@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Uploading artifact to Nexus3 and send EiffelArtifactCreatedEvent</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.ericsson.eiffel.fem.messaging.ImplicitEiffelMessagingContributorProperty plugin="eiffel-fem@FEM_VERSION">
+      <scriptEnabled>false</scriptEnabled>
+    </com.ericsson.eiffel.fem.messaging.ImplicitEiffelMessagingContributorProperty>
+    <com.ericsson.eiffel.fem.messaging.EiffelMessageFlowContextJobProperty plugin="eiffel-fem@FEM_VERSION">
+      <enabled>false</enabled>
+      <flowContext></flowContext>
+    </com.ericsson.eiffel.fem.messaging.EiffelMessageFlowContextJobProperty>
+    <com.ericsson.eiffel.fem.injection.EiffelVariableInjectionJobProperty plugin="eiffel-fem@FEM_VERSION">
+      <enabled>false</enabled>
+    </com.ericsson.eiffel.fem.injection.EiffelVariableInjectionJobProperty>
+    <com.ericsson.eiffel.fem.messaging.ImplicitEiffelMessagingJobProperty plugin="eiffel-fem@FEM_VERSION">
+      <implicitMessagingEnabled>false</implicitMessagingEnabled>
+      <eiffelActivityFinishedEventDisabled>false</eiffelActivityFinishedEventDisabled>
+    </com.ericsson.eiffel.fem.messaging.ImplicitEiffelMessagingJobProperty>
+    <com.ericsson.eiffel.fem.messaging.UserDomainSuffixJobProperty plugin="eiffel-fem@FEM_VERSION">
+      <enabled>false</enabled>
+      <userDomainSuffix></userDomainSuffix>
+    </com.ericsson.eiffel.fem.messaging.UserDomainSuffixJobProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>curl -O https://jitpack.io/com/github/Ericsson/eiffel-remrem-generate/generate-service/0.9.8/generate-service-0.9.8.war
+                ls</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>curl -v -u NEXUS_USER:NEXUS_PASSWORD --upload-file ./generate-service-0.9.8.war NEXUS_URLrepository/maven-releases/com/ericsson/eiffel/generate-service/0.9.8/generate-service-0.9.8.war            </command>
+    </hudson.tasks.Shell>
+    <com.ericsson.eiffel.fem.messaging.EiffelMessageDispatcherBuildStep plugin="eiffel-fem@FEM_VERSION">
+      <inputJson>{
+  &quot;msgParams&quot;: {
+    &quot;meta&quot;: {
+      &quot;type&quot;: &quot;EiffelArtifactCreatedEvent&quot;,
+      &quot;version&quot;: &quot;1.1.0&quot;,
+      &quot;tags&quot;: [],
+      &quot;source&quot;: {
+        &quot;domainId&quot;: &quot;&quot;,
+        &quot;host&quot;: &quot;&quot;,
+        &quot;name&quot;: &quot;&quot;,
+        &quot;uri&quot;: &quot;&quot;
+      },
+      &quot;security&quot;: {
+        &quot;sdm&quot;: {
+          &quot;authorIdentity&quot;: &quot;required if sdm present&quot;,
+          &quot;encryptedDigest&quot;: &quot;required if sdm present&quot;
+        }
+      }
+    }
+  },
+  &quot;eventParams&quot;: {
+    &quot;data&quot;: {
+      &quot;gav&quot;: {
+        &quot;groupId&quot;: &quot;com.ericsson.eiffel&quot;,
+        &quot;artifactId&quot;: &quot;generate-service&quot;,
+        &quot;version&quot;: &quot;0.9.8&quot;
+      },
+      &quot;fileInformation&quot;: [
+        {
+          &quot;classifier&quot;: &quot;exec&quot;,
+          &quot;extension&quot;: &quot;war&quot;
+        }
+      ],
+      &quot;buildCommand&quot;: &quot;&quot;,
+      &quot;requiresImplementation&quot;: &quot;&quot;,
+      &quot;name&quot;: &quot;&quot;,
+      &quot;dependsOn&quot;: [],
+      &quot;implements&quot;: [],
+      &quot;customData&quot;: []
+    },
+    &quot;links&quot;: []
+  }
+}</inputJson>
+      <customGenerateURL></customGenerateURL>
+      <customPublishURL></customPublishURL>
+      <eiffelMessageGenerator class="com.ericsson.eiffel.fem.messaging.EiffelMessageGeneratorImpl"/>
+      <eventType>EiffelArtifactCreatedEvent</eventType>
+    </com.ericsson.eiffel.fem.messaging.EiffelMessageDispatcherBuildStep>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

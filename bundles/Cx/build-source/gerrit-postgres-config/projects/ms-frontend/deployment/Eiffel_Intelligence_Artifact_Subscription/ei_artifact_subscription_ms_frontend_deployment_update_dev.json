@@ -1,0 +1,37 @@
+[
+{
+    "subscriptionName": "Subscription_MS_FRONTEND_DEPLOYMENT_UPDATE_DEV",
+    "repeat": false,
+    "created": "",
+    "notificationType": "REST_POST",
+    "notificationMeta": "http://webhook-gateway-svc:12000/msfrontenddeployment",
+    "restPostBodyMediaType": "application/json",
+    "notificationMessageKeyValues": [
+        {
+            "formkey": "",
+            "formvalue": "{ sourceCreations: internalComposition.compositions[*].artifacts[*].internalComposition.compositions[*].sourceCreations[?gitIdentifier.repoName=='ms-frontend'].gitIdentifier | [0][0][0][0], imageversion: gav.version}"
+        }
+    ],
+    "requirements": [
+        {
+            "conditions": [
+                {
+                    "jmespath": "type=='EiffelArtifactCreatedEvent' && gav.artifactId=='ms-frontend'"
+                },
+                {
+                    "jmespath": "confidenceLevels[?value=='SUCCESS' && name=='readyForSystemIntegration']"
+                },
+                {
+                    "jmespath": "publications[*].locations[?type=='OTHER']"
+                }
+            ]
+        }
+    ],
+    "userName": "",
+    "notificationMessageKeyValuesAuth": [],
+    "authenticationType": "NO_AUTH",
+    "token": "admin",
+    "aggregationtype": "eiffel-intelligence",
+    "ldapUserName": ""
+}
+]

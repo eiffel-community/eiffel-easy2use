@@ -1,0 +1,58 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Sends EiffelArtifactCreatedEvent &amp; Activity events</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash
+
+echo &apos;{ &quot;msgParams&quot;: {
+    &quot;meta&quot;: {
+      &quot;type&quot;: &quot;EiffelArtifactCreatedEvent&quot;,
+      &quot;version&quot;: &quot;1.1.0&quot;,
+      &quot;tags&quot;: [],
+      &quot;source&quot;: {
+        &quot;domainId&quot;: &quot;example.domain&quot;
+      }
+    }
+  },
+  &quot;eventParams&quot;: {
+    &quot;data&quot;: {
+      &quot;gav&quot;: {
+        &quot;groupId&quot;: &quot;com.othercompany.library2&quot;,
+        &quot;artifactId&quot;: &quot;required&quot;,
+        &quot;version&quot;: &quot;required&quot;
+      },
+      &quot;fileInformation&quot;: [
+        {
+          &quot;classifier&quot;: &quot;exec&quot;,
+          &quot;extension&quot;: &quot;jar&quot;
+        }
+      ],
+      &quot;buildCommand&quot;: &quot;&quot;,
+      &quot;requiresImplementation&quot;: &quot;&quot;,
+      &quot;name&quot;: &quot;&quot;,
+      &quot;dependsOn&quot;: [],
+      &quot;implements&quot;: [],
+      &quot;customData&quot;: []
+    },
+    &quot;links&quot;: []
+  }
+}&apos; &gt; event.json
+
+curl -H &quot;Content-Type: application/json&quot; -X POST --data @event.json  &quot;REMREM_PUBLISH_URL/generateAndPublish?mp=eiffelsemantics&amp;msgType=EiffelArtifactCreatedEvent&quot;
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

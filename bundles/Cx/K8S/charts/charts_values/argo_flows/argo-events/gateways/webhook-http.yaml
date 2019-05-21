@@ -1,0 +1,62 @@
+#
+#   Copyright 2019 Ericsson AB.
+#   For a full list of individual contributors, please see the commit history.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+apiVersion: argoproj.io/v1alpha1
+kind: Gateway
+metadata:
+  name: webhook-gateway-http
+  labels:
+    gateways.argoproj.io/gateway-controller-instanceid: argo-events
+    gateway-name: "webhook-gateway-http"
+spec:
+  configMap: "webhook-gateway-configmap"
+  type: "webhook"
+  processorPort: "9330"
+  eventProtocol:
+    type: "HTTP"
+    http:
+      port: "9300"
+  eventVersion: "1.0"
+  template:
+    metadata:
+      name: "webhook-gateway-http"
+      labels:
+        gateway-name: "webhook-gateway-http"
+    spec:
+      containers:
+        - name: "gateway-client"
+          image: "docker.io/argoproj/gateway-client:v0.8.3"
+          imagePullPolicy: "Always"
+          command: ["/bin/gateway-client"]
+        - name: "webhook-events"
+          image: "docker.io/argoproj/webhook-gateway:v0.8.3"
+          imagePullPolicy: "Always"
+          command: ["/bin/webhook-gateway"]
+      serviceAccountName: "argo-events-sa"
+  service:
+    metadata:
+      name: webhook-gateway-svc
+    spec:
+      selector:
+        gateway-name: "webhook-gateway-http"
+      ports:
+        - port: 12000
+          targetPort: 12000
+      type: LoadBalancer
+  watchers:
+    sensors:
+      - name: "webhook-sensor-http-gen-eiffelevent-ms-backend"
+      - name: "webhook-sensor-http-deployment-update-ms-frontend"

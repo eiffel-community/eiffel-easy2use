@@ -1,0 +1,84 @@
+#!/usr/bin/env groovy
+//
+//   Copyright 2019 Ericsson AB.
+//   For a full list of individual contributors, please see the commit history.
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+//
+// ####################################################################################################################
+//  Jenkinsfile CI Loop using Pipeline As Code with shared Jenkins pipeline code
+//
+//  Author: michael.frick@ericsson.com
+//
+// ####################################################################################################################
+
+
+library identifier: 'myshared@master', retriever: modernSCM([$class: 'GitSCMSource',
+    remote: 'http://GERRIT_GIT_SERVER_SED/eiffel-jenkins-pipeline-shared',
+    credentialsId: 'GERRIT_CREDENTIALS',
+    branch: 'master',
+    extensions: [[$class: 'WipeWorkspace']],
+    excludes: '',
+    includes: '*',
+    rawRefSpecs: 'refs/heads/master'
+]) _
+
+
+
+
+// # CI Shared Jenkins Pipeline code for Java apps executed in K8S
+Java_K8S_CI_Pipeline_Gerrit_And_SourceCode_Repos{
+
+
+     // Required Docker Images with build capabilities to be used in pipeline build steps
+     DOCKERIMAGE_CHECKOUT = "eiffelericsson/jdk8mvndockergitjq:latest"
+     DOCKERIMAGE_COMPILE = "eiffelericsson/jdk8mvndockergitjq:latest"
+     DOCKERIMAGE_CODEANALYSIS = "eiffelericsson/jdk8mvndockergitjq:latest"
+     DOCKERIMAGE_UNITTEST = "eiffelericsson/jdk8mvndockergitjq:latest"                     
+     DOCKERIMAGE_ARMPUBLISH = "eiffelericsson/jdk8mvndockergitjq:latest"
+     DOCKERIMAGE_DOCKER_BUILD_PUSH = "eiffelericsson/jdk8mvndockergitjq:latest"
+     DOCKERIMAGE_REMREM_EVENTS = "eiffelericsson/jdk8mvndockergitjq:latest"
+
+     // Optional: Required only if sourcecode exist in GITHUB and wrapper repo exist in Gerrit
+     GITHUB_REPO = ""
+
+     // Required:  Gerrit repo
+     GERRIT_GIT_SERVER_NP = "GERRIT_GIT_SERVER_NP_SED"
+     GERRIT_GIT_SERVER = "http://GERRIT_GIT_SERVER_SED"
+     GERRIT_GIT_PROJECT = "ms-backend"
+
+     // Required: Wrapper repo build info filename
+     BUILD_INFO_FILE = ""
+
+     // Required: Compile cmd in build step
+     BUILD_COMMAND = "mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V"
+
+     // Optional: If not defined, cmds in .travis file will be used to execute tests
+     UNIT_TEST_COMMANDS = [ "mvn test" ]
+
+     // Optional: if empty ("") SonarQube will NOT be performed
+     SONARQUBE_HOST_URL = ""
+
+     // Optional: ARM for uploading compiled artifact JAR/WAR
+     CX_ARM_URL = "http://ARTIFACTORY_URL_SED/artifactory/example-repo-local"
+
+     // Optional:  Cx Docker Images registry and path
+     CX_IMAGE_REGISTRY = "DOCKER_REGISTRY_SED"
+     CX_IMAGE_REPOSITORY = "DOCKER_IMAGE_REPOSITORY_SED"
+
+     // Required
+     REMREM_PUBLISH_GEN_PUB_URL = "REMREM_PUBLISH_GEN_PUB_URL_SED"
+     REMREM_GENERATE_URL = "REMREM_GENERATE_URL_SED"
+     REMREM_PUBLISH_URL = "REMREM_PUBLISH_URL_SED"
+}
+

@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Sends EiffelArtifactCreatedEvent &amp; Activity events</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.ericsson.eiffel.fem.messaging.ImplicitEiffelMessagingContributorProperty plugin="eiffel-fem@FEM_VERSION">
+      <scriptEnabled>false</scriptEnabled>
+    </com.ericsson.eiffel.fem.messaging.ImplicitEiffelMessagingContributorProperty>
+    <com.ericsson.eiffel.fem.messaging.EiffelMessageFlowContextJobProperty plugin="eiffel-fem@FEM_VERSION">
+      <enabled>false</enabled>
+      <flowContext></flowContext>
+    </com.ericsson.eiffel.fem.messaging.EiffelMessageFlowContextJobProperty>
+    <com.ericsson.eiffel.fem.injection.EiffelVariableInjectionJobProperty plugin="eiffel-fem@FEM_VERSION">
+      <enabled>false</enabled>
+    </com.ericsson.eiffel.fem.injection.EiffelVariableInjectionJobProperty>
+    <com.ericsson.eiffel.fem.messaging.ImplicitEiffelMessagingJobProperty plugin="eiffel-fem@FEM_VERSION">
+      <implicitMessagingEnabled>true</implicitMessagingEnabled>
+      <eiffelActivityFinishedEventDisabled>false</eiffelActivityFinishedEventDisabled>
+    </com.ericsson.eiffel.fem.messaging.ImplicitEiffelMessagingJobProperty>
+    <com.ericsson.eiffel.fem.messaging.UserDomainSuffixJobProperty plugin="eiffel-fem@FEM_VERSION">
+      <enabled>false</enabled>
+      <userDomainSuffix></userDomainSuffix>
+    </com.ericsson.eiffel.fem.messaging.UserDomainSuffixJobProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <com.ericsson.eiffel.fem.messaging.EiffelMessageDispatcherBuildStep plugin="eiffel-fem@FEM_VERSION">
+      <inputJson>{
+  &quot;msgParams&quot;: {
+    &quot;meta&quot;: {
+      &quot;type&quot;: &quot;EiffelArtifactCreatedEvent&quot;,
+      &quot;version&quot;: &quot;1.1.0&quot;,
+      &quot;tags&quot;: [],
+      &quot;source&quot;: {
+        &quot;domainId&quot;: &quot;example.domain&quot;
+      }
+    }
+  },
+  &quot;eventParams&quot;: {
+    &quot;data&quot;: {
+      &quot;gav&quot;: {
+        &quot;groupId&quot;: &quot;com.othercompany.library&quot;,
+        &quot;artifactId&quot;: &quot;required&quot;,
+        &quot;version&quot;: &quot;required&quot;
+      },
+      &quot;fileInformation&quot;: [
+        {
+          &quot;classifier&quot;: &quot;exec&quot;,
+          &quot;extension&quot;: &quot;jar&quot;
+        }
+      ],
+      &quot;buildCommand&quot;: &quot;&quot;,
+      &quot;requiresImplementation&quot;: &quot;&quot;,
+      &quot;name&quot;: &quot;&quot;,
+      &quot;dependsOn&quot;: [],
+      &quot;implements&quot;: [],
+      &quot;customData&quot;: []
+    },
+    &quot;links&quot;: []
+  }
+}</inputJson>
+      <customGenerateURL></customGenerateURL>
+      <customPublishURL></customPublishURL>
+      <eiffelMessageGenerator class="com.ericsson.eiffel.fem.messaging.EiffelMessageGeneratorImpl"/>
+      <eventType>EiffelArtifactCreatedEvent</eventType>
+    </com.ericsson.eiffel.fem.messaging.EiffelMessageDispatcherBuildStep>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

@@ -1,0 +1,14 @@
+appVersion: 1.0.0
+description: myapplication Base Chart
+engine: gotpl
+home: 
+icon: 
+keywords:
+- myapplication
+maintainers:
+- email: michael.frick@ericsson.com
+  name: emichaf
+name: myapplication
+sources:
+- https://xxxxxxxxx
+version: 1.0.0

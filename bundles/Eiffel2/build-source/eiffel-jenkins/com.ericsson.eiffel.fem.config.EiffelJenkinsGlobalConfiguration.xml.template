@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<com.ericsson.eiffel.fem.config.EiffelJenkinsGlobalConfiguration_-EiffelJenkinsGlobalConfigurationDescriptor plugin="eiffel-fem-FEM_VERSION">
+  <arms class="java.util.Collections$UnmodifiableMap">
+    <m class="linked-hash-map">
+      <entry>
+        <string>0</string>
+        <com.ericsson.eiffel.fem.config.JenkinsCryptographicArm>
+          <id>0</id>
+          <description>NEXUS_DESCRIPTION</description>
+          <httpString>NEXUS_URL</httpString>
+          <downloadRepoName>NEXUS_DOWNLOAD_REPO_NAME</downloadRepoName>
+          <uploadRepoName>NEXUS_UPLOAD_REPO_NAME</uploadRepoName>
+          <credentials>
+            <name>NEXUS_USER</name>
+            <password>NEXUS_PASSWORD</password>
+          </credentials>
+        </com.ericsson.eiffel.fem.config.JenkinsCryptographicArm>
+      </entry>
+    </m>
+  </arms>
+  <messageBus>
+    <hostName>RABBITMQ_HOST</hostName>
+    <port>RABBITMQ_PORT</port>
+    <exchangeName>RABBITMQ_EXCHANGE_NAME</exchangeName>
+    <componentName>RABBITMQ_COMPONENT_NAME</componentName>
+    <protocol>RABBITMQ_PROTOCOL</protocol>
+    <createExchangeIfNotExisting>RABBITMQ_CREATE_EXCHANGE</createExchangeIfNotExisting>
+    <credentials>
+      <name>RABBITMQ_USER</name>
+      <password>RABBITMQ_PASSWORD</password>
+    </credentials>
+  </messageBus>
+  <domainId>RABBITMQ_DOMAIN_ID</domainId>
+  <remremGenerateUrl>REMREM_GENERATE_URL</remremGenerateUrl>
+  <remremPublishUrl>REMREM_PUBLISH_URL</remremPublishUrl>
+  <remremLdapUserName>REMREM_USER</remremLdapUserName>
+  <remremLdapPassword>REMREM_PASSWORD</remremLdapPassword>
+  <erRestUrl>ER_REST_URL</erRestUrl>
+  <bypassIO>BYPASS_IO</bypassIO>
+</com.ericsson.eiffel.fem.config.EiffelJenkinsGlobalConfiguration_-EiffelJenkinsGlobalConfigurationDescriptor>

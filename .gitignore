@@ -1,0 +1,53 @@
+# Easy2Use
+config-user.bash
+# Easy2Use Cx Bundle Argo-events (seeded files)
+bundles/Cx/K8S/charts/charts_values/argo_flows/argo-events/gateways/amqp-gateway-configmap.yaml
+bundles/Cx/K8S/charts/charts_values/argo_flows/deploy/sensor-controller-configmap.yaml
+bundles/Cx/K8S/charts/charts_values/argo_flows/deploy/minio-ingress.yaml
+bundles/Cx/K8S/charts/charts_values/argo_flows/deploy/gateway-controller-configmap.yaml
+bundles/Cx/K8S/charts/charts_values/argo_flows/argo-events/sensors/sensor-ci-flow-amqp-triggered-ms-backend.yaml
+bundles/Cx/K8S/charts/charts_values/argo_flows/argo-events/sensors/sensor-webhook-deployment-update-ms-frontend.yaml
+bundles/Cx/K8S/charts/charts_values/argo_flows/argo-events/sensors/sensor-ci-flow-amqp-triggered-ei-subscription-ms-frontend.yaml
+bundles/Cx/K8S/charts/charts_values/argo_flows/argo-events/gateways/amqp-gateway-configmap.yaml
+bundles/Cx/K8S/charts/charts_values/keycloak_secrets/easy2use-all.json
+bundles/Cx/K8S/charts/charts_values/argo_flows/argo-events/sensors/sensor-generate-eiffel-event-ms-backend.yaml
+# Easy2Use MS Bundle -> Bookinfo app (seeded files)
+bundles/MS/K8S/samples/bookinfo/networking/ingress.yaml
+bundles/MS/K8S/samples/helloworld/ingress.yaml
+bundles/MS/K8S/charts/logging/deploy/ingress.yaml
+
+# VSCodegit
+.vscode/
+
+# VSCode
+.vscode/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+
+# Others
+derby.log
+work/
+
+# Docker seeded env files
+bundles/Eiffel2/docker-env-files/
+bundles/EiffelCommon/docker-env-files/

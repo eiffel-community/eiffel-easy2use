@@ -1,0 +1,37 @@
+[{
+    "_id" : "9a1dd1fd-fb8f-4650-9421-109de3f048dc",
+    "links" : [],
+    "data" : {
+        "customData" : [ 
+            {
+                "value" : "SCS1",
+                "key" : "name"
+            }, 
+            {
+                "value" : 0,
+                "key" : "iteration"
+            }
+        ],
+        "gitIdentifier" : {
+            "repoName" : "mytestRepo",
+            "commitId" : "fd090b60a4aedc5161da9c035a49b14a319829b4",
+            "branch" : "master",
+            "repoUri" : "https://repo.com"
+        },
+        "submitter" : {
+            "name" : "John Doe",
+            "email" : "john.doe@company.com",
+            "id" : "johnxxx",
+            "group" : "Team Gophers"
+        }
+    },
+    "meta" : {
+        "type" : "EiffelSourceChangeSubmittedEvent",
+        "version" : "1.0.0",
+        "source" : {
+            "domainId" : "example.domain"
+        },
+        "id" : "9a1dd1fd-fb8f-4650-9421-109de3f048dc",
+        "time" : 1490777046665
+    }
+}]

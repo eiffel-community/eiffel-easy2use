@@ -1,0 +1,856 @@
+#
+#   Copyright 2019 Ericsson AB.
+#   For a full list of individual contributors, please see the commit history.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+#!/bin/bash
+
+# Global constants that needs to be configured here since no config file has
+# been read yet
+CORE_BUNDLES_PATH=bundles
+EXTERNAL_BUNDLES_PATH=
+
+
+#-----------------------------
+# get_bundles
+#
+# This function will return available bundles. If an external bundles path
+# is given, bundles in that path will be included as well.
+#-----------------------------
+function get_bundles {
+  echo -e "$(cd ${CORE_BUNDLES_PATH} ; ls | sed -e 's|^|    |')"
+  if [ ! -z $EXTERNAL_BUNDLES_PATH ]
+  then
+    echo -e "$(cd ${EXTERNAL_BUNDLES_PATH} ; ls | sed -e 's|^|    |')"
+  fi
+}
+
+
+#-----------------------------
+# usage
+#
+# This function will print script usage help
+#-----------------------------
+function usage {
+  cat <<EOF
+usage: easy2use COMMAND [OPTIONS] BUNDLE
+
+OPTIONS:
+       --debug    : Turn on debug mode, echoing shell command results for
+                    example
+  -d | --domain DOMAIN :
+                    Kubernetes domain name when ingress is used. Overrides
+                    configured domain name for Kubernetes
+       --dry-run  : Check what would have been executed, but don't execute
+                    any destructive commands. Should be used in conjunction
+                    with -v
+  -e | --external-bundles-path PATH :
+                    Use external bundles provided by file-system path
+  -h | --help     : This help text
+  -n | --namespace NAMESPACE | --network NETWORK :
+                    Namespace for Kubernetes alternatively network for Docker.
+                    For K8S -> Overrides configured namespace name
+                    For Docker -> Overrides configured network name. Note!
+                    This is not yet implemented for Docker (update nw in
+                    docker-compose file)
+  -p | --package PACKAGE :
+                    Package from bundle. Pre-configured package with services in
+                    given bundle.
+  -s | --services SERVICE[,SERVICE2,SERVICE3,...] :
+                    Specify services from given bundle. Multiple services can
+                    be given by separating them with comma.
+                    For Docker: to stop/remove all services specify all services
+                    or skip flag.
+  -t | --target-type TARGET-TYPE :
+                    Valid values are "Kubernetes" and "Docker". Overrides
+                    configured target type
+  -v | --verbose  : Turn on verbose mode, echoing shell commands for example
+  -y | --yes      : Make the script non-interactive by replying 'y' on all
+                    questions
+
+COMMANDS:
+  configure-local-k8s-hyper-v :
+               Configure local Kubernetes cluster in Hyper-v (Docker for
+               Windows) for Easy2Use usage.
+  configure-local-k8s-minikube :
+               Configure local Kubernetes cluster in minikube for Easy2Use
+               usage.
+  generate-local-hosts-file-hyper-v :
+               Generate hosts file delta for services deployed in local
+               Kubernetes cluster (Hyper-v Docker for Windows). Content needs to
+               be added to local ../etc/hosts file
+  generate-local-hosts-file-minikube :
+               Generate hosts file delta for services deployed in local
+               Kubernetes cluster (minikube). Content needs to be added to local
+               ../etc/hosts file
+  info       : List bundle information
+  list       : List all deployed services for a given bundle
+               For Docker: addresses and host ports and user/psw
+               For K8S: Ingresses to services and user/psw
+  list-bundles : 
+               List available bundles
+  list-packages :
+               List available packages for choosen bundle. Use flag -p <package>
+               to list services in package. Packages are pre-defined service
+               combinations from the bundle.
+  list-psw   : List all user & psw for deployed services for a given bundle
+  remove     : Remove a given bundle services.
+               For Docker: All services for bundle will be removed.
+               For K8S: All services removed (or specific service(s) and/or
+               package if given). Namespace NOT removed.
+  restart    : Restarts all running bundle services (or specific service(s)
+               and/or package if given). For Docker: dependent services will NOT
+               be restarted.
+               For K8S: the services will be deleted and installed again.
+  start      : Starts all services in a given bundle (or specific service(s)
+               and/or package if given)
+  status     : Checks the status of a deployment
+  stop       : Stop all running services in a given bundle (or specific
+               service(s) and/or package if given). For Docker: dependent
+               services will NOT be stopped. This command is NOT applicable for
+               K8S.
+
+Available bundles:
+$(get_bundles)
+
+Examples:
+
+Use configurations in config-default.bash
+
+Start the complete Eiffel1 bundle
+$ ./easy2use start Eiffel1
+
+Start three specific services from the Eiffel2 bundle
+$ ./easy2use start Eiffel2 --services rabbitmq,mongodb,er
+
+Start a predefined package of services from the Eiffel2 bundle
+$ ./easy2use start Eiffel2 --package min
+
+Examples :
+Override configurations in config-default.bash file via flags
+
+Start the complete Cx bundle in Kubernetes and in namespace = cx, and with base domain name = test.com
+$ ./easy2use start Cx -t Kubernetes -n cx -d test.com
+
+Remove the complete Cx bundle in Kubernetes
+$ ./easy2use remove Cx -t Kubernetes -n cx
+
+EOF
+}
+
+
+#-----------------------------
+# parse_arguments
+#
+# This function parses command line arguments and stores them in global
+# variables. It also does some basic sanity checks on some arguments.
+#
+#-----------------------------
+function parse_arguments {
+  # Define array for storing positional arguments
+  args=()
+
+  # Parse named arguments
+  while [ "$1" != "" ]
+  do
+    case "$1" in
+           --debug )     debug="true";;
+      -d | --domain )    k8s_domainname_override="$2"; shift;;
+           --dry-run )   noop="true";;
+      -e | --external-bundles-path ) external_bundles_path_override="$2"; shift;;
+      -h | --help )      usage; exit;; # quit and show usage
+      -n | --namespace | --network ) namespace_cli_override="$2"; shift;;
+      -p | --package )   package="$2"; shift;;
+      -s | --services )  services_string="$2"; shift;;
+      -t | --target-type ) target_type_override="$2"; shift;;
+      -v | --verbose )   verbose="true";;
+      -y | --yes )       non_interactive="true";;
+      * )                args+=("$1")  # if no match, add it to the positional
+                                       # arguments
+    esac
+    shift # move to next key-value pair
+  done
+
+  # Join all given services to a space separated string
+  [[ -z ${services_string} ]] || \
+    services=$(echo ${services_string} | tr ',' ' ')
+
+  if [ ! "$non_interactive" ]
+  then
+    interactive="true"
+  fi
+
+  # Restore ordinary/positional arguments
+  set -- "${args[@]}"
+
+  command="${args[0]}"
+  if [[ -z "${command}" ]]
+  then
+    echo -e "Command missing\n"
+    usage
+    exit
+  fi
+  shift
+
+  bundle="${args[1]}"
+  shift
+
+  remaining_arguments="$@"
+  if [[ ! -z ${remaining_arguments} ]]
+  then
+    echo -e "Unknown arguments: ${remaining_arguments}\n"
+    usage
+    exit
+  fi
+}
+
+
+#*****************************************************************************
+# Easy2Use CLI commands in alphabetical order
+#*****************************************************************************
+
+#-----------------------------
+# CLI command: configure-local-k8s-hyper-v
+#
+# Helper to configure local Hyper-V  (Docker for Windows) K8S cluster
+#-----------------------------
+function do_k8s_local_hyper_v {
+  source utilities/K8S/configure_local_k8s_hyper_v.sh
+}
+
+
+#-----------------------------
+# CLI command: configure-local-k8s-minikube
+#
+# Helper to configure local minikube K8S cluster
+#-----------------------------
+function do_k8s_local_minikube {
+  source utilities/K8S/configure_local_k8s_minikube.sh
+}
+
+
+#-----------------------------
+# CLI command: generate-local-hosts-file-hyper-v
+#
+# Helper to generate local hosts file delta for services deployed
+# in local Hyper-V (Docker for Windows) K8S cluster
+#-----------------------------
+function do_k8s_local_hosts_file_hyper_v {
+  echo "Update your local '../etc/hosts' file with:"
+  source utilities/K8S/get_k8s_ingress.sh | awk '{if (NR!=1) {print "127.0.0.1 " $2}}'
+}
+
+
+#-----------------------------
+# CLI command: generate-local-hosts-file-minikube
+#
+# Helper to generate local hosts file delta for services deployed
+# in local minikube cluster
+#-----------------------------
+function do_k8s_local_hosts_file_minikube {
+  minikube_ip=$(minikube ip)
+  echo "Update your local '../etc/hosts' file with:"
+  source utilities/K8S/get_k8s_ingress.sh | awk -v env_var="$minikube_ip" '{if (NR!=1) {print env_var" "$2}}'
+}
+
+
+#-----------------------------
+# CLI command: info
+#-----------------------------
+function do_info {
+  local bundles_path="$1"
+  local bundle="$2"
+
+  cat ${bundles_path}/$bundle/README.md
+}
+
+
+#-----------------------------
+# CLI command: list
+#-----------------------------
+function do_list {
+  local bundles_path="$1"
+  local bundle="$2"
+  local package="$3"
+  local services="$4"
+
+  debug "do_list called for $bundle (${bundles_path}), $package, $services"
+
+  cd ${bundles_path}/$bundle
+
+  if [ "$TARGET_TYPE" == "Docker" ]
+  then
+    local service_url_format="%-25s  %s\n"
+    local docker_services=$(docker-compose config --services | sed -e 's/[\n\r]+/ /g' | sort)
+    local service_ports=$(grep EXTERNAL_PORT config-bundle.bash | sed -e "s/^.*${bundle}_//ig" | sort)
+    printf "\n${service_url_format}" "Service" "Exposed URL(s)"
+    echo "------------------------------------------------------"
+    for docker_service in $docker_services
+    do
+      local service_port_found=0
+      for service_port in $service_ports
+      do
+        local service_name=$(echo $service_port | sed -e 's/=.*$//g;s/_EXTERNAL_PORT//g' | tr '[:upper:]' '[:lower:]')
+        if [ "${docker_service}" == "${service_name}" ]
+        then
+          local service_port_found=1
+          local exposed_port=$(echo $service_port | sed -e 's/^.*=//g')
+          local url="http://${TARGET_HOST}:${exposed_port}"
+          printf "${service_url_format}" "${docker_service}" "$url"
+        fi
+      done
+      if [ $service_port_found -ne 1 ]
+      then
+        local url="No exposed port defined (at least not found)"
+        printf "${service_url_format}" "${docker_service}" "$url"
+      fi
+    done
+
+    echo ""
+    echo "Services with EXPOSED_PORTS but not present in docker-compose.yaml (or spelled differently)"
+    local docker_services_oneliner=$(echo "${docker_services}" | tr "\n" " ")
+    for service_port in $service_ports
+    do
+      local service_name=$(echo $service_port | sed -e 's/=.*$//g;s/_EXTERNAL_PORT//g' | tr '[:upper:]' '[:lower:]')
+      if [[ ! " ${docker_services_oneliner} " =~ " ${service_name} " ]]
+      then
+        local exposed_port=$(echo $service_port | sed -e 's/^.*=//g')
+        url="http://${TARGET_HOST}:${exposed_port}"
+        printf "${service_url_format}" "${service_name}" "$url"
+      fi
+    done
+   echo "${app_url_context_path}"
+   echo "${easy2use_bundle_psw}"
+
+  elif [ "$TARGET_TYPE" == "Kubernetes" ]
+  then
+    verbose "Looking for Kubernetes services in namespace ${K8S_NAMESPACE}"
+    source ${CLI_ROOT}/utilities/K8S/get_k8s_ingress.sh | awk '{if (NR!=1) {print "http://"$2}}'
+    echo "${app_url_context_path}"
+    echo "${easy2use_bundle_psw}"
+  fi
+  cd ../..
+}
+
+
+#-----------------------------
+# CLI command: list-bundles
+#-----------------------------
+function do_list_bundles {
+  echo "Available bundles:"
+  echo "$(get_bundles)"
+}
+
+
+#-----------------------------
+# CLI command: list-packages
+#-----------------------------
+function do_list_packages {
+  local bundles_path="$1"
+  local bundle="$2"
+
+  debug "do_list_packages called for $bundle"
+
+  if [ "$TARGET_TYPE" == "Kubernetes" ]
+  then
+    if [ ! -z "$package" ]
+    then
+
+      cd ${bundles_path}/$bundle/K8S/packages
+      source $package.sh
+      print "Kubernetes services in package '$package' in bundle '$bundle':\n\
+  $k8s_package_services"
+    else
+      for packages in `ls "${bundles_path}/$bundle/K8S/packages" | grep \.sh$`
+      do
+        echo "$(basename $packages .sh)"
+      done
+    fi
+  elif [ "$TARGET_TYPE" == "Docker" ]
+  then
+    if [ ! -z "$package" ]
+    then
+      cd ${bundles_path}/$bundle/docker-compose/packages
+      source $package.sh
+      print "Docker Package Services: $docker_package_services"
+    else
+      for packages in `ls "${bundles_path}/$bundle/docker-compose/packages" | grep \.sh$`
+      do
+        echo "$(basename $packages .sh)"
+      done
+    fi
+  fi
+}
+
+
+#-----------------------------
+# CLI command: list-psw
+#-----------------------------
+function do_list_psw {
+  echo "${easy2use_bundle_psw}"
+}
+
+
+#-----------------------------
+# CLI command: remove
+#-----------------------------
+function do_remove {
+  local bundles_path="$1"
+  local bundle="$2"
+  local package="$3"
+  local services="$4"
+
+  debug "do_remove called for $bundle (${bundles_path}), $package, $services"
+
+  local config=$(get_bundle_configuration "$bundle" "$package" "$services" "remove")
+  ask_continue "\n${config}"
+
+  cd ${bundles_path}/$bundle
+
+  if [ "$TARGET_TYPE" == "Docker" ]
+  then
+    if [ ! -z "$services" ] || [ ! -z "$package" ]
+    then
+      bail_out "Docker: The remove command can NOT be used together with service(s) and/or package"
+    fi
+      call "docker-compose down --volumes" $noop
+  elif [ "$TARGET_TYPE" == "Kubernetes" ]
+  then
+    cd K8S
+    source k8s_bundle_functions.bash
+    if [ -z "$services" ] && [ -z "$package" ]
+    then
+      [[ -f "./packages/max.sh" ]] || \
+        bail_out "K8S package file max.sh do not exist for K8S"
+      package="max"
+    fi
+    execute_k8s_command "delete" "$package" "$services"
+    cd ..
+  fi
+
+  remove_dependencies $bundle
+}
+
+
+#-----------------------------
+# CLI command: restart
+#-----------------------------
+function do_restart {
+  local bundles_path="$1"
+  local bundle="$2"
+  local package="$3"
+  local services="$4"
+
+  debug "do_restart called for $bundle (${bundles_path}), $package, $services"
+
+  if [ "$TARGET_TYPE" == "Docker" ]
+  then
+    local config=$(get_bundle_configuration "$bundle" "$package" "$services" "restart")
+    ask_continue "\n${config}"
+
+    cd ${bundles_path}/$bundle/docker-compose
+    if [ -z "$services" ] && [ -z "$package" ]
+    then
+      call "docker-compose restart" $noop
+    else
+      execute_docker_command "restart" "" "$package" "$services"
+    fi
+
+    restart_dependencies $bundle
+
+  elif [ "$TARGET_TYPE" == "Kubernetes" ]
+  then
+    print "Restarting in Kubernetes is done by first removing and then starting the service(s)"
+
+    do_remove "${bundles_path}" "$bundle" "$package" "$services"
+
+    do_start "${bundles_path}" "$bundle" "$package" "$services"
+  fi
+}
+
+
+#-----------------------------
+# CLI command: start
+#-----------------------------
+function do_start {
+  local bundles_path="$1"
+  local bundle="$2"
+  local package="$3"
+  local services="$4"
+
+  debug "do_start called for $bundle (${bundles_path}), $package, $services"
+
+  local config=$(get_bundle_configuration "$bundle" "$package" "$services" "start")
+  ask_continue "\n${config}"
+
+  cd ${bundles_path}/$bundle
+
+  if [ "$TARGET_TYPE" == "Docker" ]
+  then
+    cd docker-compose
+    if [ -z "$services" ] && [ -z "$package" ]
+    then
+      [[ -f "./packages/max.sh" ]] || \
+        bail_out "Docker package file max.sh do not exist"
+      package="max"
+    fi
+    execute_docker_command "up" "-d" "$package" "$services"
+    cd ..
+
+  elif [ "$TARGET_TYPE" == "Kubernetes" ]
+  then
+    cd K8S
+    source k8s_bundle_functions.bash
+    if [ -z "$services" ] && [ -z "$package" ]
+    then
+      [[ -f "./packages/max.sh" ]] || \
+        bail_out "K8S package file max.sh do not exist"
+      package="max"
+    fi
+    execute_k8s_command "install" "$package" "$services" || \
+      bail_out "Failed to install '$services'"
+    verbose "Done installing '$services'"
+    cd ..
+  fi
+
+  start_dependencies $bundle
+}
+
+
+#-----------------------------
+# CLI command: status
+#-----------------------------
+function do_status {
+  local bundles_path="$1"
+  local bundle="$2"
+  local package="$3"
+  local services="$4"
+
+  debug "do_status called for $bundle (${bundles_path}), $package, $services"
+
+  cd ${bundles_path}/$bundle
+
+  if [ "$TARGET_TYPE" == "Docker" ]
+  then
+    call "docker-compose ps" $noop
+  elif [ "$TARGET_TYPE" == "Kubernetes" ]
+  then
+    print "Command 'status' is not yet implemented for Kubernetes"
+  fi
+  cd ../..
+}
+
+
+#-----------------------------
+# CLI command: stop
+#-----------------------------
+function do_stop {
+  local bundles_path="$1"
+  local bundle="$2"
+  local package="$3"
+  local services="$4"
+
+  debug "do_stop called for $bundle (${bundles_path}), $package, $services"
+
+  local config=$(get_bundle_configuration "$bundle" "$package" "$services" "stop")
+  ask_continue "\n${config}"
+
+  cd ${bundles_path}/$bundle
+
+  if [ "$TARGET_TYPE" == "Docker" ]
+  then
+    cd docker-compose
+    execute_docker_command "stop" "" "$package" "$services" $noop
+    cd ../../..
+    stop_dependencies $bundle
+
+  elif [ "$TARGET_TYPE" == "Kubernetes" ]
+  then
+    bail_out "Command 'stop' is not applicable for Kubernetes. Use 'remove' instead."
+  fi
+}
+
+
+#*****************************************************************************
+# Easy2Use dependency utility functions in alphabetical order
+#*****************************************************************************
+
+#-----------------------------
+# remove_dependencies
+#
+# This function will check the dependencies of the given bundle and loop
+# through them with the remove command.
+#-----------------------------
+function remove_dependencies {
+  local bundle="$1"
+
+  cd ${CLI_ROOT}
+
+  local dependencies_array_constant="CONF_${bundle}_DEPENDENCIES_BUNDLES[@]"
+  if [ ! -z ${!dependencies_array_constant} ]
+  then
+    print "Removing dependent bundles and services"
+    for bundle_dependency in "${!dependencies_array_constant}"
+    do
+      debug "Bundle dependency: ${bundle_dependency}"
+      dependent_bundle=$(printf "${bundle_dependency}" *  | head -n1 | cut -d "," -f1)
+      dependent_services=$(echo "${bundle_dependency#*,}" | tr ',' ' ')
+      verbose "Dependent bundle: ${dependent_bundle}  "
+      verbose "Dependent service(s): ${dependent_services}"
+      do_run remove "${dependent_bundle}" "" "${dependent_services}"
+    done
+  fi
+}
+
+
+#-----------------------------
+# restart_dependencies
+#
+# This function will check the dependencies of the given bundle and loop
+# through them with the restart command.
+#
+# This is only valid for Docker targets, since for Kubernetes targets we
+# remove/start the services instead
+#-----------------------------
+function restart_dependencies {
+  local bundle="$1"
+
+  if [ "$TARGET_TYPE" != "Docker" ]
+  then
+    return
+  fi
+
+  cd ${CLI_ROOT}
+
+  local dependencies_array_constant="CONF_${bundle}_DEPENDENCIES_BUNDLES[@]"
+  debug "Dependencies variable: $dependencies_array_constant"
+  if [ ! -z ${!dependencies_array_constant} ]
+  then
+    print "Restarting dependent bundles and services"
+    for bundle_dependency in "${!dependencies_array_constant}"
+    do
+      debug "Bundle dependency: ${bundle_dependency}"
+      dependent_bundle=$(printf "${bundle_dependency}" *  | head -n1 | cut -d "," -f1)
+      dependent_services=$(echo "${bundle_dependency#*,}" | tr ',' ' ')
+
+      verbose "Dependent bundle: ${dependent_bundle}  "
+      verbose "Dependent service(s): ${dependent_services}"
+      do_run restart "$dependent_bundle" "" "$dependent_services"
+    done
+  fi
+}
+
+
+#-----------------------------
+# start_dependencies
+#
+# This function will check the dependencies of the given bundle and loop
+# through them with the start command.
+#-----------------------------
+function start_dependencies {
+  local bundle="$1"
+
+  cd ${CLI_ROOT}
+
+  local dependencies_array_constant="CONF_${bundle}_DEPENDENCIES_BUNDLES[@]"
+  debug "Dependencies variable: $dependencies_array_constant"
+  if [ ! -z ${!dependencies_array_constant} ]
+  then
+    print "Starting dependent bundles and services"
+    for bundle_dependency in "${!dependencies_array_constant}"
+    do
+      debug "Bundle dependency: ${bundle_dependency}"
+      dependent_bundle=$(printf "${bundle_dependency}" *  | head -n1 | cut -d "," -f1)
+      dependent_services=$(echo "${bundle_dependency#*,}" | tr ',' ' ')
+
+      verbose "Dependent bundle: ${dependent_bundle}  "
+      verbose "Dependent service(s): ${dependent_services}"
+      do_run start "$dependent_bundle" "" "$dependent_services"
+    done
+  fi
+}
+
+
+#-----------------------------
+# stop_dependencies
+#
+# This function will check the dependencies of the given bundle and loop
+# through them with the stop command.
+#-----------------------------
+function stop_dependencies {
+  local bundle="$1"
+
+  cd ${CLI_ROOT}
+
+  local dependencies_array_constant="CONF_${bundle}_DEPENDENCIES_BUNDLES[@]"
+  if [ ! -z ${!dependencies_array_constant} ]
+  then
+    print "Stopping dependent bundles and services"
+    for bundle_dependency in "${!dependencies_array_constant}"
+    do
+      debug "Bundle dependency: ${bundle_dependency}"
+      dependent_bundle=$(printf "${bundle_dependency}" *  | head -n1 | cut -d "," -f1)
+      dependent_services=$(echo "${bundle_dependency#*,}" | tr ',' ' ')
+      verbose "Dependent bundle: ${dependent_bundle}  "
+      verbose "Dependent service(s): ${dependent_services}"
+      do_run stop "${dependent_bundle}" "" "${dependent_services}"
+    done
+  fi
+}
+
+
+#-----------------------------
+# do_run
+#
+# This function enables recursive calls of Easy2Use commands based on 
+# dependencies between bundles.
+#-----------------------------
+function do_run {
+  local command="$1"
+  local bundle="$2"
+  local package="$3"
+  local services="$4"
+
+  debug "do_run: $command, $bundle, $package, $services"
+
+  # Verify that all commands that need a bundle to be set has that set
+  # and configure Easy2Use for the given bundle
+  case "$command" in
+    start | \
+    remove | \
+    restart | \
+    status | \
+    stop | \
+    info | \
+    list | \
+    list-psw | \
+    list-packages)
+      if [[ -z "${bundle}" ]]
+      then
+        bail_out "The command '$command' requires a bundle to be given\n"
+      fi
+
+      if [ -d "$EXTERNAL_BUNDLES_PATH/$bundle" ]
+      then
+        local current_bundles_path=$EXTERNAL_BUNDLES_PATH
+      elif [ -d "$CORE_BUNDLES_PATH/$bundle" ]
+      then
+        local current_bundles_path=$CORE_BUNDLES_PATH
+      else
+        local bundles=$(get_bundles)
+        bail_out "Bundle '$bundle' does not exist.\nChoose one of the following:\n$bundles"
+      fi
+
+      local config_bundle_file=${current_bundles_path}/$bundle/config-bundle.bash
+      verbose "Reading bundle config"
+      source ${config_bundle_file} || \
+        bail_out "The given bundle lacks a config file (${config_bundle_file})"
+
+      verify_bundle_target_type || bail_out "Verify bundle target type failed"
+
+      source ${current_bundles_path}/$bundle/component-versions.bash || \
+        debug "Could not set component versions. This bundle might not need them"
+
+      if [ "$TARGET_TYPE" == "Docker" ]
+      then
+        source ${current_bundles_path}/$bundle/config-docker.bash || \
+          debug "Could not set bundle specific Docker configuration. This bundle might not need it"
+        check_docker || bail_out "Docker environment check failed"
+
+      elif [ "$TARGET_TYPE" == "Kubernetes" ]
+      then
+        source ${current_bundles_path}/$bundle/config-k8s.bash || \
+          debug "Could not set bundle specific Kubernetes configuration. This bundle might not need it"
+        check_kubernetes || bail_out "Kubernetes environment check failed"
+      fi
+      ;;
+  esac
+
+  debug "About to call command $command"
+  case "$command" in
+    start )    do_start "${current_bundles_path}" "$bundle" "$package" "$services";;
+    remove )   do_remove "${current_bundles_path}" "$bundle" "$package" "$services";;
+    restart )  do_restart "${current_bundles_path}" "$bundle" "$package" "$services";;
+    status )   do_status "${current_bundles_path}" "$bundle" "$package" "$services";;
+    stop )     do_stop "${current_bundles_path}" "$bundle" "$package" "$services";;
+    info )     do_info "${current_bundles_path}" "$bundle" "$package" "$services";;
+    list )     do_list "${current_bundles_path}" "$bundle" "$package" "$services";;
+    list-psw)  do_list_psw "${current_bundles_path}" "$bundle" "$package" "$services";;
+    list-bundles)  do_list_bundles;;
+    list-packages)  do_list_packages "${current_bundles_path}" "$bundle";;
+    configure-local-k8s-hyper-v) do_k8s_local_hyper_v;;
+    configure-local-k8s-minikube) do_k8s_local_minikube;;
+    generate-local-hosts-file-hyper-v) do_k8s_local_hosts_file_hyper_v;;
+    generate-local-hosts-file-minikube) do_k8s_local_hosts_file_minikube;;
+    * )        bail_out "Unknown command: $command"
+  esac
+}
+
+
+#*****************************************************************************
+# Easy2Use Main routine
+#*****************************************************************************
+
+parse_arguments "$@"
+
+echo ""
+
+source utilities/cli/cli_utils.bash
+
+CLI_ROOT=$(dirname $(realpath $0))
+verbose "CLI root: ${CLI_ROOT}"
+cd ${CLI_ROOT}
+
+# Read default config
+source config-default.bash || bail_out "Could not source default config file"
+
+# Read user config if it exists (overwrites default config)
+source config-user.bash 2>/dev/null || echo ""
+
+if [ ! -z ${target_type_override} ]
+then
+  debug "Target type overriden by command line: ${target_type_override}"
+  TARGET_TYPE=${target_type_override}
+fi
+
+[[ "$interactive" ]] || debug "Running in non-interactive mode"
+
+debug "Target Type: ${TARGET_TYPE}"
+
+if [ "$TARGET_TYPE" == "Docker" ]
+then
+  [[ ${namespace_cli_override} ]] && \
+    DOCKER_NETWORK_OVERRIDE=${namespace_cli_override}
+  source utilities/cli/docker_utils.bash
+elif [ "$TARGET_TYPE" == "Kubernetes" ]
+then
+  [[ ${namespace_cli_override} ]] && \
+    K8S_NAMESPACE_OVERRIDE=${namespace_cli_override}
+  [[ ${k8s_domainname_override} ]] && \
+    K8S_DOMAINNAME=${k8s_domainname_override}
+  source utilities/cli/k8s_utils.bash
+else
+  bail_out "Unknown target type: $TARGET_TYPE"
+fi
+
+[[ ${external_bundles_path_override} ]] && \
+  EXTERNAL_BUNDLES_PATH=${external_bundles_path_override}
+
+[[ ! -z ${EXTERNAL_BUNDLES_PATH} ]] && \
+  [[ ! -d ${EXTERNAL_BUNDLES_PATH} ]] && \
+  bail_out "Given external bundles path ($EXTERNAL_BUNDLES_PATH) does not exist"
+
+echo -e "\n$(get_target_configuration)"
+
+do_run $command "$bundle" "$package" "$services"

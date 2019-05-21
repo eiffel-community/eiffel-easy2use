@@ -1,0 +1,252 @@
+#
+#   Copyright 2019 Ericsson AB.
+#   For a full list of individual contributors, please see the commit history.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: webhook-sensor-http-deployment-update-ms-frontend
+  labels:
+    sensors.argoproj.io/sensor-controller-instanceid: argo-events
+spec:
+  repeat: true
+  template:
+    spec:
+      containers:
+        - name: "sensor"
+          image: "docker.io/argoproj/sensor:v0.8.3"
+          imagePullPolicy: Always
+      serviceAccountName: argo-events-sa    
+  eventProtocol:
+    type: "HTTP"
+    http:
+      port: "9300"  
+  dependencies:
+    - name: "webhook-gateway-http:msfrontenddeployment"
+  triggers:
+    - template:
+        name: argo-workflow
+        group: argoproj.io
+        version: v1alpha1
+        kind: Workflow
+          # The parameters from the workflow are overridden by the webhook's message
+          # An empty path means complete payload will be passed to trigger      
+        source:
+          inline: |
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: gerrit-webhook-deployment--update-ms-frontend-
+              spec:
+                serviceAccountName: argo-events-sa
+                entrypoint: deployment-update-ms-frontend
+                arguments:
+                  parameters:
+                  - name: jsonpayload
+                    # this is the value that should be overridden
+                    value: overridden                      
+                templates:
+                - name: deployment-update-ms-frontend         
+                  steps:                        
+                  - - name: update-deployment-manifest
+                      template: update-deployment-manifest 
+
+                  - - name: configure-argo-cd-application
+                      template: configure-argo-cd-application 
+                     
+                      
+
+                # ------ Templates
+
+                - name: update-deployment-manifest   
+                  outputs:  
+                    parameters:
+                    - name: repoName
+                      valueFrom:
+                        path: /tmp/repoName.txt  
+                      globalName: repoName      
+                    - name: GITDomain
+                      valueFrom:
+                        path: /tmp/GITDomain.txt    
+                      globalName: GITDomain    
+                    - name: branch
+                      valueFrom:
+                        path: /tmp/branch.txt
+                      globalName: branch                                                                                                 
+                  script:
+                    image: eiffelericsson/python-requests:latest
+                    env:
+                    - name: SECRET_USERNAME
+                      valueFrom:
+                        secretKeyRef:
+                          name: easy2use-gerrit-credentials
+                          key: username   
+                    - name: SECRET_PSW
+                      valueFrom:
+                        secretKeyRef:
+                          name: easy2use-gerrit-credentials
+                          key: password                        
+                    command: [python]
+                    source: |
+                      import requests
+                      import json
+                      import os
+                      import sys
+                      import yaml
+                      import git
+                      import re
+                      from urllib.parse import urlparse
+                     
+                      myjson_ = json.loads('{{workflow.parameters.jsonpayload}}', strict=False)
+                      print(myjson_)
+
+
+                      print(myjson_['sourceCreations']['repoName'])
+                      print(myjson_['sourceCreations']['repoUri'])
+                      print(myjson_['sourceCreations']['commitId'])
+                      print(myjson_['sourceCreations']['branch'])
+                      print(myjson_['imageversion'])
+
+                      imagepath_, imagetag_ = myjson_['imageversion'].split(':')
+
+                      print(imagetag_)
+
+                      merge_dev_to_stage_and_master=True  # only executed once to deploy first version to K8S for dev/stage and master (prod)
+
+                      # Update manifest in deployments repo branch:dev if source code repo patchset merged
+                      # fetch gerrit domain for pull/push
+                      git_url = urlparse(myjson_['sourceCreations']['repoUri'])
+                      git_domain = git_url.hostname
+                      print(git_domain) 
+
+                      gerrit_clone_url="http://" + os.environ["SECRET_USERNAME"] + ":" + os.environ["SECRET_PSW"] + "@" + git_domain + ":8080" + "/a/deployments.git"
+
+                      print( gerrit_clone_url )
+
+ 
+                      # Clone deployment repo, check out dev branch. update image.tag and stage/commit and push update!
+                      git.Git("./").clone(gerrit_clone_url)
+
+                      print(os.listdir("deployments"))
+
+                      repo = git.Repo("deployments")
+
+
+                      file1 = open("/tmp/repoName.txt","w") 
+                      file1.write(myjson_['sourceCreations']['repoName']) 
+                      file1.close() 
+
+                      file1 = open("/tmp/GITDomain.txt","w") 
+                      file1.write(git_domain) 
+                      file1.close()                       
+
+                      file1 = open("/tmp/branch.txt","w") 
+                      file1.write(myjson_['sourceCreations']['branch']) 
+                      file1.close()       
+
+
+
+                      #####  dev branch ############################################
+                      repo.git.checkout('dev')
+                      repo.git.config('--global', "user.name", "Easy Use")
+                      repo.git.config('--global', "user.email", "admin@example.com")
+
+                      # if first CI build -> merge changes in dev to stage & master for initial deployment in K8S
+                      #if len(list(repo.iter_commits())) == 2:  # initial only 2 commits exist in branches dev/stage and master
+                      #    merge_dev_to_stage_and_master=True
+                      
+                      # Check if initial commit message exist, if not this will trigger first merge of deployement repo
+                      #  dev -> stage, and stage -> master 
+                      commits = list(repo.iter_commits('master'))
+                      for commit in commits:
+                        if commit.summary == "Argo-event CI pipeline ms-frontend updates all Helm value files image.tag":
+                          merge_dev_to_stage_and_master=False
+                      
+                      # Update Helm value file with new tag 
+                      # dev value file -> image.tag ---------------------------------
+                      filename='deployments/ms-frontend/values-dev.yaml'
+                      with open(filename) as f:
+                          doc = yaml.safe_load(f)
+
+                      doc['image']['tag'] = imagetag_
+
+                      with open(filename, 'w') as f:
+                          yaml.safe_dump(doc, f, default_flow_style=False)
+
+                      # stage value file -> image.tag ---------------------------------
+                      filename='deployments/ms-frontend/values-stage.yaml'
+                      with open(filename) as f:
+                          doc = yaml.safe_load(f)
+
+                      doc['image']['tag'] = imagetag_
+
+                      with open(filename, 'w') as f:
+                          yaml.safe_dump(doc, f, default_flow_style=False)
+
+                      # prod value file -> image.tag ------------------------------------
+                      filename='deployments/ms-frontend/values-prod.yaml'
+                      with open(filename) as f:
+                          doc = yaml.safe_load(f)
+
+                      doc['image']['tag'] = imagetag_
+
+                      with open(filename, 'w') as f:
+                          yaml.safe_dump(doc, f, default_flow_style=False)                             
+
+                      #f = open('deployments/ms-frontend/values-dev.yaml', 'r')
+                      #print(f.read())
+                      #f.close()                          
+                      
+                      repo.git.status()
+                      repo.git.add(update=True)
+                      repo.git.commit(m='Argo-event CI pipeline ms-frontend updates all Helm value files image.tag')
+                      repo.git.pull('origin', 'dev')
+                      repo.git.push('origin', 'dev')
+
+                      # if first CI build -> merge changes in dev to stage & master for initial deployment in K8S
+                      if merge_dev_to_stage_and_master==True:  # initial only 2 commits exist in branches stage and master
+                          # Merge dev to stage
+                          repo.git.checkout('stage')
+                          repo.git.pull('origin', 'stage')
+                          repo.git.merge('dev')
+                          repo.git.push('origin', 'stage')
+
+                          # Merge dev to master
+                          repo.git.checkout('master')
+                          repo.git.pull('origin', 'master')
+                          repo.git.merge('dev')
+                          repo.git.push('origin', 'master')
+
+
+
+                - name: configure-argo-cd-application
+                  inputs:
+                    artifacts:
+                    - name: source
+                      path: /ms-frontend
+                      git:
+                        repo: "http://{{workflow.outputs.parameters.GITDomain}}:8080/{{workflow.outputs.parameters.repoName}}.git"
+                        revision: "{{workflow.outputs.parameters.branch}}"                               
+                  container:
+                    image: "eiffelericsson/jdk8mvndockergitjq:latest"
+                    command: [sh, -c]
+                    args: ["kubectl apply -f /ms-frontend/deployment/argocd/application-ms-frontend-dev.yaml && kubectl apply -f /ms-frontend/deployment/argocd/application-ms-frontend-stage.yaml && kubectl apply -f /ms-frontend/deployment/argocd/application-ms-frontend-prod.yaml"]
+                 
+
+                       
+      resourceParameters:
+        - src:
+            event: "webhook-gateway-http:msfrontenddeployment"
+          dest: spec.arguments.parameters.0.value                   

@@ -1,0 +1,123 @@
+#
+#   Copyright 2019 Ericsson AB.
+#   For a full list of individual contributors, please see the commit history.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: sensor-ci-flow-amqp-upload-ei-subscription-ms-frontend
+  labels:
+    sensors.argoproj.io/sensor-controller-instanceid: argo-events
+spec:
+  repeat: true 
+  template:
+    spec:
+      containers:
+        - name: "sensor"
+          image: "IMAGE_REPOSITORY_TAG_SED:IMAGE_VERSION_TAG_SED"
+          imagePullPolicy: Always
+      serviceAccountName: argo-events-sa
+  eventProtocol:
+    type: "HTTP"
+    http:
+      port: "9300"  
+  dependencies:
+    - name: "amqp-gateway:ci"
+      filters:
+        name: "data-filter"
+        data:
+          - path: meta.type
+            type: string
+            value:
+              - "EiffelSourceChangeCreatedEvent" 
+          - path: data.gitIdentifier.repoName
+            type: string
+            value:
+              - "ms-frontend"                         
+  triggers:
+    - template:
+        name: argo-workflow
+        group: argoproj.io
+        version: v1alpha1
+        kind: Workflow
+        source:
+          inline: |
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: ci-build-ei-subscription-ms-frontend-
+              spec:
+                serviceAccountName: argo-events-sa
+                entrypoint: ciworkflow     
+                arguments:
+                  parameters:
+                  - name: repo
+                    value: overriden
+                  - name: revision
+                    value: overriden 
+                  - name: eifrontend
+                    value: EI_FRONTEND_INGRESS_SED                                     
+                  - name: eibackenddns
+                    value: EI_BACKEND_ARTIFACT_DNS_SED   
+                  - name: dockerImage
+                    value: eiffelericsson/jdk8mvndockergitjq:latest                                               
+                templates:
+                - name: ciworkflow
+
+                  # ------ Steps
+                  steps:                        
+                  - - name: gerrit-checkout
+                      template: gerrit-checkout  
+                                                                   
+                          
+                # ------ Templates
+                     
+                - name: gerrit-checkout
+                  inputs:
+                    artifacts:
+                    - name: source
+                      path: /ms-frontend
+                      git:
+                        repo: "{{workflow.parameters.repo}}"
+                        revision: "{{workflow.parameters.revision}}"    
+                  outputs:
+                    artifacts:
+                    - name: source
+                      path: /ms-frontend                                    
+                  container:  
+                    image: "{{workflow.parameters.dockerImage}}"                   
+                    command: ["/bin/sh", "-c"]
+                    args: ["cd /ms-frontend/deployment/Eiffel_Intelligence_Artifact_Subscription && 
+                            
+                            echo gerrit-checkout && 
+
+                            ls && 
+                            
+                            curl --header 'Content-Type: application/json' --request POST --data @ei_artifact_subscription_ms_frontend_deployment_update_dev.json http://{{workflow.parameters.eifrontend}}/subscriptions?backendname={{workflow.parameters.eibackenddns}}"]
+     
+
+
+      # The parameters from the workflow are overridden by the webhook's message
+      resourceParameters:    
+        - src:
+            event: "amqp-gateway:ci"
+            path: data.gitIdentifier.repoUri
+            value: No Event data.gitIdentifier.repoUri In PayLoad
+          dest: spec.arguments.parameters.0.value    
+        - src:
+            event: "amqp-gateway:ci"
+            path: data.gitIdentifier.branch
+            value: No Event data.gitIdentifier.branch In PayLoad
+          dest: spec.arguments.parameters.1.value    

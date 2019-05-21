@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.ericsson.eiffel.fem.messaging.ImplicitEiffelMessagingContributorProperty plugin="eiffel-fem@FEM_VERSION">
+      <scriptEnabled>false</scriptEnabled>
+    </com.ericsson.eiffel.fem.messaging.ImplicitEiffelMessagingContributorProperty>
+    <com.ericsson.eiffel.fem.messaging.EiffelMessageFlowContextJobProperty plugin="eiffel-fem@FEM_VERSION">
+      <enabled>false</enabled>
+      <flowContext></flowContext>
+    </com.ericsson.eiffel.fem.messaging.EiffelMessageFlowContextJobProperty>
+    <com.ericsson.eiffel.fem.injection.EiffelVariableInjectionJobProperty plugin="eiffel-fem@FEM_VERSION">
+      <enabled>true</enabled>
+    </com.ericsson.eiffel.fem.injection.EiffelVariableInjectionJobProperty>
+    <com.ericsson.eiffel.fem.messaging.ImplicitEiffelMessagingJobProperty plugin="eiffel-fem@FEM_VERSION">
+      <implicitMessagingEnabled>false</implicitMessagingEnabled>
+      <eiffelActivityFinishedEventDisabled>false</eiffelActivityFinishedEventDisabled>
+    </com.ericsson.eiffel.fem.messaging.ImplicitEiffelMessagingJobProperty>
+    <com.ericsson.eiffel.fem.messaging.UserDomainSuffixJobProperty plugin="eiffel-fem@FEM_VERSION">
+      <enabled>false</enabled>
+      <userDomainSuffix></userDomainSuffix>
+    </com.ericsson.eiffel.fem.messaging.UserDomainSuffixJobProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>echo &quot;Job Triggered via Eiffel Intelligence TestExecution Subscription&quot;</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

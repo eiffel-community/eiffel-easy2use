@@ -1,0 +1,188 @@
+#
+#   Copyright 2019 Ericsson AB.
+#   For a full list of individual contributors, please see the commit history.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: webhook-sensor-http-gen-eiffelevent-ms-backend
+  labels:
+    sensors.argoproj.io/sensor-controller-instanceid: argo-events
+spec:
+  repeat: true
+  template:
+    spec:
+      containers:
+        - name: "sensor"
+          image: "IMAGE_REPOSITORY_TAG_SED:IMAGE_VERSION_TAG_SED"
+          imagePullPolicy: Always
+      serviceAccountName: argo-events-sa    
+  eventProtocol:
+    type: "HTTP"
+    http:
+      port: "9300"  
+  dependencies:
+    - name: "webhook-gateway-http:msbackendgenerateeiffelevent"
+  triggers:
+    - template:
+        name: argo-workflow
+        group: argoproj.io
+        version: v1alpha1
+        kind: Workflow
+          # The parameters from the workflow are overridden by the webhook's message
+          # An empty path means complete payload will be passed to trigger      
+        source:
+          inline: |
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: gerrit-webhook-generate-eiffelevent-
+              spec:
+                serviceAccountName: argo-events-sa
+                entrypoint: generate-eiffel-event
+                arguments:
+                  parameters:
+                  - name: jsonpayload
+                    # this is the value that should be overridden
+                    value: overridden
+                  - name: remremurl
+                    value: REMREM_PUB_SED
+                  - name: sourceDomain
+                    value: tobeset 
+                  - name: sourceName
+                    value: Argo
+                  - name: gerritServierUrl
+                    value: http://GERRIT_INGRESS_SED                         
+                templates:
+                - name: generate-eiffel-event
+                  inputs:
+                    parameters:
+                    - name: jsonpayload
+                    - name: remremurl
+                    - name: sourceDomain
+                    - name: sourceName
+                    - name: gerritServierUrl
+                  script:
+                    image: eiffelericsson/python-requests:latest
+                    command: [python]
+                    source: |
+                      import requests
+                      import json
+                      import os
+                      import sys
+
+                      myjson_ = json.loads('{{inputs.parameters.jsonpayload}}', strict=False)
+                      print(myjson_)
+
+                      source_domain = "{{inputs.parameters.sourceDomain}}"
+                      host_name = os.getenv('HOSTNAME')
+                      source_name = "{{inputs.parameters.sourceName}}"
+                      source_uri = os.getenv('HOSTNAME')
+                      gerrit_Servier_url = "{{inputs.parameters.gerritServierUrl}}"                      
+                      repo_uri = gerrit_Servier_url+"/"+myjson_['change']['project']
+                      remrem_url = "{{inputs.parameters.remremurl}}"  
+
+                      author_name = ""
+                      author_email = ""
+                      author_id = ""
+
+                      if myjson_['type'] == 'patchset-created':
+                        author_name = myjson_['uploader']['name']
+                        author_email = myjson_['uploader']['email']
+                        author_id = myjson_['uploader']['username']
+                      else:
+                        author_name = myjson_['submitter']['name']
+                        author_email = myjson_['submitter']['email']
+                        author_id = myjson_['submitter']['username']                        
+
+                      event = {                                                                                                      
+                              "msgParams": {                                                                                          
+                                            "meta": {                                                                                 
+                                              "source": {                                                                             
+                                                "domainId": source_domain,                                                           
+                                                "host": host_name,                                                                 
+                                                "name": source_name,                                                                 
+                                                "uri": source_uri                                                                    
+                                              }                                                                                     
+                                            }                                                                                       
+                              },                                                                                                    
+                              "eventParams": {                                                                                        
+                                "data": {                                                                                             
+                                  "author": {                                                                                         
+                                    "name": author_name,                                             
+                                    "email": author_email,                                           
+                                    "id": author_id                                         
+                                  },                                                                                                
+                                  "change": {                                                                                         
+                                    "insertions": myjson_['patchSet']['sizeInsertions'],                                                                                
+                                    "deletions": myjson_['patchSet']['sizeDeletions'],                                                                                   
+                                    "files": myjson_['change']['url'], 
+                                    "tracker": "Gerrit",                                                                                  
+                                    "details": myjson_['change']['url'],                                       
+                                    "id": myjson_['patchSet']['ref']                                                                            
+                                  },                                                                                                    
+                                  "gitIdentifier": {                                                                                      
+                                    "commitId": myjson_['change']['id'],                                               
+                                    "repoUri": repo_uri,                                                         
+                                    "branch": myjson_['change']['branch'],                                                                                   
+                                    "repoName": myjson_['change']['project']                                                                              
+                                  },                                                                                                    
+                                  "customData": [
+                                    {
+                                      "key": "type",
+                                      "value": myjson_['type']
+                                    },
+                                    {
+                                      "key": "refName",
+                                      "value": myjson_['refName']
+                                    },
+                                    {
+                                      "key": "changeNumber",
+                                      "value": str(myjson_['change']['number'])
+                                    },   
+                                    {
+                                      "key": "patchSetrevision",
+                                      "value": myjson_['patchSet']['revision']
+                                    }                 
+                                  ],                                                                                       
+                                  "issues": []                                                                                            
+                                },                                                                                                      
+                                "links": []                                                                                               
+                              }                                                                                                        
+                        } 
+
+
+                      eiffel_event_payload = json.dumps(event)
+
+                      print(eiffel_event_payload)
+                      
+                      url=remrem_url+"EiffelSourceChangeCreatedEvent"
+
+                      print(url)
+
+                      headers = {'content-type': 'application/json', 'Accept-Charset': 'UTF-8'}
+                      
+                      response = requests.post(url, headers=headers, data=eiffel_event_payload)
+
+                      print(response)
+
+                      if response.status_code == 200:
+                        sys.exit(0)
+                      else:
+                        sys.exit(1)
+      resourceParameters:
+        - src:
+            event: "webhook-gateway-http:msbackendgenerateeiffelevent"
+          dest: spec.arguments.parameters.0.value

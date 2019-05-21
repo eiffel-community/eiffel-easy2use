@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  cx_gerrit:
+    build:
+      context: ./
+      dockerfile: ./gerrit/Dockerfile
+      args:
+        GERRIT_VERSION: ${CX_GERRIT_VERSION}
+
+  cx_gerrit_postgres_configurations:
+    build:
+      context: ./
+      dockerfile: ./gerrit-postgres-config/Dockerfile
+      args:
+        SSH_KEY_PATH: /root/.ssh/id_rsa

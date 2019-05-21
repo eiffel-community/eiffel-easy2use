@@ -1,0 +1,40 @@
+version: "3.7"
+services:
+  vici:
+    image: ${EIFFEL2_VICI_IMAGE_TAG}
+    build:
+      context: ./
+      dockerfile: ./eiffel-vici/Dockerfile
+      args:
+        EIFFEL_VICI_VERSION: ${EIFFEL2_VICI_VERSION}
+
+  dummy_er:
+    image: ${EIFFEL2_DUMMY_ER_IMAGE_TAG}
+    build:
+      context: ./dummy-er
+      args:
+        DUMMY_ER_VERSION: ${EIFFEL2_DUMMY_ER_VERSION}
+
+  remrem_generate:
+    image: ${EIFFEL2_REMREM_GENERATE_IMAGE_TAG}
+    build:
+      context: ./
+      dockerfile: ./remrem-generate/Dockerfile
+      args:
+        REMREM_GENERATE_VERSION: ${EIFFEL2_REMREM_GENERATE_VERSION}
+
+  remrem_publish:
+    image: ${EIFFEL2_REMREM_PUBLISH_IMAGE_TAG}
+    build:
+      context: ./
+      dockerfile: ./remrem-publish/Dockerfile
+      args:
+        REMREM_PUBLISH_VERSION: ${EIFFEL2_REMREM_PUBLISH_VERSION}
+
+  jenkins:
+    image: ${EIFFEL2_JENKINS_IMAGE_TAG}
+    build:
+      context: ./
+      dockerfile: ./jenkins/Dockerfile
+      args:
+        JENKINS_VERSION: ${EIFFEL2_JENKINS_IMAGE_BUILD_VERSION}
