@@ -99,8 +99,8 @@ If running in local K8S cluster, minikube or docker-for-windows (windows 10 Hype
 ./easy2use start Eiffel2 -t <target-type> -n <namespace> -d <basedomainname>
 ```
 
-## List Service URLs
-EasyUse list command will both list URLs (ingresses) to the deployed K8S services and user/psw for the services.
+## List Service URLs, UserName & PSW
+Easy2Use list command will both list URLs (ingresses) to the deployed K8S services and user/psw for the services.
 ```
 ./easy2use list Eiffel2 -t <target-type> -n <namespace>
 ```
@@ -126,8 +126,9 @@ Update your hosts file with the output from the printout!
 
  Windows: C:\Windows\System32\drivers\etc\hosts            (OBS you need to open cmd in Administrator mode!)
 
-# Remove Eiffel2 Bundle
+## Remove Eiffel2 Bundle
 ```
 ./easy2use remove Eiffel2 -t <target-type> -n <namespace>
 ```
 
+## Known Issues

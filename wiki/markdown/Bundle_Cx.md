@@ -33,6 +33,7 @@ Argo CD automates the synchronization of the desired application state with each
 CI:
  - 2 Java Microservices included (ms-frontend & ms-backend)
  - CI Engines included with pipeline as code: Jenkins Pipeline (ms-frontend) & Argo CI (ms-backend)
+ - Jenkins pipeline shared pipeline code
  - Eiffel 2.0 event generated & CI triggered
  
 CD:
@@ -53,7 +54,7 @@ Cx
 
 ## Components included in Cx bundle
 Component | Service name | User/PSW | Ingress | Info
-------------- | ------------ | -------- | ------- | --------
+------------- | ------------ | -------- | ------- | ------------
 KeyCloak | cx_keycloak | admin/admin | cx-keycloak-\<namespace\>.\<domainname\> | KeyCloak is used for Gerrit authentication
 Postgresql (KeyCloak) | N/A | keycloak/password | N/A | Deployed in KeyCloak HELM chart |
 Gerrit Server & Git | cx_gerrit | easy2use/password123<br><br>OBS when pushing changes to Gerrit use:<br> PSW: gX6aUy55fjSgJfldDItW2WiCpoiid+2tK9FyqayQlg | cx-gerrit-\<namespace\>.\<domainname\> | Git repos included at startup:<br><br>- eiffel-jenkins-pipeline-shared (Jenkins shared pipeline code)<br>- ms-frontend (Java proj.)<br>- ms-backend (Java proj.)<br><br>GitOPS Argo CD config repo:<br>- deployment with 3 branches dev/stage/prod (master) |
@@ -108,6 +109,8 @@ This is a schematic picture of the environment:
 <img src="./images/cx-jenkins-pre-post-merge-principles.png" alt="Eiffel Easy2Use Cx Jenkins pre post merge pipline principles" width="750">
 <br><br>
 <img src="./images/cx-argo-pre-post-merge-principles.png" alt="Eiffel Easy2Use Cx Argo CI pre post merge pipline principles" width="750">
+<br><br>
+<img src="./images/cx-pipeline-events.png" alt="Eiffel Easy2Use Cx Eiffel Events Generated in CI piplines" width="750">
 
 ## Usage
 ### Bundle Information
@@ -133,8 +136,8 @@ In the easy2use root, create file:  <b>config-user.bash</b>
 
 Add the following lines in the file:
 
-export CX_IMAGE_REGISTRY="\<imageregistry\>"       Example for Dockerhub add registry.hub.docker.com
-export CX_IMAGE_REPOSITORY="\<repository\>"        Example in Dockerhub your username   
+export CX_IMAGE_REGISTRY="\<imageregistry\>"       Example for Dockerhub add registry.hub.docker.com<br>
+export CX_IMAGE_REPOSITORY="\<repository\>"        Example in Dockerhub your username<br>   
  
 export CX_IMAGE_REPOSITORY_ARGO_K8S_SECRET_USER="\<UserName\>"       
 export CX_IMAGE_REPOSITORY_ARGO_K8S_SECRET_PSW="\<Password\>"
@@ -142,6 +145,8 @@ export CX_IMAGE_REPOSITORY_ARGO_K8S_SECRET_PSW="\<Password\>"
 
 ## Start Cx Bundle
 Argo can only be deployed once per cluster, bur Argo-events can be deployed in multiple namespaces in the same cluster.
+
+Note: the Gerrit server startup can take a few minutes (seeding etc), so be patient!
 
 ### Alt1) Deploy CX bundle with all components including Argo 
 
@@ -164,8 +169,8 @@ If Argo already implemented in K8S cluster. With this deployment Argo GUI/Artifa
 
   OBS You need to answer "Y" twice, first for the Cx bundle installs and then the dependent services from the Eiffel2 bundle!
 
-## List Service URLs
-EasyUse list command will both list URLs (ingresses) to the deployed K8S services and user/psw for the services.
+## List Service URLs, UserName & PSW
+Easy2Use list command will both list URLs (ingresses) to the deployed K8S services and user/psw for the services.
   
   ```
   ./easy2use list Cx -t Kubernetes -n <namespace>
@@ -196,14 +201,10 @@ If you running the Cx bundle on a local K8S cluster, you need to update your ..e
  - Linux:  /etc/hosts
  - Windows: C:\Windows\System32\drivers\etc\hosts            (OBS you need to open cmd in Administrator mode!)
 
-## Service URLs
-EasyUse list command will both list URLs (ingresses) to the deployed K8S services and user/psw for the services.
-```
-./easy2use list Cx -t Kubernetes -n <namespace> 
-```
-
 ## Remove Cx Bundle
 
+The deployed applications ms-frontend & ms-backend (Argo-CD) will not be removed via Easy2Use CLI.
+Remove the applications in the Argo-CD GUI before executing the Easy2Use remove cmd!
 
 ### Alt1) Deploy CX bundle with all components including Argo 
 OBS Argo are a cluster global release, so it will be removed even if it's deployed in other namespace than specified in the Easy2Use cmd!
@@ -222,10 +223,19 @@ OBS Argo are a cluster global release, so it will be removed even if it's deploy
 
   OBS You need to answer "Y" twice, first for the Cx bundle removals and then the dependent services from the Eiffel2 bundle!
 
+### Additional removals
+Sometimes the Argo CRD is not removed successfully, to remove it execute: 
+  ```
+  kubectl patch crd/applications.argoproj.io -p '{"metadata":{"finalizers":[]}}' --type=merge
+  kubectl delete crd applications.argoproj.io
+  ```
 
 ## Jenkins
+Included microservice "ms-frontend" in the Gerrit Git repo will be handled Jenkins pre & post-merge pipelines
 
-### Update Image registry Credentials
+The source code repo includes the Jenkinsfile describing the pipelines which will use the shared Jenkins pipeline code in Gerrit/Git
+
+### 1. Update Image registry Credentials
 
  - Login to Jenkins  (admin/admin)
  - Click Credentials
@@ -233,12 +243,7 @@ OBS Argo are a cluster global release, so it will be removed even if it's deploy
  - Click Update
  - Enter Username/Password for your image registry (i.e same as defined in file config-user.bash)
 
-### Jenkins jobs Included
-Included microservice "ms-frontend" in the Gerrit Git repo will be handled Jenkins pre & post-merge pipelines
-
-The source code repo includes the Jenkinsfile describing the pipelines which will use the shared Jenkins pipeline code in Gerrit/Git
-
-### Trigger Predefined Jenkins jobs
+### 2. Trigger Predefined Jenkins jobs
 Pipeline Execution: pre-merge Jenkins pipeline
 
 Clone gerrit repo: ms-frontend:
@@ -249,11 +254,12 @@ Clone gerrit repo: ms-frontend:
  - Choose Projects/List
  - Click ms-frontend
  - Click General tab
- - Click http & copy clone address (git clone http://easy2use@cx-gerrit-\<namespace\>.\<yourdomainname\>/a/ms-frontend.git)
+ - Click http & copy clone address 
+   - git clone http://easy2use@cx-gerrit-<namespace\>.\<yourdomainname\>/a/ms-frontend.git
  - Open terminal (ex git bash or similar)
  - Parse git clone cmd
 
-#### Update local git repo & push patchset for review
+#### 2.1. Update local git repo & push patchset for review
  - cd ms-frontend
  - Do some changes do your local ms-frontend git repo
  - commit and push changes
@@ -272,15 +278,15 @@ Check your pushed patchset
 - Chose My/Changes
 - Click "msfrontendchanges"
 
-#### Check started Jenkins ms-frontend job, pre-merge triggered via git push to Gerri (Gerrit Trigger)
-- Logon to Jenkins: cx-jenkins-<namespace>.<domainname>
+#### 2.2. Check started Jenkins ms-frontend job, pre-merge triggered via git push to Gerri (Gerrit Trigger)
+- Logon to Jenkins: cx-jenkins-\<namespace\>.\<domainname\>
   - User/Psw: admin/admin
 - Click "Blueocean"
 - Click ms-frontend to see pre-merge pipeline execution
 - After successful execution, the pipeline will update Gerrit "Verified" to +1 (else -1 if error in pipeline)
 
 
-#### Pipeline Execution: post-merge Jenkins pipeline
+#### 2.3. Pipeline Execution: post-merge Jenkins pipeline
 - Logon to Gerrit server: cx-gerrit-\<namespace\>.\<domainname\>
   - Click Sign In
   - User/Psw: easy2use/password123
@@ -291,23 +297,90 @@ Check your pushed patchset
 - Click submit button
 
 
-#### Check started Jenkins ms-frontend job, post-merge triggered via Gerrit merge (Gerrit Trigger)
-- Logon to Jenkins: cx-jenkins-<namespace>.<domainname>
+#### 2.4. Check started Jenkins ms-frontend job, post-merge triggered via Gerrit merge (Gerrit Trigger)
+- Logon to Jenkins: cx-jenkins-\<namespace\>.\<domainname\>
   - User/Psw: admin/admin
 - Click "Blueocean"
 - Click ms-frontend to see post-merge pipeline execution
 
-#### Eiffel Events Generated in Jenkins Pipelines
+### 3. Eiffel Events Generated in Jenkins Pipelines
 - Eiffel2 Vici: eiffel2-vici-\<namespace\>.\<domainname\>
-- Click Eiffel Flow Visualizer
-- Click GenericUpstream/GenericDownstream
+- Instruction TBD XXXXX
+
+
+### 4. Check deployed ms-frontend Microservice in Argo-CD
+ - Goto: cx-argocd-\<namespace\>.\<domainname\>
+ - Username: admin
+ - Password: get psw with -> ./easy2use list Cx -n \<namespace\>
+
+
+### 5. Communicate with ms-frontend microservice in dev/stage/prod
+
+Deployed microservices will be visible in printout from cmd:
+```
+./easy2use list Cx -n <namespace>
+```
+
+#### 5.1 ms-frontend & ms-backend
+  - dev
+    - ms-frontend-dev-\<namespace\>.\<domainname\>/api/greeting
+    - ms-backend-dev-\<namespace\>.\<domainname\>/api/hellobackend
+  - stage
+    - ms-frontend-stage-\<namespace\>.\<domainname\>/api/greeting
+    - ms-backend-stage-\<namespace\>.\<domainname\>/api/hellobackend       Info: 2 replicas created<br>
+  - prod (master)
+    - ms-frontend-prod-\<namespace\>.\<domainname\>/api/greeting
+    - ms-backend-prod-\<namespace\>.\<domainname\>/api/hellobackend        Info: 3 replicas created<br>
+
+### 6. Promotion
+After the initial patchset merge (submit) in Gerrit all Branches dev/stage/prod (master) will have the same versions
+which Argo-CD synced to K8S.
+
+Now promotion can be performed by merging dev -> stage -> master (prod)
+
+Perform another update in ms-frontend and push patchset it for review, follow steps 2.1-2.3 again.
+
+Now the new patchset is merged (submitted) to dev branch, and synced via Argo-CD in K8S.
+
+#### 6.1 Promote ms-fontend dev to stage
+Deploy to stage, merge dev to stage.
+
+```
+ git pull origin dev
+ git checkout stage
+ git pull origin stage
+ git merge dev
+ git push origin stage
+```
+Now Argo-CD will sync the new changes in the stage branch. Also check steps 4-5.
+
+
+#### 6.2 Promote ms-fontend stage to prod (master)
+Deploy to Prod, merge stage to master prod.
+
+```
+ git pull origin stage
+ git checkout master
+ git pull origin master
+ git merge stage
+ git push origin master
+```
+Now Argo-CD will sync the new changes in the master (prod) branch. Also check steps 4-5.
+
 
 ## Argo CI
 
 ### Argo pipeline
 Included microservice "ms-backend" in the Gerrit Git repo will be handled in Argo pre & post-merge pipelines
 
-### Trigger Argo pipeline (Workflow)
+### 1. Update Image registry Credentials
+ - Login to Jenkins  (admin/admin)
+ - Click Credentials
+ - For credentials id =  IMAGE_REGISTRY_CREDENTIALS, click Name column
+ - Click Update
+ - Enter Username/Password for your image registry (i.e same as defined in file config-user.bash)
+  
+### 2. Trigger Argo pipeline (Workflow)
 Clone gerrit repo: ms-backend:
 
  - Logon to Gerrit server: cx-argo-\<namespace\>.\<domainname\>
@@ -316,12 +389,13 @@ Clone gerrit repo: ms-backend:
  - Choose Projects/List
  - Click ms-backend
  - Click General tab
- - Click http & copy clone address (git clone http://easy2use@cx-gerrit-\<namespace\>.\<yourdomainname\>/a/ms-backend.git)
+ - Click http & copy clone address 
+   - git clone http://easy2use@cx-gerrit-\<namespace\>.\<yourdomainname\>/a/ms-backend.git
  - Open terminal (ex git bash or similar)
  - Parse git clone cmd
 
 
-#### Update local git repo & push patchset for review
+#### 2.1. Update local git repo & push patchset for review
  - cd ms-frontend
  - Do some changes do your local ms-backend git repo
  - commit and push changes
@@ -340,13 +414,13 @@ Check your pushed patchset
 - Chose My/Changes
 - Click "msbackendchanges"
 
-#### Check Workflows Execution (Triggered via Eiffel event SCC)
+#### 2.2. Check Workflows Execution (Triggered via Eiffel event SCC)
 - cx-argo-<namespace>.<domainname>
 - Click on workflows icon on the left manu
 - After successful execution, the pipeline will update Gerrit "Verified" to +1 (else -1 if error in pipeline)
 
 
-#### Pipeline Execution: post-merge Argo pipeline 
+#### 2.3. Pipeline Execution: post-merge Argo pipeline 
 - Logon to Gerrit server: cx-gerrit-\<namespace\>.\<domainname\>
    - Click Sign In
    - User/Psw: easy2use/password123
@@ -356,7 +430,74 @@ Check your pushed patchset
 - Set Review to +2
 - Click submit button
 
-#### Check Workflows Execution (Triggered via Eiffel event SCC)
+#### 2.4. Check Workflows Execution (Triggered via Eiffel event SCC)
 - cx-argo-\<namespace\>.\<domainname\>
 - Click on workflows icon on the left manu
-- After successful execution, the pipeline will update Gerrit "Verified" to +1 (else -1 if error in pipeline)
+
+### 3. Eiffel Events Generated in Jenkins Pipelines
+- Eiffel2 Vici: eiffel2-vici-\<namespace\>.\<domainname\>
+- Instruction TBD XXXXX
+
+
+### 4. Check deployed ms-frontend Microservice in Argo-CD
+ - Goto: cx-argocd-\<namespace\>.\<domainname\>
+ - Username: admin
+ - Password: get psw with -> ./easy2use list Cx -n \<namespace\>
+
+
+### 5. Communicate with ms-frontend microservice in dev/stage/prod
+
+Deployed microservices will be visible in printout from cmd:
+```
+./easy2use list Cx -n <namespace>
+```
+
+#### 5.1 ms-frontend & ms-backend
+  - dev
+    - ms-frontend-dev-\<namespace\>.\<domainname\>/api/greeting
+    - ms-backend-dev-\<namespace\>.\<domainname\>/api/hellobackend
+  - stage
+    - ms-frontend-stage-\<namespace\>.\<domainname\>/api/greeting
+    - ms-backend-stage-\<namespace\>.\<domainname\>/api/hellobackend       Info: 2 replicas created<br>
+  - prod (master)
+    - ms-frontend-prod-\<namespace\>.\<domainname\>/api/greeting
+    - ms-backend-prod-\<namespace\>.\<domainname\>/api/hellobackend        Info: 3 replicas created<br>
+
+### 6. Promotion
+After the initial patchset merge (submit) in Gerrit all Branches dev/stage/prod (master) will have the same versions
+which Argo-CD synced to K8S.
+
+Now promotion can be performed by merging dev -> stage -> master (prod)
+
+Perform another update in ms-frontend and push patchset it for review, follow steps 2.1-2.3 again.
+
+Now the new patchset is merged (submitted) to dev branch, and synced via Argo-CD in K8S.
+
+#### 6.1. Promote ms-fontend dev to stage
+Deploy to stage, merge dev to stage.
+
+```
+ git pull origin dev
+ git checkout stage
+ git pull origin stage
+ git merge dev
+ git push origin stage
+```
+Now Argo-CD will sync the new changes in the stage branch. Also check steps 4-5.
+
+
+#### 6.2. Promote ms-fontend stage to prod (master)
+Deploy to Prod, merge stage to master prod.
+
+```
+ git pull origin stage
+ git checkout master
+ git pull origin master
+ git merge stage
+ git push origin master
+```
+Now Argo-CD will sync the new changes in the master (prod) branch. Also check steps 4-5.
+
+
+## Known Issues
+ - When running Cx bundle on a local K8S cluster the login to Gerrit server via KeyCloak will not work.  

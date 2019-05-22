@@ -98,7 +98,7 @@ persistence:
 resources: {}
 
 ## Replica count, set to 1 to provide a default available cluster
-replicas: 2
+replicas: 1
 
 ## Node labels and tolerations for pod assignment
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector

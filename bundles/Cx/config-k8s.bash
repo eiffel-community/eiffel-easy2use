@@ -533,7 +533,6 @@ srkJhe+yrkINseLDEtrJB/3z/ozOjgSBM5CAasEIR2Hl+bhLC0R2
 export app_url_context_path="
 Cx Bundle URLs contextPath:
 --------------------------
-eiffel2_ve contextPath: /client/#veclient
 ms-frontend contextPath: /api/greeting
 ms-backend contextPath: /api/hellobackend"
 

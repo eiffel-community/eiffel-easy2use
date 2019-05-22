@@ -89,7 +89,7 @@ To be able to run Easy2Use, make sure you have decided on a [**hosting environme
 
 ```
 git clone https://github.com/eiffel-community/eiffel-easy2use.git
-cd easy2use
+cd eiffel-easy2use
 ```
 
 ## Deploy Your Chosen Easy2Use Bundle
