@@ -1,3 +1,0 @@
-Only a working dir for seeded configfiles for Docker environment.
-All files will be overwritten in this directory in next Docker envrionment initiation.
-

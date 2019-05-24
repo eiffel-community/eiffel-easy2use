@@ -11,10 +11,7 @@ bundles/Cx/K8S/charts/charts_values/argo_flows/argo-events/sensors/sensor-ci-flo
 bundles/Cx/K8S/charts/charts_values/argo_flows/argo-events/gateways/amqp-gateway-configmap.yaml
 bundles/Cx/K8S/charts/charts_values/keycloak_secrets/easy2use-all.json
 bundles/Cx/K8S/charts/charts_values/argo_flows/argo-events/sensors/sensor-generate-eiffel-event-ms-backend.yaml
-# Easy2Use MS Bundle -> Bookinfo app (seeded files)
-bundles/MS/K8S/samples/bookinfo/networking/ingress.yaml
-bundles/MS/K8S/samples/helloworld/ingress.yaml
-bundles/MS/K8S/charts/logging/deploy/ingress.yaml
+
 
 # VSCodegit
 .vscode/
@@ -49,5 +46,4 @@ derby.log
 work/
 
 # Docker seeded env files
-bundles/Eiffel2/docker-env-files/
-bundles/EiffelCommon/docker-env-files/
+bundles/Eiffel/docker-env-files/
