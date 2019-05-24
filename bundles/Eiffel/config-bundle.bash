@@ -43,15 +43,15 @@ source $EIFFEL2_CURRENT_DIR/components-configuration.bash
 
 
 ###################################################################
-## Eiffel2 Bundle app context paths (added to apps Ingress URLs)
+## Eiffel Bundle app context paths (added to apps Ingress URLs)
 export app_url_context_path="
-Eiffel2 Bundle URLs contextPath:
+Eiffel Bundle URLs contextPath:
 --------------------------"
 
-## Eiffel2 Bundle Passwords listings
+## Eiffel Bundle Passwords listings
 export easy2use_bundle_psw="
-Eiffel2 Bundle Users/Passwords:
+Eiffel Bundle Users/Passwords:
 --------------------------
-eiffel2_jenkins_fem: admin / admin
-eiffel2_rabbitmq: myuser / myuser
-eiffel2_nexus: admin / admin123"
+eiffel_jenkins_fem: admin / admin
+eiffel_rabbitmq: myuser / myuser
+eiffel_nexus: admin / admin123"

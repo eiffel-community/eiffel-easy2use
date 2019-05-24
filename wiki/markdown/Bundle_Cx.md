@@ -21,7 +21,7 @@ To provide a Cx bundle with pipeline as code setup which executes CI pipeline bu
 
 The execution flow and docker containers used for the build steps will be re-used in included build engines Jenkins & Argo. Eiffel 2.0 events will be generated in build steps to log Cx execution activities.
 
-Dependent Eiffel 2.0 services will be loaded from the Eiffel2 bundle to provide capability to log/vizualize pipeline activities via Eiffel 2.0 events.
+Dependent Eiffel 2.0 services will be loaded from the Eiffel bundle to provide capability to log/vizualize pipeline activities via Eiffel 2.0 events.
 
 ### GitOPS
 
@@ -65,13 +65,13 @@ Argo-Events | cx_argo_events | N/A | N/A | 2 Argo Gateways & 2 Sensors included 
 Argo CD | cx_argocd | user: admin<br> psw: Argo-CD pod name, use:<br>./easy2use list Cx -n \<namespace\> |cx-argocd-\<namespace\>.\<domainname\> | GitOPS<br> Check for updates in Gerrit GIT repo deployment for branches dev/stage/master, and will automatically sync deployments in K8S.<br><br> Deployments are performed in the choosen namespace but the ms-frontend and ms-backend will exist for each environment -> stage/dev/prod (master)
 Minio (S3 compatible storage) | N/A | AccessKey:<br>AKIAIOSFODNN7EXAMPLE<br>SecretKey:<br>wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY | cx-minio-\<namespace\>.\<domainname\> | Minio is used for sharing Artifacts between build steps in Argo workflows and also storing Helm charts via chartmuseum<br><br>Minio is a high performance distributed object storage server, designed for<br>large-scale private cloud infrastructure.
 Artifactory (JFrog) | cx_artifactory | admin/password | cx-artifactory-\<namespace\>.\<domainname\> | Artifactory is used for storing compiled artifacts (war files for Java projs. in Gerrit)
-<b>Services Loaded from Eiffel2 Bundle*</b> | | | 
-RabbitMQ (Message Bus) | rabbitmq | myuser / myuser | eiffel2-rabbitmq-\<namespace\>.\<domainname\>	
+<b>Services Loaded from Eiffel Bundle*</b> | | | 
+RabbitMQ (Message Bus) | rabbitmq | myuser / myuser | eiffel-rabbitmq-\<namespace\>.\<domainname\>	
 MongoDB & Data Seeding | mongodb<br> mongo_seed | N/A | N/A | The seed-data folder in Easy2Use contains data that can be seeded into the MongoDB instance.
-RemRem Generate | remrem_generate | N/A | eiffel2-remrem-generate-\<namespace\>.\<domainname\>	 
-RemRem Publish | remrem_publish | N/A | eiffel2-remrem-publish-\<namespace\>.\<domainname\>
-Event Repository REST API | er | N/A | eiffel2-er-\<namespace\>.\<domainname\>	
-Eiffel Vici | vici | N/A | eiffel2-vici-\<namespace\>.\<domainname\>	
+RemRem Generate | remrem_generate | N/A | eiffel-remrem-generate-\<namespace\>.\<domainname\>	 
+RemRem Publish | remrem_publish | N/A | eiffel-remrem-publish-\<namespace\>.\<domainname\>
+Event Repository REST API | er | N/A | eiffel-er-\<namespace\>.\<domainname\>	
+Eiffel Vici | vici | N/A | eiffel-vici-\<namespace\>.\<domainname\>	
 
 ## Resource Requirements
 OS | Minimum Requirements | Preferably | Comments
@@ -90,7 +90,7 @@ Linux | 8 GB RAM |16 GB RAM or more |	~11 GB of RAM will be use under the load. 
  - Helm
 
 ## Dependencies
-Eiffel2 bundle components
+Eiffel bundle components
 
 ## Quick getting started guide with Easy2Use
 See the getting starting page: Getting Started
@@ -155,7 +155,7 @@ Note: the Gerrit server startup can take a few minutes (seeding etc), so be pati
   ```
    basedomain name is the basedomainname for the K8S cluster, if using local k8s kluster use ex. mylocalkube.com
 
-   OBS You need to answer "Y" twice, first for the Cx bundle installs and then the dependent services from the Eiffel2 bundle!
+   OBS You need to answer "Y" twice, first for the Cx bundle installs and then the dependent services from the Eiffel bundle!
 
    Argo already installed if error printput is generated →   Easy2Use: Warning: Could not install additional installs: kubectl create serviceaccount --namespace kube-system argo, See Alt2 below!
 
@@ -167,7 +167,7 @@ If Argo already implemented in K8S cluster. With this deployment Argo GUI/Artifa
   ```
   basedomain name is the basedomainname for the K8S cluster, if using local k8s kluster use ex. mylocalkube.com
 
-  OBS You need to answer "Y" twice, first for the Cx bundle installs and then the dependent services from the Eiffel2 bundle!
+  OBS You need to answer "Y" twice, first for the Cx bundle installs and then the dependent services from the Eiffel bundle!
 
 ## List Service URLs, UserName & PSW
 Easy2Use list command will both list URLs (ingresses) to the deployed K8S services and user/psw for the services.
@@ -177,9 +177,9 @@ Easy2Use list command will both list URLs (ingresses) to the deployed K8S servic
   ```
 
 
-  OBS For included Eiffel2 components do: 
+  OBS For included Eiffel components do: 
   ```
-  ./easy2use list Eiffel2 -t Kubernetes -n <namespace>
+  ./easy2use list Eiffel -t Kubernetes -n <namespace>
   ```
 
 ## List HOSTS files entries for local K8S 
@@ -213,7 +213,7 @@ OBS Argo are a cluster global release, so it will be removed even if it's deploy
   ./easy2use remove Cx -t Kubernetes -n <namespace> 
   ```
 
-  OBS You need to answer "Y" twice, first for the Cx bundle removals and then the dependent services from the Eiffel2 bundle!
+  OBS You need to answer "Y" twice, first for the Cx bundle removals and then the dependent services from the Eiffel bundle!
 
 ### Alt2) Deploy CX bundle with all components including Argo-Events and excluding Argo  
   
@@ -221,7 +221,7 @@ OBS Argo are a cluster global release, so it will be removed even if it's deploy
   ./easy2use remove Cx -t Kubernetes -n <namespace> -p min
   ```
 
-  OBS You need to answer "Y" twice, first for the Cx bundle removals and then the dependent services from the Eiffel2 bundle!
+  OBS You need to answer "Y" twice, first for the Cx bundle removals and then the dependent services from the Eiffel bundle!
 
 ### Additional removals
 Sometimes the Argo CRD is not removed successfully, to remove it execute: 
@@ -304,7 +304,7 @@ Check your pushed patchset
 - Click ms-frontend to see post-merge pipeline execution
 
 ### 3. Eiffel Events Generated in Jenkins Pipelines
-- Eiffel2 Vici: eiffel2-vici-\<namespace\>.\<domainname\>
+- Eiffel Vici: eiffel-vici-\<namespace\>.\<domainname\>
 - Instruction TBD XXXXX
 
 
@@ -435,7 +435,7 @@ Check your pushed patchset
 - Click on workflows icon on the left manu
 
 ### 3. Eiffel Events Generated in Jenkins Pipelines
-- Eiffel2 Vici: eiffel2-vici-\<namespace\>.\<domainname\>
+- Eiffel Vici: eiffel-vici-\<namespace\>.\<domainname\>
 - Instruction TBD XXXXX
 
 
@@ -500,4 +500,4 @@ Now Argo-CD will sync the new changes in the master (prod) branch. Also check st
 
 
 ## Known Issues
- - When running Cx bundle on a local K8S cluster the login to Gerrit server via KeyCloak will not work.  
+[**Easy2Use Issues**](https://github.com/eiffel-community/eiffel-easy2use/issues)

@@ -40,7 +40,7 @@ The Easy2Use CLI supports standard docker-compose and helm charts for deploying 
 
 # Included Bundles
 
-* Eiffel2
+* Eiffel
 * Cx 
 
 # About this repository

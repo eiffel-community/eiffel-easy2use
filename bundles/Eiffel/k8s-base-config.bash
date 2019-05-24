@@ -15,7 +15,7 @@
 #   limitations under the License.
 #
 ##-------------------------------------------------------------------------------------
-## Eiffel 2.0 K8S environment variable settings
+## Eiffel K8S environment variable settings
 ##
 ## Author: michael.frick@ericsson.com
 ##
@@ -33,7 +33,7 @@ export K8S_Ingress_Enabled=true
 verbose "Domainname to use: ${K8S_DOMAINNAME}"
 
 # Namespace in K8S Cluster
-K8S_NAMESPACE=eiffel2
+K8S_NAMESPACE=eiffel
 [[ ! -z ${K8S_NAMESPACE_OVERRIDE} ]] && K8S_NAMESPACE=${K8S_NAMESPACE_OVERRIDE}
 verbose "Namespace to use: ${K8S_NAMESPACE}"
 

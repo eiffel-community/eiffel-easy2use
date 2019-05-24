@@ -15,7 +15,7 @@
 #   limitations under the License.
 #
 ##-------------------------------------------------------------------------------------
-## Eiffel 2.0 environment variable settings
+## Eiffel environment variable settings
 ##
 ## Author: michael.frick@ericsson.com
 ##
@@ -23,22 +23,22 @@
 
 ### DNS Service names
 # ----- Eiffel 2.0 Servicenames, External Ports, Internal Ports
-export EIFFEL2_MONGODB="eiffel2-mongodb"
-export EIFFEL2_RABBITMQ="eiffel2-rabbitmq"
-export EIFFEL2_DUMMY_ER="eiffel2-dummy-er"
-export EIFFEL2_ER="eiffel2-er"
-export EIFFEL2_JENKINS_FEM="eiffel2-jenkins-fem"
-export EIFFEL2_JENKINS="eiffel2-jenkins"
-export EIFFEL2_NEXUS3="eiffel2-nexus3"
-export EIFFEL2_REMREM_GENERATE="eiffel2-remrem-generate"
-export EIFFEL2_REMREM_PUBLISH="eiffel2-remrem-publish"
-export EIFFEL2_VICI="eiffel2-vici"
-export EIFFEL2_EI_BACKEND_ARTIFACT="eiffel2-backend-artifact"
-export EIFFEL2_EI_BACKEND_SOURCECHANGE="eiffel2-backend-sourcechange"
-export EIFFEL2_EI_BACKEND_TESTEXECUTION="eiffel2-backend-testexecution"
-export EIFFEL2_EI_BACKEND_ALLEVENTS="eiffel2-backend-allevents"
-export EIFFEL2_EI_FRONTEND="eiffel2-frontend"
-export EIFFEL2_MONGODB_SEED="eiffel2-mongo-seed"
+export EIFFEL2_MONGODB="eiffel-mongodb"
+export EIFFEL2_RABBITMQ="eiffel-rabbitmq"
+export EIFFEL2_DUMMY_ER="eiffel-dummy-er"
+export EIFFEL2_ER="eiffel-er"
+export EIFFEL2_JENKINS_FEM="eiffel-jenkins-fem"
+export EIFFEL2_JENKINS="eiffel-jenkins"
+export EIFFEL2_NEXUS3="eiffel-nexus3"
+export EIFFEL2_REMREM_GENERATE="eiffel-remrem-generate"
+export EIFFEL2_REMREM_PUBLISH="eiffel-remrem-publish"
+export EIFFEL2_VICI="eiffel-vici"
+export EIFFEL2_EI_BACKEND_ARTIFACT="eiffel-backend-artifact"
+export EIFFEL2_EI_BACKEND_SOURCECHANGE="eiffel-backend-sourcechange"
+export EIFFEL2_EI_BACKEND_TESTEXECUTION="eiffel-backend-testexecution"
+export EIFFEL2_EI_BACKEND_ALLEVENTS="eiffel-backend-allevents"
+export EIFFEL2_EI_FRONTEND="eiffel-frontend"
+export EIFFEL2_MONGODB_SEED="eiffel-mongo-seed"
 
 # ----- Eiffel 2.0 External Ports, Internal Ports
 export EIFFEL2_MONGODB_EXTERNAL_PORT=27017

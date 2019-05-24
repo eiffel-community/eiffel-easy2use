@@ -84,16 +84,16 @@ export CX_ARGOCD=$K8S_RELEASE_CX_ARGOCD
 export CX_CHARTMUSEUM=$K8S_RELEASE_CX_CHARTMUSEUM
 
 
-### Eiffel2 Bundle's REMREM URLs. so be seeded in Gerrit/GIT Projects Jenkisfile(s) 
-export REMREM_PUBLISH_GEN_PUB_URL="http://eiffel2-remrem-publish-${K8S_NAMESPACE}:8096/generateAndPublish?mp=eiffelsemantics&parseData=false&msgType="
-export REMREM_GENERATE_URL="http://eiffel2-remrem-generate-${K8S_NAMESPACE}:8095/eiffelsemantics?msgType="
-export REMREM_PUBLISH_URL="http://eiffel2-remrem-publish-${K8S_NAMESPACE}:8096/producer/msg?mp=eiffelsemantics"
+### Eiffel Bundle's REMREM URLs. so be seeded in Gerrit/GIT Projects Jenkisfile(s) 
+export REMREM_PUBLISH_GEN_PUB_URL="http://eiffel-remrem-publish-${K8S_NAMESPACE}:8096/generateAndPublish?mp=eiffelsemantics&parseData=false&msgType="
+export REMREM_GENERATE_URL="http://eiffel-remrem-generate-${K8S_NAMESPACE}:8095/eiffelsemantics?msgType="
+export REMREM_PUBLISH_URL="http://eiffel-remrem-publish-${K8S_NAMESPACE}:8096/producer/msg?mp=eiffelsemantics"
 
-export EI_FRONTEND_INGRESS="eiffel2-frontend-${K8S_NAMESPACE}.$K8S_DOMAINNAME"
-export EI_BACKEND_ARTIFACT_DNS="eiffel2-backend-artifact-${K8S_NAMESPACE}"
+export EI_FRONTEND_INGRESS="eiffel-frontend-${K8S_NAMESPACE}.$K8S_DOMAINNAME"
+export EI_BACKEND_ARTIFACT_DNS="eiffel-backend-artifact-${K8S_NAMESPACE}"
 
-### Eiffel2 Bundle's RABBITMQ 
-export CX_RABBITMQ_URL="amqp://myuser:myuser@eiffel2-rabbitmq-${K8S_NAMESPACE}.${K8S_NAMESPACE}:5672"
+### Eiffel Bundle's RABBITMQ 
+export CX_RABBITMQ_URL="amqp://myuser:myuser@eiffel-rabbitmq-${K8S_NAMESPACE}.${K8S_NAMESPACE}:5672"
 export CX_RABBITMQ_EXCHANGENAME=ei-poc-4
 
 # Artifactory
@@ -549,7 +549,7 @@ cx_jenkins: ${CX_JENKINS_CONFIG_CI_INIT_ADMIN}/${CX_JENKINS_CONFIG_CI_INIT_PASSW
 cx_minio: AKIAIOSFODNN7EXAMPLE / wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY 
 cx_keycloak: ${CX_KEYCLOAK_CONFIG_CI_INIT_ADMIN} / ${CX_KEYCLOAK_CONFIG_CI_INIT_PASSWORD} 
 cx_postgresql: ${CX_POSTGRES_USER} / ${CX_POSTGRES_PSW} 
-eiffel2_rabbitmq: myuser / myuser
+eiffel_rabbitmq: myuser / myuser
 gitops_minio: ${CX_MINIO_CONFIG_CI_INIT_ADMIN} / ${CX_MINIO_CONFIG_CI_INIT_PASSWORD}
 gitops_argocd: ${CX_ARGOCD_USERNAME} / $(kubectl get pod -n ${K8S_NAMESPACE} -l app.kubernetes.io/name=argo-cd-server -o name | cut -d'/' -f 2)"
 

@@ -15,7 +15,7 @@
 #   limitations under the License.
 #
 #################################################################################################
-# Eiffel 2.0 Bundle Easy2Use -> OBS NOT for Production
+# Eiffel Bundle Easy2Use -> OBS NOT for Production
 #
 # run:         docker-compose up
 # stop:        docker-compose stop

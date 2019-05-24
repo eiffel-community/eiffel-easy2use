@@ -14,23 +14,9 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-# This config file can be sourced if you wish to execute docker or kubectl
-# commands manually instead of using the easy2use CLI.
+# ---- Do NOT Change --------------------------------
+export K8S_Ingress_Enabled=true
 
-source ../../utilities/cli/cli_utils.bash
-source ../../config-default.bash
-
-export TARGET_TYPE=Docker
-
-source component-versions.bash
-source base-config.bash
-source config-bundle.bash
-source docker-base-config.bash
-source components-configuration.bash
-
-
-cat <<EOF
-Docker & Kubernetes for Eiffel2 bundle environment prepared.
-Now you can start use docker-compose/docker/kubectl/helm commands
-in Eiffel2 bundle.
-EOF
+# Namespace in K8S Cluster
+K8S_NAMESPACE=eiffel
+[[ ! -z ${K8S_NAMESPACE_OVERRIDE} ]] && K8S_NAMESPACE=${K8S_NAMESPACE_OVERRIDE}
