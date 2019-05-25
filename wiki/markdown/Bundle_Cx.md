@@ -19,9 +19,9 @@
 ## Idea
 To provide a Cx bundle with pipeline as code setup which executes CI pipeline build steps in Docker containers to minimize state on CI server (Cattle principle).
 
-The execution flow and docker containers used for the build steps will be re-used in included build engines Jenkins & Argo. Eiffel 2.0 events will be generated in build steps to log Cx execution activities.
+The execution flow and docker containers used for the build steps will be re-used in included build engines Jenkins & Argo. Eiffel events will be generated in build steps to log Cx execution activities.
 
-Dependent Eiffel 2.0 services will be loaded from the Eiffel bundle to provide capability to log/vizualize pipeline activities via Eiffel 2.0 events.
+Dependent Eiffel services will be loaded from the Eiffel bundle to provide capability to log/vizualize pipeline activities via Eiffel events.
 
 ### GitOPS
 
@@ -34,7 +34,8 @@ CI:
  - 2 Java Microservices included (ms-frontend & ms-backend)
  - CI Engines included with pipeline as code: Jenkins Pipeline (ms-frontend) & Argo CI (ms-backend)
  - Jenkins pipeline shared pipeline code
- - Eiffel 2.0 event generated & CI triggered
+ - Pre & post-merge pipelines
+ - Eiffel event generated & CI triggered
  
 CD:
  - GITOPS With Argo CD (automatically sync configuration in GIT repo with deployment in Kubernetes for specific branches : dev/stage/prod)
