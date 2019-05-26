@@ -135,6 +135,8 @@ If running in local K8S cluster, minikube or docker-for-windows (windows 10 Hype
 ## Prerequisite Docker Registry Configuration
 In the easy2use root, create file:  <b>config-user.bash</b>
 
+Info: this file is included in .gitignore!
+
 Add the following lines in the file:
 
 export CX_IMAGE_REGISTRY="\<imageregistry\>"       Example for Dockerhub add registry.hub.docker.com<br>
