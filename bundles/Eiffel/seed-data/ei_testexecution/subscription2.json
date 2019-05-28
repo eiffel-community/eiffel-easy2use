@@ -5,7 +5,7 @@
     "repeat" : false,
     "created" : 1523473956269,
     "notificationType" : "REST_POST",
-    "notificationMeta" : "http://EIFFEL2_JENKINS/job/ei-testexecution-triggered-job/build",
+    "notificationMeta" : "http://EIFFEL_JENKINS/job/ei-testexecution-triggered-job/build",
     "restPostBodyMediaType" : "application/x-www-form-urlencoded",
     "notificationMessageKeyValues" : [
         {

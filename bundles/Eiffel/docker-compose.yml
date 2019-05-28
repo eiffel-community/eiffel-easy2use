@@ -33,18 +33,18 @@ version: "3.7"
 services:
   mongodb:
     restart: always
-    image: ${EIFFEL2_MONGODB_IMAGE_TAG}
+    image: ${EIFFEL_MONGODB_IMAGE_TAG}
     expose:
-      - "${EIFFEL2_MONGODB_INTERNAL_PORT}"
+      - "${EIFFEL_MONGODB_INTERNAL_PORT}"
     ports:
-      - "${EIFFEL2_MONGODB_EXTERNAL_PORT}:${EIFFEL2_MONGODB_INTERNAL_PORT}"
+      - "${EIFFEL_MONGODB_EXTERNAL_PORT}:${EIFFEL_MONGODB_INTERNAL_PORT}"
     networks:
           eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_MONGODB}
+              - ${EIFFEL_MONGODB}
 
   mongo_seed:
-    image: ${EIFFEL2_MONGODB_IMAGE_TAG}
+    image: ${EIFFEL_MONGODB_IMAGE_TAG}
     links:
       - mongodb
     volumes:
@@ -54,108 +54,108 @@ services:
       - ./seed-data/ei_testexecution:/seed-data-temp/ei_testexecution
       - ./seed-data/ei_allevents:/seed-data-temp/ei_allevents
     environment:
-      - EIFFEL2_JENKINS_FEM
-      - EIFFEL2_JENKINS_FEM_PORT=${EIFFEL2_JENKINS_FEM_INTERNAL_PORT}
-      - EIFFEL2_JENKINS
-      - EIFFEL2_JENKINS_PORT=${EIFFEL2_JENKINS_INTERNAL_PORT}
+      - EIFFEL_JENKINS_FEM
+      - EIFFEL_JENKINS_FEM_PORT=${EIFFEL_JENKINS_FEM_INTERNAL_PORT}
+      - EIFFEL_JENKINS
+      - EIFFEL_JENKINS_PORT=${EIFFEL_JENKINS_INTERNAL_PORT}
     command:   #  Do NOT SEED ER without user & psw specified in application.yml, DB and tables will be created with remrem_generated PSW if not specified. json filename = collection
       bash -c "cp -R /seed-data-temp /seed-data &&
                /seed-data/inject-env-values-to-files.sh &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_ARTIFACT_MONGODB_DATABASE_NAME} --type json --file /seed-data/sessions.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_ARTIFACT_MONGODB_DATABASE_NAME} --type json --file /seed-data/aggregated_objects.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_ARTIFACT_MONGODB_DATABASE_NAME} --type json --file /seed-data/event_object_map.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_ARTIFACT_MONGODB_DATABASE_NAME} --type json --file /seed-data/ei_artifact/subscription.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_ARTIFACT_MONGODB_DATABASE_NAME} --collection subscription --type json --file /seed-data/ei_artifact/subscription2.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_ARTIFACT_MONGODB_DATABASE_NAME} --type json --file /seed-data/subscription_repeat_handler.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_ARTIFACT_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME} --type json --file /seed-data/Notification.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_SOURCECHANGE_MONGODB_DATABASE_NAME} --type json --file /seed-data/sessions.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_SOURCECHANGE_MONGODB_DATABASE_NAME} --type json --file /seed-data/aggregated_objects.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_SOURCECHANGE_MONGODB_DATABASE_NAME} --type json --file /seed-data/event_object_map.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_SOURCECHANGE_MONGODB_DATABASE_NAME} --type json --file /seed-data/ei_sourcechange/subscription.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_SOURCECHANGE_MONGODB_DATABASE_NAME} --collection subscription --type json --file /seed-data/ei_sourcechange/subscription2.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_SOURCECHANGE_MONGODB_DATABASE_NAME} --type json --file /seed-data/subscription_repeat_handler.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_SOURCECHANGE_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME} --type json --file /seed-data/Notification.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_TESTEXECUTION_MONGODB_DATABASE_NAME} --type json --file /seed-data/sessions.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_TESTEXECUTION_MONGODB_DATABASE_NAME} --type json --file /seed-data/aggregated_objects.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_TESTEXECUTION_MONGODB_DATABASE_NAME} --type json --file /seed-data/event_object_map.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_TESTEXECUTION_MONGODB_DATABASE_NAME} --type json --file /seed-data/ei_testexecution/subscription.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_TESTEXECUTION_MONGODB_DATABASE_NAME} --collection subscription --type json --file /seed-data/ei_testexecution/subscription2.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_TESTEXECUTION_MONGODB_DATABASE_NAME} --type json --file /seed-data/subscription_repeat_handler.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_TESTEXECUTION_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME} --type json --file /seed-data/Notification.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_ALLEVENTS_MONGODB_DATABASE_NAME} --type json --file /seed-data/sessions.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_ALLEVENTS_MONGODB_DATABASE_NAME} --type json --file /seed-data/aggregated_objects.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_ALLEVENTS_MONGODB_DATABASE_NAME} --type json --file /seed-data/event_object_map.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_ALLEVENTS_MONGODB_DATABASE_NAME} --type json --file /seed-data/ei_allevents/subscription.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_ALLEVENTS_MONGODB_DATABASE_NAME} --collection subscription --type json --file /seed-data/ei_allevents/subscription2.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_ALLEVENTS_MONGODB_DATABASE_NAME} --type json --file /seed-data/subscription_repeat_handler.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db ${EIFFEL2_EI_BACKEND_ALLEVENTS_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME} --type json --file /seed-data/Notification.json --jsonArray &&
-               mongoimport --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT} --db eiffel --type json --file /seed-data/events.json --jsonArray &&
-               mongo eiffel --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.events.remove({})\" &&
-               mongo MissedNotification-artifact --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.Notification.remove({})\" &&
-               mongo MissedNotification-sourcechange --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.Notification.remove({})\" &&
-               mongo MissedNotification-testexecution --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.Notification.remove({})\" &&
-               mongo MissedNotification-allevents --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.Notification.remove({})\" &&
-               mongo eiffel_intelligence-artifact --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.sessions.remove({})\" &&
-               mongo eiffel_intelligence-artifact --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.aggregated_objects.remove({})\" &&
-               mongo eiffel_intelligence-artifact --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.event_object_map.remove({})\" &&
-               mongo eiffel_intelligence-artifact --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.wait_list.remove({})\" &&
-               mongo eiffel_intelligence-artifact --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.subscription_repeat_handler.remove({})\" &&
-               mongo eiffel_intelligence-sourcechange --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.sessions.remove({})\" &&
-               mongo eiffel_intelligence-sourcechange --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.aggregated_objects.remove({})\" &&
-               mongo eiffel_intelligence-sourcechange --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.event_object_map.remove({})\" &&
-               mongo eiffel_intelligence-sourcechange --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.wait_list.remove({})\" &&
-               mongo eiffel_intelligence-sourcechange --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.subscription_repeat_handler.remove({})\" &&
-               mongo eiffel_intelligence-testexecution --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.sessions.remove({})\" &&
-               mongo eiffel_intelligence-testexecution --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.aggregated_objects.remove({})\" &&
-               mongo eiffel_intelligence-testexecution --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.event_object_map.remove({})\" &&
-               mongo eiffel_intelligence-testexecution --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.wait_list.remove({})\" &&
-               mongo eiffel_intelligence-testexecution --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.subscription_repeat_handler.remove({})\" &&
-               mongo eiffel_intelligence-allevents --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.sessions.remove({})\" &&
-               mongo eiffel_intelligence-allevents --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.aggregated_objects.remove({})\" &&
-               mongo eiffel_intelligence-allevents --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.event_object_map.remove({})\" &&
-               mongo eiffel_intelligence-allevents --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.wait_list.remove({})\" &&
-               mongo eiffel_intelligence-allevents --host ${EIFFEL2_MONGODB}:${EIFFEL2_MONGODB_INTERNAL_PORT}  --eval \"db.subscription_repeat_handler.remove({})\"
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_ARTIFACT_MONGODB_DATABASE_NAME} --type json --file /seed-data/sessions.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_ARTIFACT_MONGODB_DATABASE_NAME} --type json --file /seed-data/aggregated_objects.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_ARTIFACT_MONGODB_DATABASE_NAME} --type json --file /seed-data/event_object_map.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_ARTIFACT_MONGODB_DATABASE_NAME} --type json --file /seed-data/ei_artifact/subscription.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_ARTIFACT_MONGODB_DATABASE_NAME} --collection subscription --type json --file /seed-data/ei_artifact/subscription2.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_ARTIFACT_MONGODB_DATABASE_NAME} --type json --file /seed-data/subscription_repeat_handler.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_ARTIFACT_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME} --type json --file /seed-data/Notification.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_SOURCECHANGE_MONGODB_DATABASE_NAME} --type json --file /seed-data/sessions.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_SOURCECHANGE_MONGODB_DATABASE_NAME} --type json --file /seed-data/aggregated_objects.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_SOURCECHANGE_MONGODB_DATABASE_NAME} --type json --file /seed-data/event_object_map.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_SOURCECHANGE_MONGODB_DATABASE_NAME} --type json --file /seed-data/ei_sourcechange/subscription.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_SOURCECHANGE_MONGODB_DATABASE_NAME} --collection subscription --type json --file /seed-data/ei_sourcechange/subscription2.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_SOURCECHANGE_MONGODB_DATABASE_NAME} --type json --file /seed-data/subscription_repeat_handler.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_SOURCECHANGE_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME} --type json --file /seed-data/Notification.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_TESTEXECUTION_MONGODB_DATABASE_NAME} --type json --file /seed-data/sessions.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_TESTEXECUTION_MONGODB_DATABASE_NAME} --type json --file /seed-data/aggregated_objects.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_TESTEXECUTION_MONGODB_DATABASE_NAME} --type json --file /seed-data/event_object_map.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_TESTEXECUTION_MONGODB_DATABASE_NAME} --type json --file /seed-data/ei_testexecution/subscription.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_TESTEXECUTION_MONGODB_DATABASE_NAME} --collection subscription --type json --file /seed-data/ei_testexecution/subscription2.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_TESTEXECUTION_MONGODB_DATABASE_NAME} --type json --file /seed-data/subscription_repeat_handler.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_TESTEXECUTION_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME} --type json --file /seed-data/Notification.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_ALLEVENTS_MONGODB_DATABASE_NAME} --type json --file /seed-data/sessions.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_ALLEVENTS_MONGODB_DATABASE_NAME} --type json --file /seed-data/aggregated_objects.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_ALLEVENTS_MONGODB_DATABASE_NAME} --type json --file /seed-data/event_object_map.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_ALLEVENTS_MONGODB_DATABASE_NAME} --type json --file /seed-data/ei_allevents/subscription.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_ALLEVENTS_MONGODB_DATABASE_NAME} --collection subscription --type json --file /seed-data/ei_allevents/subscription2.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_ALLEVENTS_MONGODB_DATABASE_NAME} --type json --file /seed-data/subscription_repeat_handler.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db ${EIFFEL_EI_BACKEND_ALLEVENTS_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME} --type json --file /seed-data/Notification.json --jsonArray &&
+               mongoimport --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT} --db eiffel --type json --file /seed-data/events.json --jsonArray &&
+               mongo eiffel --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.events.remove({})\" &&
+               mongo MissedNotification-artifact --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.Notification.remove({})\" &&
+               mongo MissedNotification-sourcechange --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.Notification.remove({})\" &&
+               mongo MissedNotification-testexecution --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.Notification.remove({})\" &&
+               mongo MissedNotification-allevents --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.Notification.remove({})\" &&
+               mongo eiffel_intelligence-artifact --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.sessions.remove({})\" &&
+               mongo eiffel_intelligence-artifact --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.aggregated_objects.remove({})\" &&
+               mongo eiffel_intelligence-artifact --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.event_object_map.remove({})\" &&
+               mongo eiffel_intelligence-artifact --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.wait_list.remove({})\" &&
+               mongo eiffel_intelligence-artifact --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.subscription_repeat_handler.remove({})\" &&
+               mongo eiffel_intelligence-sourcechange --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.sessions.remove({})\" &&
+               mongo eiffel_intelligence-sourcechange --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.aggregated_objects.remove({})\" &&
+               mongo eiffel_intelligence-sourcechange --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.event_object_map.remove({})\" &&
+               mongo eiffel_intelligence-sourcechange --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.wait_list.remove({})\" &&
+               mongo eiffel_intelligence-sourcechange --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.subscription_repeat_handler.remove({})\" &&
+               mongo eiffel_intelligence-testexecution --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.sessions.remove({})\" &&
+               mongo eiffel_intelligence-testexecution --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.aggregated_objects.remove({})\" &&
+               mongo eiffel_intelligence-testexecution --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.event_object_map.remove({})\" &&
+               mongo eiffel_intelligence-testexecution --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.wait_list.remove({})\" &&
+               mongo eiffel_intelligence-testexecution --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.subscription_repeat_handler.remove({})\" &&
+               mongo eiffel_intelligence-allevents --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.sessions.remove({})\" &&
+               mongo eiffel_intelligence-allevents --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.aggregated_objects.remove({})\" &&
+               mongo eiffel_intelligence-allevents --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.event_object_map.remove({})\" &&
+               mongo eiffel_intelligence-allevents --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.wait_list.remove({})\" &&
+               mongo eiffel_intelligence-allevents --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.subscription_repeat_handler.remove({})\"
                "
     networks:
           eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_MONGODB_SEED}
+              - ${EIFFEL_MONGODB_SEED}
 
 
   rabbitmq:
     restart: always
-    image: ${EIFFEL2_RABBITMQ_IMAGE_TAG}
+    image: ${EIFFEL_RABBITMQ_IMAGE_TAG}
     expose:
-      - "${EIFFEL2_RABBITMQ_WEB_INTERNAL_PORT}"
-      - "${EIFFEL2_RABBITMQ_AMQP_INTERNAL_PORT}"
+      - "${EIFFEL_RABBITMQ_WEB_INTERNAL_PORT}"
+      - "${EIFFEL_RABBITMQ_AMQP_INTERNAL_PORT}"
     ports:
-      - "${EIFFEL2_RABBITMQ_WEB_EXTERNAL_PORT}:${EIFFEL2_RABBITMQ_WEB_INTERNAL_PORT}"
-      - "${EIFFEL2_RABBITMQ_AMQP_EXTERNAL_PORT}:${EIFFEL2_RABBITMQ_AMQP_INTERNAL_PORT}"
+      - "${EIFFEL_RABBITMQ_WEB_EXTERNAL_PORT}:${EIFFEL_RABBITMQ_WEB_INTERNAL_PORT}"
+      - "${EIFFEL_RABBITMQ_AMQP_EXTERNAL_PORT}:${EIFFEL_RABBITMQ_AMQP_INTERNAL_PORT}"
     networks:
           eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_RABBITMQ}
+              - ${EIFFEL_RABBITMQ}
     environment:
-      - RABBITMQ_USERNAME=${EIFFEL2_RABBITMQ_USER}
-      - RABBITMQ_PASSWORD=${EIFFEL2_RABBITMQ_PASSWORD}
-      - RABBITMQ_VHOST=${EIFFEL2_RABBITMQ_VHOST}
+      - RABBITMQ_USERNAME=${EIFFEL_RABBITMQ_USER}
+      - RABBITMQ_PASSWORD=${EIFFEL_RABBITMQ_PASSWORD}
+      - RABBITMQ_VHOST=${EIFFEL_RABBITMQ_VHOST}
 
 
   ####### /Start Eiffel Intelligence Artifact ###############################################################################
   ei_backend_artifact:
     restart: always
-    image: ${EIFFEL2_EI_BACKEND_IMAGE_TAG}
+    image: ${EIFFEL_EI_BACKEND_IMAGE_TAG}
     expose:
-      - "${EIFFEL2_EI_BACKEND_ARTIFACT_INTERNAL_PORT}"
+      - "${EIFFEL_EI_BACKEND_ARTIFACT_INTERNAL_PORT}"
     ports:
-      - "${EIFFEL2_EI_BACKEND_ARTIFACT_EXTERNAL_PORT}:${EIFFEL2_EI_BACKEND_ARTIFACT_INTERNAL_PORT}"
+      - "${EIFFEL_EI_BACKEND_ARTIFACT_EXTERNAL_PORT}:${EIFFEL_EI_BACKEND_ARTIFACT_INTERNAL_PORT}"
     depends_on:
       - mongodb
       - rabbitmq
     networks:
           eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_EI_BACKEND_ARTIFACT}
+              - ${EIFFEL_EI_BACKEND_ARTIFACT}
     env_file:
       - ./docker-env-files/ei-backend-artifact.env
 
@@ -165,18 +165,18 @@ services:
 ####### /Start Eiffel Intelligence Source Change ###############################################################################
   ei_backend_sourcechange:
     restart: always
-    image: ${EIFFEL2_EI_BACKEND_IMAGE_TAG}
+    image: ${EIFFEL_EI_BACKEND_IMAGE_TAG}
     expose:
-      - "${EIFFEL2_EI_BACKEND_SOURCECHANGE_INTERNAL_PORT}"
+      - "${EIFFEL_EI_BACKEND_SOURCECHANGE_INTERNAL_PORT}"
     ports:
-      - "${EIFFEL2_EI_BACKEND_SOURCECHANGE_EXTERNAL_PORT}:${EIFFEL2_EI_BACKEND_SOURCECHANGE_INTERNAL_PORT}"
+      - "${EIFFEL_EI_BACKEND_SOURCECHANGE_EXTERNAL_PORT}:${EIFFEL_EI_BACKEND_SOURCECHANGE_INTERNAL_PORT}"
     depends_on:
       - mongodb
       - rabbitmq
     networks:
           eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_EI_BACKEND_SOURCECHANGE}
+              - ${EIFFEL_EI_BACKEND_SOURCECHANGE}
     env_file:
       - ./docker-env-files/ei-backend-sourcechange.env
 
@@ -186,18 +186,18 @@ services:
 ####### /Start Eiffel Intelligence Test Execution ###############################################################################
   ei_backend_testexecution:
     restart: always
-    image: ${EIFFEL2_EI_BACKEND_IMAGE_TAG}
+    image: ${EIFFEL_EI_BACKEND_IMAGE_TAG}
     expose:
-      - "${EIFFEL2_EI_BACKEND_TESTEXECUTION_INTERNAL_PORT}"
+      - "${EIFFEL_EI_BACKEND_TESTEXECUTION_INTERNAL_PORT}"
     ports:
-      - "${EIFFEL2_EI_BACKEND_TESTEXECUTION_EXTERNAL_PORT}:${EIFFEL2_EI_BACKEND_TESTEXECUTION_INTERNAL_PORT}"
+      - "${EIFFEL_EI_BACKEND_TESTEXECUTION_EXTERNAL_PORT}:${EIFFEL_EI_BACKEND_TESTEXECUTION_INTERNAL_PORT}"
     depends_on:
       - mongodb
       - rabbitmq
     networks:
           eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_EI_BACKEND_TESTEXECUTION}
+              - ${EIFFEL_EI_BACKEND_TESTEXECUTION}
     env_file:
       - ./docker-env-files/ei-backend-testexecution.env
 
@@ -208,18 +208,18 @@ services:
 ####### /Start Eiffel Intelligence All Events ###############################################################################
   ei_backend_allevents:
     restart: always
-    image: ${EIFFEL2_EI_BACKEND_IMAGE_TAG}
+    image: ${EIFFEL_EI_BACKEND_IMAGE_TAG}
     expose:
-      - "${EIFFEL2_EI_BACKEND_ALLEVENTS_INTERNAL_PORT}"
+      - "${EIFFEL_EI_BACKEND_ALLEVENTS_INTERNAL_PORT}"
     ports:
-      - "${EIFFEL2_EI_BACKEND_ALLEVENTS_EXTERNAL_PORT}:${EIFFEL2_EI_BACKEND_ALLEVENTS_INTERNAL_PORT}"
+      - "${EIFFEL_EI_BACKEND_ALLEVENTS_EXTERNAL_PORT}:${EIFFEL_EI_BACKEND_ALLEVENTS_INTERNAL_PORT}"
     depends_on:
       - mongodb
       - rabbitmq
     networks:
           eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_EI_BACKEND_ALLEVENTS}
+              - ${EIFFEL_EI_BACKEND_ALLEVENTS}
     env_file:
       - ./docker-env-files/ei-backend-allevents.env
 
@@ -229,17 +229,17 @@ services:
 ####### /Start Eiffel Intelligence Frontend ###############################################################################
   ei_frontend:
     restart: always
-    image: ${EIFFEL2_EI_FRONTEND_IMAGE_TAG}
+    image: ${EIFFEL_EI_FRONTEND_IMAGE_TAG}
     expose:
-      - "${EIFFEL2_EI_FRONTEND_INTERNAL_PORT}"
+      - "${EIFFEL_EI_FRONTEND_INTERNAL_PORT}"
     ports:
-      - "${EIFFEL2_EI_FRONTEND_EXTERNAL_PORT}:${EIFFEL2_EI_FRONTEND_INTERNAL_PORT}"
+      - "${EIFFEL_EI_FRONTEND_EXTERNAL_PORT}:${EIFFEL_EI_FRONTEND_INTERNAL_PORT}"
     depends_on:
       - ei_backend_allevents
     networks:
           eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_EI_FRONTEND}
+              - ${EIFFEL_EI_FRONTEND}
     env_file:
       - ./docker-env-files/ei-frontend.env
 
@@ -247,58 +247,58 @@ services:
 
   vici:
     restart: always
-    image: ${EIFFEL2_VICI_IMAGE_TAG}
+    image: ${EIFFEL_VICI_IMAGE_TAG}
     expose:
-      - "${EIFFEL2_VICI_INTERNAL_PORT}"
+      - "${EIFFEL_VICI_INTERNAL_PORT}"
     ports:
-      - "${EIFFEL2_VICI_EXTERNAL_PORT}:${EIFFEL2_VICI_INTERNAL_PORT}"
+      - "${EIFFEL_VICI_EXTERNAL_PORT}:${EIFFEL_VICI_INTERNAL_PORT}"
 #    environment:
 #      - WAIT_MB_HOSTS=rabbitmq:15672
 #      - WAIT_DB_HOSTS=mongodb:27017
     networks:
           eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_VICI}
+              - ${EIFFEL_VICI}
 
   dummy_er:
     restart: always
-    image: ${EIFFEL2_DUMMY_ER_IMAGE_TAG}
+    image: ${EIFFEL_DUMMY_ER_IMAGE_TAG}
     expose:
-      - "${EIFFEL2_DUMMY_ER_INTERNAL_PORT}"
+      - "${EIFFEL_DUMMY_ER_INTERNAL_PORT}"
     ports:
-      - "${EIFFEL2_DUMMY_ER_EXTERNAL_PORT}:${EIFFEL2_DUMMY_ER_INTERNAL_PORT}"
+      - "${EIFFEL_DUMMY_ER_EXTERNAL_PORT}:${EIFFEL_DUMMY_ER_INTERNAL_PORT}"
     depends_on:
       - er
       - vici
     networks:
           eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_DUMMY_ER}
+              - ${EIFFEL_DUMMY_ER}
     env_file:
       - ./docker-env-files/dummy-er.env
 
   remrem_generate:
     restart: always
-    image: ${EIFFEL2_REMREM_GENERATE_IMAGE_TAG}
+    image: ${EIFFEL_REMREM_GENERATE_IMAGE_TAG}
     expose:
-      - "${EIFFEL2_REMREM_GENERATE_INTERNAL_PORT}"
+      - "${EIFFEL_REMREM_GENERATE_INTERNAL_PORT}"
     ports:
-      - "${EIFFEL2_REMREM_GENERATE_EXTERNAL_PORT}:${EIFFEL2_REMREM_GENERATE_INTERNAL_PORT}"
+      - "${EIFFEL_REMREM_GENERATE_EXTERNAL_PORT}:${EIFFEL_REMREM_GENERATE_INTERNAL_PORT}"
     env_file:
       - ./docker-env-files/remrem-generate.env
     networks:
           eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_REMREM_GENERATE}
+              - ${EIFFEL_REMREM_GENERATE}
 
 
   remrem_publish:
     restart: always
-    image: ${EIFFEL2_REMREM_PUBLISH_IMAGE_TAG}
+    image: ${EIFFEL_REMREM_PUBLISH_IMAGE_TAG}
     expose:
-      - "${EIFFEL2_REMREM_PUBLISH_INTERNAL_PORT}"
+      - "${EIFFEL_REMREM_PUBLISH_INTERNAL_PORT}"
     ports:
-      - "${EIFFEL2_REMREM_PUBLISH_EXTERNAL_PORT}:${EIFFEL2_REMREM_PUBLISH_INTERNAL_PORT}"
+      - "${EIFFEL_REMREM_PUBLISH_EXTERNAL_PORT}:${EIFFEL_REMREM_PUBLISH_INTERNAL_PORT}"
     depends_on:
       - rabbitmq
     env_file:
@@ -306,16 +306,16 @@ services:
     networks:
           eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_REMREM_PUBLISH}
+              - ${EIFFEL_REMREM_PUBLISH}
 
 
   er:
     restart: always
-    image: ${EIFFEL2_ER_IMAGE_TAG}
+    image: ${EIFFEL_ER_IMAGE_TAG}
     expose:
-      - "${EIFFEL2_ER_INTERNAL_PORT}"
+      - "${EIFFEL_ER_INTERNAL_PORT}"
     ports:
-      - "${EIFFEL2_ER_EXTERNAL_PORT}:${EIFFEL2_ER_INTERNAL_PORT}"
+      - "${EIFFEL_ER_EXTERNAL_PORT}:${EIFFEL_ER_INTERNAL_PORT}"
     depends_on:
       - rabbitmq
       - mongodb
@@ -325,19 +325,19 @@ services:
     networks:
           eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_ER}
+              - ${EIFFEL_ER}
     env_file:
       - ./docker-env-files/eiffel-er.env
 
 
   jenkins:
     restart: always
-    image: ${EIFFEL2_JENKINS_IMAGE_TAG}
+    image: ${EIFFEL_JENKINS_IMAGE_TAG}
     expose:
-      - "${EIFFEL2_JENKINS_INTERNAL_PORT}"
+      - "${EIFFEL_JENKINS_INTERNAL_PORT}"
       - "50000"
     ports:
-      - "${EIFFEL2_JENKINS_EXTERNAL_PORT}:${EIFFEL2_JENKINS_INTERNAL_PORT}"
+      - "${EIFFEL_JENKINS_EXTERNAL_PORT}:${EIFFEL_JENKINS_INTERNAL_PORT}"
       - "50001:50000"
     depends_on:
       - rabbitmq
@@ -354,16 +354,16 @@ services:
     networks:
          eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_JENKINS}
+              - ${EIFFEL_JENKINS}
 
   jenkins_fem:
     restart: always
-    image: ${EIFFEL2_JENKINS_FEM_IMAGE_TAG}
+    image: ${EIFFEL_JENKINS_FEM_IMAGE_TAG}
     expose:
-      - "${EIFFEL2_JENKINS_FEM_INTERNAL_PORT}"
+      - "${EIFFEL_JENKINS_FEM_INTERNAL_PORT}"
       - "50000"
     ports:
-      - "${EIFFEL2_JENKINS_FEM_EXTERNAL_PORT}:${EIFFEL2_JENKINS_FEM_INTERNAL_PORT}"
+      - "${EIFFEL_JENKINS_FEM_EXTERNAL_PORT}:${EIFFEL_JENKINS_FEM_INTERNAL_PORT}"
       - "50002:50000"
     depends_on:
       - rabbitmq
@@ -380,7 +380,7 @@ services:
     networks:
           eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_JENKINS_FEM}
+              - ${EIFFEL_JENKINS_FEM}
 #    volumes:
 #      - jenkins_home:/var/jenkins_home
 
@@ -388,15 +388,15 @@ services:
     restart: always
     image: ${EIFFEL2_NEXUS_IMAGE_TAG}
     expose:
-      - "${EIFFEL2_NEXUS_INTERNAL_PORT}"
+      - "${EIFFEL_NEXUS_INTERNAL_PORT}"
     ports:
-      - "${EIFFEL2_NEXUS_EXTERNAL_PORT}:${EIFFEL2_NEXUS_INTERNAL_PORT}"
+      - "${EIFFEL_NEXUS_EXTERNAL_PORT}:${EIFFEL_NEXUS_INTERNAL_PORT}"
     depends_on:
       - rabbitmq
     networks:
           eiffel_2.0_1:
             aliases:
-              - ${EIFFEL2_NEXUS3}
+              - ${EIFFEL_NEXUS3}
 
 #    volumes:
 #      - /opt/my-nexus-data:/nexus-data
@@ -404,5 +404,5 @@ services:
 
 networks:
   eiffel_2.0_1:
-      name: ${EIFFEL2_NETWORK_NAME}
+      name: ${EIFFEL_NETWORK_NAME}
 

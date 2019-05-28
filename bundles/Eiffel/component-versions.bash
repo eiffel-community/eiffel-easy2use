@@ -34,18 +34,18 @@ export EIFFEL2_NEXUS_VERSION=3.11.0
 export EXTERNAL_DOCKER_REGISTRY=docker.io
 
 # Docker repository component image tag names
-export EIFFEL2_MONGODB_IMAGE_TAG_NAME=mongo
-export EIFFEL2_RABBITMQ_IMAGE_TAG_NAME=bitnami/rabbitmq
-export EIFFEL2_EI_BACKEND_IMAGE_TAG_NAME=eiffelericsson/eiffel-intelligence-backend
-export EIFFEL2_EI_FRONTEND_IMAGE_TAG_NAME=eiffelericsson/eiffel-intelligence-frontend
-export EIFFEL2_VICI_IMAGE_TAG_NAME=eiffelericsson/eiffel-vici
-export EIFFEL2_DUMMY_ER_IMAGE_TAG_NAME=eiffelericsson/dummy-er
-export EIFFEL2_ER_IMAGE_TAG_NAME=eiffelericsson/eiffel-er
-export EIFFEL2_REMREM_GENERATE_IMAGE_TAG_NAME=eiffelericsson/eiffel-remrem-generate
-export EIFFEL2_REMREM_PUBLISH_IMAGE_TAG_NAME=eiffelericsson/eiffel-remrem-publish
-export EIFFEL2_JENKINS_IMAGE_TAG_NAME=bitnami/jenkins
-export EIFFEL2_JENKINS_FEM_IMAGE_TAG_NAME=eiffelericsson/eiffel-jenkins
-export EIFFEL2_NEXUS_IMAGE_TAG_NAME=sonatype/nexus3
+export EIFFEL_MONGODB_IMAGE_TAG_NAME=mongo
+export EIFFEL_RABBITMQ_IMAGE_TAG_NAME=bitnami/rabbitmq
+export EIFFEL_EI_BACKEND_IMAGE_TAG_NAME=eiffelericsson/eiffel-intelligence-backend
+export EIFFEL_EI_FRONTEND_IMAGE_TAG_NAME=eiffelericsson/eiffel-intelligence-frontend
+export EIFFEL_VICI_IMAGE_TAG_NAME=eiffelericsson/eiffel-vici
+export EIFFEL_DUMMY_ER_IMAGE_TAG_NAME=eiffelericsson/dummy-er
+export EIFFEL_ER_IMAGE_TAG_NAME=eiffelericsson/eiffel-er
+export EIFFEL_REMREM_GENERATE_IMAGE_TAG_NAME=eiffelericsson/eiffel-remrem-generate
+export EIFFEL_REMREM_PUBLISH_IMAGE_TAG_NAME=eiffelericsson/eiffel-remrem-publish
+export EIFFEL_JENKINS_IMAGE_TAG_NAME=bitnami/jenkins
+export EIFFEL_JENKINS_FEM_IMAGE_TAG_NAME=eiffelericsson/eiffel-jenkins
+export EIFFEL_NEXUS_IMAGE_TAG_NAME=sonatype/nexus3
 
 
 # Full Components Image tag names
