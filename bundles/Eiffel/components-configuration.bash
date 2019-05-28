@@ -37,7 +37,7 @@ export EIFFEL_RABBITMQ_VHOST=/
 export EIFFEL_RABBITMQ_USER=myuser
 export EIFFEL_RABBITMQ_PASSWORD=myuser
 export EIFFEL_RABBITMQ_EXCHANGE="ei-poc-4"
-export EIFFEL_RABBITMQ_DOMAIN_ID=eiffel2
+export EIFFEL_RABBITMQ_DOMAIN_ID=eiffel
 export EIFFEL_RABBITMQ_BINDING_KEY=#
 
 export EIFFEL_MONGODB_USER=
@@ -139,8 +139,8 @@ rabbitmq.password=${EIFFEL_RABBITMQ_PASSWORD}
 mergeidmarker=${EIFFEL_EI_MERGE_ID_MAKER}
 spring.data.mongodb.host=${EIFFEL_MONGODB}
 spring.data.mongodb.port=${EIFFEL_MONGODB_APPLICATION_PORT}
-spring.data.mongodb.database=eiffel2_intelligence-allevents
-missedNotificationDataBaseName=eiffel2_intelligence-allevents_MissedNotification
+spring.data.mongodb.database=eiffel_intelligence-allevents
+missedNotificationDataBaseName=eiffel_intelligence-allevents_MissedNotification
 missedNotificationCollectionName=Notification
 aggregated.object.name=aggregatedObject
 aggregated.collection.name=aggregated_objects
@@ -214,8 +214,8 @@ rabbitmq.password=${EIFFEL_RABBITMQ_PASSWORD}
 mergeidmarker=${EIFFEL_EI_MERGE_ID_MAKER}
 spring.data.mongodb.host=${EIFFEL_MONGODB}
 spring.data.mongodb.port=${EIFFEL_MONGODB_APPLICATION_PORT}
-spring.data.mongodb.database=eiffel2_intelligence-artifact
-missedNotificationDataBaseName=eiffel2_intelligence-artifact_MissedNotification
+spring.data.mongodb.database=eiffel_intelligence-artifact
+missedNotificationDataBaseName=eiffel_intelligence-artifact_MissedNotification
 missedNotificationCollectionName=Notification
 aggregated.object.name=aggregatedObject
 aggregated.collection.name=aggregated_objects
@@ -290,8 +290,8 @@ rabbitmq.password=${EIFFEL_RABBITMQ_PASSWORD}
 mergeidmarker=${EIFFEL_EI_MERGE_ID_MAKER}
 spring.data.mongodb.host=${EIFFEL_MONGODB}
 spring.data.mongodb.port=${EIFFEL_MONGODB_APPLICATION_PORT}
-spring.data.mongodb.database=eiffel2_intelligence-testexecution
-missedNotificationDataBaseName=eiffel2_intelligence-testexecution_MissedNotification
+spring.data.mongodb.database=eiffel_intelligence-testexecution
+missedNotificationDataBaseName=eiffel_intelligence-testexecution_MissedNotification
 missedNotificationCollectionName=Notification
 aggregated.object.name=aggregatedObject
 aggregated.collection.name=aggregated_objects
@@ -366,8 +366,8 @@ rabbitmq.password=${EIFFEL_RABBITMQ_PASSWORD}
 mergeidmarker=${EIFFEL_EI_MERGE_ID_MAKER}
 spring.data.mongodb.host=${EIFFEL_MONGODB}
 spring.data.mongodb.port=${EIFFEL_MONGODB_APPLICATION_PORT}
-spring.data.mongodb.database=eiffel2_intelligence-sourcechange
-missedNotificationDataBaseName=eiffel2_intelligence-sourcechange_MissedNotification
+spring.data.mongodb.database=eiffel_intelligence-sourcechange
+missedNotificationDataBaseName=eiffel_intelligence-sourcechange_MissedNotification
 missedNotificationCollectionName=Notification
 aggregated.object.name=aggregatedObject
 aggregated.collection.name=aggregated_objects
@@ -673,14 +673,14 @@ echo -e "$DOCKER_CONFIG_EIFFEL_JENKINS_FEM" > $CURRENT_DIR/docker-env-files/eiff
 
 ############### Kubernetes MongoDb seed of data. For Docker look in docker-compose file. ########################
 
-export EIFFEL_EI_BACKEND_ARTIFACT_MONGODB_DATABASE_NAME=eiffel2_intelligence-artifact
-export EIFFEL_EI_BACKEND_ARTIFACT_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME=eiffel2_intelligence-artifact_MissedNotification
-export EIFFEL_EI_BACKEND_SOURCECHANGE_MONGODB_DATABASE_NAME=eiffel2_intelligence-sourcechange
-export EIFFEL_EI_BACKEND_SOURCECHANGE_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME=eiffel2_intelligence-sourcechange_MissedNotification
-export EIFFEL_EI_BACKEND_TESTEXECUTION_MONGODB_DATABASE_NAME=eiffel2_intelligence-testexecution
-export EIFFEL_EI_BACKEND_TESTEXECUTION_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME=eiffel2_intelligence-testexecution_MissedNotification
-export EIFFEL_EI_BACKEND_ALLEVENTS_MONGODB_DATABASE_NAME=eiffel2_intelligence-allevents
-export EIFFEL_EI_BACKEND_ALLEVENTS_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME=eiffel2_intelligence-allevents_MissedNotification
+export EIFFEL_EI_BACKEND_ARTIFACT_MONGODB_DATABASE_NAME=eiffel_intelligence-artifact
+export EIFFEL_EI_BACKEND_ARTIFACT_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME=eiffel_intelligence-artifact_MissedNotification
+export EIFFEL_EI_BACKEND_SOURCECHANGE_MONGODB_DATABASE_NAME=eiffel_intelligence-sourcechange
+export EIFFEL_EI_BACKEND_SOURCECHANGE_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME=eiffel_intelligence-sourcechange_MissedNotification
+export EIFFEL_EI_BACKEND_TESTEXECUTION_MONGODB_DATABASE_NAME=eiffel_intelligence-testexecution
+export EIFFEL_EI_BACKEND_TESTEXECUTION_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME=eiffel_intelligence-testexecution_MissedNotification
+export EIFFEL_EI_BACKEND_ALLEVENTS_MONGODB_DATABASE_NAME=eiffel_intelligence-allevents
+export EIFFEL_EI_BACKEND_ALLEVENTS_MONGODB_MISSED_NOTIFICATION_DATABASE_NAME=eiffel_intelligence-allevents_MissedNotification
 
 export K8S_CONFIG_EIFFEL_MONGODB_SEED_INJECTENVVALUESTOFILESSH="#!/bin/bash
 sed -i 's/EIFFEL_JENKINS_FEM/${EIFFEL_JENKINS_FEM}\:${EIFFEL_JENKINS_FEM_EXTERNAL_PORT}/g' '/etc/pre-install/seed-data/ei_allevents/subscription.json'
