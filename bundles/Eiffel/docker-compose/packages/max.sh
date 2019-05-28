@@ -21,4 +21,4 @@
 ##
 ##--------------------------------------------------------------------------------------
 
-docker_package_services="mongodb mongo_seed rabbitmq ei_backend_artifact ei_backend_sourcechange ei_backend_testexecution ei_backend_allevents ei_frontend vici dummy_er remrem_generate remrem_publish er jenkins jenkins_fem nexus nexus_proxy nexus_eiffel_configurations ve"
+docker_package_services="mongodb mongo_seed rabbitmq ei_backend_artifact ei_backend_sourcechange ei_backend_testexecution ei_backend_allevents ei_frontend vici dummy_er remrem_generate remrem_publish er jenkins jenkins_fem nexus nexus_proxy nexus_eiffel_configurations"

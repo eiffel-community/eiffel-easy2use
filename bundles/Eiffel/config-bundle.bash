@@ -26,20 +26,20 @@ export K8S_Ingress_Enabled=true
 K8S_NAMESPACE=eiffel2
 [[ ! -z ${K8S_NAMESPACE_OVERRIDE} ]] && K8S_NAMESPACE=${K8S_NAMESPACE_OVERRIDE}
 
-EIFFEL2_CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"
-source $EIFFEL2_CURRENT_DIR/component-versions.bash
-source $EIFFEL2_CURRENT_DIR/base-config.bash
+EIFFEL_CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"
+source $EIFFEL_CURRENT_DIR/component-versions.bash
+source $EIFFEL_CURRENT_DIR/base-config.bash
 
 if [ "$TARGET_TYPE" == "Kubernetes" ]
 then
-  source $EIFFEL2_CURRENT_DIR/config-k8s.bash
-  source $EIFFEL2_CURRENT_DIR/k8s-base-config.bash
+  source $EIFFEL_CURRENT_DIR/config-k8s.bash
+  source $EIFFEL_CURRENT_DIR/k8s-base-config.bash
 else
-  source $EIFFEL2_CURRENT_DIR/config-docker.bash
-  source $EIFFEL2_CURRENT_DIR/docker-base-config.bash
+  source $EIFFEL_CURRENT_DIR/config-docker.bash
+  source $EIFFEL_CURRENT_DIR/docker-base-config.bash
 fi
 
-source $EIFFEL2_CURRENT_DIR/components-configuration.bash
+source $EIFFEL_CURRENT_DIR/components-configuration.bash
 
 
 ###################################################################

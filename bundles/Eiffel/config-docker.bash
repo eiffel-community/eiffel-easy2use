@@ -20,5 +20,5 @@ NETWORK=eiffel_2.0_1
 #verbose "Network to use: $NETWORK"
  
  
-export EIFFEL2_DOCKER_NETWORK=$NETWORK
-export EIFFEL2_NETWORK_NAME=eiffel2_network
+export EIFFEL_DOCKER_NETWORK=$NETWORK
+export EIFFEL_NETWORK_NAME=eiffel2_network
