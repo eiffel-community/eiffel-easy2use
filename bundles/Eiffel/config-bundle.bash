@@ -23,7 +23,7 @@ kubernetes_supported="Yes"
 export K8S_Ingress_Enabled=true
 
 # Namespace in K8S Cluster
-K8S_NAMESPACE=eiffel2
+K8S_NAMESPACE=eiffel
 [[ ! -z ${K8S_NAMESPACE_OVERRIDE} ]] && K8S_NAMESPACE=${K8S_NAMESPACE_OVERRIDE}
 
 EIFFEL_CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"

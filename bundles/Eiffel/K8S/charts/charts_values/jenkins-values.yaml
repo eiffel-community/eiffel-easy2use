@@ -48,11 +48,11 @@ Master:
   #     value: "http://192.168.64.1:3128"
   ContainerEnv:
       - name: REMREM_GENERATE_URL
-        value: "http://eiffel-remrem-generate-eiffel2:8095/eiffelsemantics"
+        value: "http://eiffel-remrem-generate-eiffel:8095/eiffelsemantics"
       - name: REMREM_PUBLISH_URL
-        value: "http://eiffel-remrem-publish-eiffel2:8096/producer/msg?mp=eiffelsemantics"
+        value: "http://eiffel-remrem-publish-eiffel:8096/producer/msg?mp=eiffelsemantics"
       - name: REMREM_PUBLISH_GEN_PUB_URL
-        value: "http://eiffel-remrem-publish-eiffel2:8096/generateAndPublish?mp=eiffelsemantics&parseData=false&msgType="
+        value: "http://eiffel-remrem-publish-eiffel:8096/generateAndPublish?mp=eiffelsemantics&parseData=false&msgType="
   #   - name: http_proxy
   #     value: "http://192.168.64.1:3128"
   # Set min/max heap here if needed with:

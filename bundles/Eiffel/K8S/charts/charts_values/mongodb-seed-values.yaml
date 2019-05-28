@@ -68,7 +68,7 @@ configmap:
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
-          "notificationMeta" : "http://EIFFEL2_JENKINS_FEM/job/ei-artifact-triggered-job/build",
+          "notificationMeta" : "http://EIFFEL_JENKINS_FEM/job/ei-artifact-triggered-job/build",
           "restPostBodyMediaType" : "application/x-www-form-urlencoded",
           "notificationMessageKeyValues" : [
               {
@@ -99,7 +99,7 @@ configmap:
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
-          "notificationMeta" : "http://EIFFEL2_JENKINS_FEM/job/ei-artifact-triggered-parameterized-job/build",
+          "notificationMeta" : "http://EIFFEL_JENKINS_FEM/job/ei-artifact-triggered-parameterized-job/build",
           "restPostBodyMediaType" : "application/x-www-form-urlencoded",
           "notificationMessageKeyValues" : [
               {
@@ -130,7 +130,7 @@ configmap:
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
-          "notificationMeta" : "http://EIFFEL2_JENKINS/job/ei-artifact-triggered-job/build",
+          "notificationMeta" : "http://EIFFEL_JENKINS/job/ei-artifact-triggered-job/build",
           "restPostBodyMediaType" : "application/x-www-form-urlencoded",
           "notificationMessageKeyValues" : [
               {
@@ -161,7 +161,7 @@ configmap:
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
-          "notificationMeta" : "http://EIFFEL2_JENKINS/job/ei-artifact-triggered-parameterized-job/build",
+          "notificationMeta" : "http://EIFFEL_JENKINS/job/ei-artifact-triggered-parameterized-job/build",
           "restPostBodyMediaType" : "application/x-www-form-urlencoded",
           "notificationMessageKeyValues" : [
               {
@@ -195,7 +195,7 @@ configmap:
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
-          "notificationMeta" : "http://EIFFEL2_JENKINS_FEM/job/ei-sourcechange-triggered-job/build",
+          "notificationMeta" : "http://EIFFEL_JENKINS_FEM/job/ei-sourcechange-triggered-job/build",
           "restPostBodyMediaType" : "application/x-www-form-urlencoded",
           "notificationMessageKeyValues" : [
               {
@@ -226,7 +226,7 @@ configmap:
         "repeat" : false,
         "created" : 1523473956269,
         "notificationType" : "REST_POST",
-        "notificationMeta" : "http://EIFFEL2_JENKINS/job/ei-sourcechange-triggered-job/build",
+        "notificationMeta" : "http://EIFFEL_JENKINS/job/ei-sourcechange-triggered-job/build",
         "restPostBodyMediaType" : "application/x-www-form-urlencoded",
         "notificationMessageKeyValues" : [
             {
@@ -260,7 +260,7 @@ configmap:
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
-          "notificationMeta" : "http://EIFFEL2_JENKINS_FEM/job/ei-testexecution-triggered-job/build",
+          "notificationMeta" : "http://EIFFEL_JENKINS_FEM/job/ei-testexecution-triggered-job/build",
           "restPostBodyMediaType" : "application/x-www-form-urlencoded",
           "notificationMessageKeyValues" : [
               {
@@ -291,7 +291,7 @@ configmap:
         "repeat" : false,
         "created" : 1523473956269,
         "notificationType" : "REST_POST",
-        "notificationMeta" : "http://EIFFEL2_JENKINS/job/ei-testexecution-triggered-job/build",
+        "notificationMeta" : "http://EIFFEL_JENKINS/job/ei-testexecution-triggered-job/build",
         "restPostBodyMediaType" : "application/x-www-form-urlencoded",
         "notificationMessageKeyValues" : [
             {
@@ -325,7 +325,7 @@ configmap:
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
-          "notificationMeta" : "http://EIFFEL2_JENKINS_FEM/job/ei-artifact-triggered-job/build",
+          "notificationMeta" : "http://EIFFEL_JENKINS_FEM/job/ei-artifact-triggered-job/build",
           "restPostBodyMediaType" : "application/x-www-form-urlencoded",
           "notificationMessageKeyValues" : [
               {
@@ -356,7 +356,7 @@ configmap:
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
-          "notificationMeta" : "http://EIFFEL2_JENKINS_FEM/job/ei-artifact-triggered-parameterized-job/build",
+          "notificationMeta" : "http://EIFFEL_JENKINS_FEM/job/ei-artifact-triggered-parameterized-job/build",
           "restPostBodyMediaType" : "application/x-www-form-urlencoded",
           "notificationMessageKeyValues" : [
               {
@@ -387,7 +387,7 @@ configmap:
         "repeat" : false,
         "created" : 1523473956269,
         "notificationType" : "REST_POST",
-        "notificationMeta" : "http://EIFFEL2_JENKINS/job/ei-artifact-triggered-job/build",
+        "notificationMeta" : "http://EIFFEL_JENKINS/job/ei-artifact-triggered-job/build",
         "restPostBodyMediaType" : "application/x-www-form-urlencoded",
         "notificationMessageKeyValues" : [
             {
@@ -418,7 +418,7 @@ configmap:
         "repeat" : false,
         "created" : 1523473956269,
         "notificationType" : "REST_POST",
-        "notificationMeta" : "http://EIFFEL2_JENKINS/job/ei-artifact-triggered-parameterized-job/build",
+        "notificationMeta" : "http://EIFFEL_JENKINS/job/ei-artifact-triggered-parameterized-job/build",
         "restPostBodyMediaType" : "application/x-www-form-urlencoded",
         "notificationMessageKeyValues" : [
             {

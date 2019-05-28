@@ -39,7 +39,7 @@ services:
     ports:
       - "${EIFFEL_MONGODB_EXTERNAL_PORT}:${EIFFEL_MONGODB_INTERNAL_PORT}"
     networks:
-          eiffel_2.0_1:
+          eiffel.0_1:
             aliases:
               - ${EIFFEL_MONGODB}
 
@@ -117,7 +117,7 @@ services:
                mongo eiffel_intelligence-allevents --host ${EIFFEL_MONGODB}:${EIFFEL_MONGODB_INTERNAL_PORT}  --eval \"db.subscription_repeat_handler.remove({})\"
                "
     networks:
-          eiffel_2.0_1:
+          eiffel.0_1:
             aliases:
               - ${EIFFEL_MONGODB_SEED}
 
@@ -132,7 +132,7 @@ services:
       - "${EIFFEL_RABBITMQ_WEB_EXTERNAL_PORT}:${EIFFEL_RABBITMQ_WEB_INTERNAL_PORT}"
       - "${EIFFEL_RABBITMQ_AMQP_EXTERNAL_PORT}:${EIFFEL_RABBITMQ_AMQP_INTERNAL_PORT}"
     networks:
-          eiffel_2.0_1:
+          eiffel.0_1:
             aliases:
               - ${EIFFEL_RABBITMQ}
     environment:
@@ -153,7 +153,7 @@ services:
       - mongodb
       - rabbitmq
     networks:
-          eiffel_2.0_1:
+          eiffel.0_1:
             aliases:
               - ${EIFFEL_EI_BACKEND_ARTIFACT}
     env_file:
@@ -174,7 +174,7 @@ services:
       - mongodb
       - rabbitmq
     networks:
-          eiffel_2.0_1:
+          eiffel.0_1:
             aliases:
               - ${EIFFEL_EI_BACKEND_SOURCECHANGE}
     env_file:
@@ -195,7 +195,7 @@ services:
       - mongodb
       - rabbitmq
     networks:
-          eiffel_2.0_1:
+          eiffel.0_1:
             aliases:
               - ${EIFFEL_EI_BACKEND_TESTEXECUTION}
     env_file:
@@ -217,7 +217,7 @@ services:
       - mongodb
       - rabbitmq
     networks:
-          eiffel_2.0_1:
+          eiffel.0_1:
             aliases:
               - ${EIFFEL_EI_BACKEND_ALLEVENTS}
     env_file:
@@ -237,7 +237,7 @@ services:
     depends_on:
       - ei_backend_allevents
     networks:
-          eiffel_2.0_1:
+          eiffel.0_1:
             aliases:
               - ${EIFFEL_EI_FRONTEND}
     env_file:
@@ -256,7 +256,7 @@ services:
 #      - WAIT_MB_HOSTS=rabbitmq:15672
 #      - WAIT_DB_HOSTS=mongodb:27017
     networks:
-          eiffel_2.0_1:
+          eiffel.0_1:
             aliases:
               - ${EIFFEL_VICI}
 
@@ -271,7 +271,7 @@ services:
       - er
       - vici
     networks:
-          eiffel_2.0_1:
+          eiffel.0_1:
             aliases:
               - ${EIFFEL_DUMMY_ER}
     env_file:
@@ -287,7 +287,7 @@ services:
     env_file:
       - ./docker-env-files/remrem-generate.env
     networks:
-          eiffel_2.0_1:
+          eiffel.0_1:
             aliases:
               - ${EIFFEL_REMREM_GENERATE}
 
@@ -304,7 +304,7 @@ services:
     env_file:
       - ./docker-env-files/remrem-publish.env
     networks:
-          eiffel_2.0_1:
+          eiffel.0_1:
             aliases:
               - ${EIFFEL_REMREM_PUBLISH}
 
@@ -323,7 +323,7 @@ services:
       - ei_backend_testexecution
       - ei_backend_sourcechange
     networks:
-          eiffel_2.0_1:
+          eiffel.0_1:
             aliases:
               - ${EIFFEL_ER}
     env_file:
@@ -353,7 +353,7 @@ services:
     env_file:
       - ./docker-env-files/jenkins.env
     networks:
-         eiffel_2.0_1:
+         eiffel.0_1:
             aliases:
               - ${EIFFEL_JENKINS}
 
@@ -380,7 +380,7 @@ services:
     env_file:
       - ./docker-env-files/eiffel-jenkins.env
     networks:
-          eiffel_2.0_1:
+          eiffel.0_1:
             aliases:
               - ${EIFFEL_JENKINS_FEM}
 #    volumes:
@@ -396,7 +396,7 @@ services:
     depends_on:
       - rabbitmq
     networks:
-          eiffel_2.0_1:
+          eiffel.0_1:
             aliases:
               - ${EIFFEL_NEXUS3}
 
@@ -405,6 +405,6 @@ services:
 
 
 networks:
-  eiffel_2.0_1:
+  eiffel.0_1:
       name: ${EIFFEL_NETWORK_NAME}
 
