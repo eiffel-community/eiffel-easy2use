@@ -128,8 +128,8 @@ Examples:
 
 Use configurations in config-default.bash
 
-Start the complete Eiffel1 bundle
-$ ./easy2use start Eiffel1
+Start the complete Eiffel bundle
+$ ./easy2use start Eiffel
 
 Start three specific services from the Eiffel bundle
 $ ./easy2use start Eiffel --services rabbitmq,mongodb,er
