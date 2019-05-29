@@ -48,8 +48,8 @@ export EIFFEL_NEXUS_USER=admin
 export EIFFEL_NEXUS_PASSWORD=admin123
 export EIFFEL_NEXUS_URL=http://${EIFFEL_NEXUS3}:${EIFFEL_NEXUS_APPLICATION_PORT}/
 
-export MAIL_HOST=mail.lmera.ericsson.se
-export MAIL_PORT=25
+export MAIL_HOST=
+export MAIL_PORT=
 export MAIL_USER=
 export MAIL_PASSWORD=
 export MAIL_PROPERTIES_AUTH_ENABLE=false
