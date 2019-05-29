@@ -75,7 +75,7 @@ export K8S_INGRESS_EIFFEL_EI_FRONTEND=$K8S_RELEASE_EIFFEL_EI_FRONTEND.$K8S_DOMAI
 
 
 ### Common Easy2Use DNS Service names
-# ----- Eiffel 2.0 Servicenames, External Ports, External Ports
+# ----- Eiffel Servicenames, External Ports, External Ports
 export EIFFEL_MONGODB=$K8S_RELEASE_EIFFEL_MONGODB
 export EIFFEL_RABBITMQ=$K8S_RELEASE_EIFFEL_RABBITMQ
 export EIFFEL_DUMMY_ER=$K8S_RELEASE_EIFFEL_DUMMY_ER
