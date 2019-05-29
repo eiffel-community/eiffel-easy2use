@@ -25,6 +25,8 @@ function execute_k8s_command_on_services {
 
   local failed=0
 
+echo "NAME: $K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
+
   for i in $services
   do
     case $i in
