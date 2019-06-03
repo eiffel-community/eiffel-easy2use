@@ -346,7 +346,6 @@ services:
       - remrem_generate
       - remrem_publish
       - nexus
-      - nexus_eiffel_configurations
       - ei_backend_artifact
       - ei_backend_testexecution
       - ei_backend_sourcechange
@@ -373,7 +372,6 @@ services:
       - remrem_generate
       - remrem_publish
       - nexus
-      - nexus_eiffel_configurations
       - ei_backend_artifact
       - ei_backend_testexecution
       - ei_backend_sourcechange
@@ -388,7 +386,7 @@ services:
 
   nexus:
     restart: always
-    image: ${EIFFEL2_PLUGIN_NEXUS_IMAGE_TAG}
+    image: ${EIFFEL2_NEXUS_IMAGE_TAG}
     expose:
       - "${EIFFEL2_NEXUS_INTERNAL_PORT}"
     ports:
