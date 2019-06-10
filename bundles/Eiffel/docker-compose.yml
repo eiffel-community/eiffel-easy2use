@@ -386,7 +386,7 @@ services:
 
   nexus:
     restart: always
-    image: ${EIFFEL2_NEXUS_IMAGE_TAG}
+    image: ${EIFFEL_NEXUS_IMAGE_TAG}
     expose:
       - "${EIFFEL_NEXUS_INTERNAL_PORT}"
     ports:
