@@ -657,6 +657,8 @@ WAIT_MB_HOSTS=${EIFFEL_RABBITMQ}\:${EIFFEL_RABBITMQ_WEB_EXTERNAL_PORT}"
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"
 
+mkdir -p $CURRENT_DIR/docker-env-files
+
 echo -e "$DOCKER_CONFIG_EIFFEL_EI_FRONTEND" > $CURRENT_DIR/docker-env-files/ei-frontend.env
 echo -e "$DOCKER_CONFIG_EIFFEL_EI_BACKEND_ARTIFACT" > $CURRENT_DIR/docker-env-files/ei-backend-artifact.env
 echo -e "$DOCKER_CONFIG_EIFFEL_EI_BACKEND_SOURCECHANGE" > $CURRENT_DIR/docker-env-files/ei-backend-sourcechange.env
