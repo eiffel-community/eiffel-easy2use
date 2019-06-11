@@ -2,16 +2,16 @@ version: "3.7"
 services:
 
   dummy_er:
-    image: ${EIFFEL2_DUMMY_ER_IMAGE_TAG}
+    image: ${EIFFEL_DUMMY_ER_IMAGE_TAG}
     build:
       context: ./dummy-er
       args:
-        DUMMY_ER_VERSION: ${EIFFEL2_DUMMY_ER_VERSION}
+        DUMMY_ER_VERSION: ${EIFFEL_DUMMY_ER_VERSION}
 
   jenkins:
-    image: ${EIFFEL2_JENKINS_IMAGE_TAG}
+    image: ${EIFFEL_JENKINS_IMAGE_TAG}
     build:
       context: ./
       dockerfile: ./jenkins/Dockerfile
       args:
-        JENKINS_VERSION: ${EIFFEL2_JENKINS_IMAGE_BUILD_VERSION}
+        JENKINS_VERSION: ${EIFFEL_JENKINS_IMAGE_BUILD_VERSION}

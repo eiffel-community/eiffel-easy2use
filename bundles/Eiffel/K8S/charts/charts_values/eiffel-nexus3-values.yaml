@@ -15,7 +15,7 @@
 #   limitations under the License.
 #
 ##-------------------------------------------------------------------------------------
-## Eiffel 2.0 eiffel-remrem-publish Helm values
+## Eiffel eiffel-nexus3 Helm values
 ##
 ## Author: michael.frick@ericsson.com
 ##
@@ -46,14 +46,13 @@ image:
 ## does your cluster have rbac enabled? assume yes by default
 rbacEnabled: false
 
-## section of specific values for eiffel2
-eiffel2:
+## section of specific values for eiffel
+eiffel:
   # Serviceport and ingress mapping to service
-  servicePort: 8096
-
+  servicePort: 8081
   # POD container port and portname for mapping to service
-  containerPort: 8080
-  containerPortName: remrempublish
+  containerPort: 8081
+  containerPortName: nexus3
 
   # Nodeport proxy
   nodePort:
@@ -66,10 +65,12 @@ eiffel2:
   diskFreeLimit: '"6GiB"'
 
   ## Environment Variable Configuration
-  configurationEnvironmentVars: injected
+  configurationEnvironmentVars: |
 
   ## Configuration file content - for spring-boot application.properties injection
-  configuration: injected
+  configuration: |-
+
+
 
 
 ## Kubernetes service type
@@ -82,7 +83,7 @@ persistence:
   storageClass: "erikube-nfs"
   accessMode: ReadWriteOnce
 
-  # If you change this value, you might have to adjust `eiffel2.diskFreeLimit` as well.
+  # If you change this value, you might have to adjust `eiffel.diskFreeLimit` as well.
   size: 8Gi
 
 ## Configure resource requests and limits
@@ -100,7 +101,7 @@ nodeSelector: {}
 tolerations: []
 affinity: {}
 
-## annotations for eiffel2 pods
+## annotations for eiffel pods
 podAnnotations: {}
 
 ## Configure the ingress resource that allows you to access the

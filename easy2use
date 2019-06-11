@@ -128,14 +128,14 @@ Examples:
 
 Use configurations in config-default.bash
 
-Start the complete Eiffel1 bundle
-$ ./easy2use start Eiffel1
+Start the complete Eiffel bundle
+$ ./easy2use start Eiffel
 
-Start three specific services from the Eiffel2 bundle
-$ ./easy2use start Eiffel2 --services rabbitmq,mongodb,er
+Start three specific services from the Eiffel bundle
+$ ./easy2use start Eiffel --services rabbitmq,mongodb,er
 
-Start a predefined package of services from the Eiffel2 bundle
-$ ./easy2use start Eiffel2 --package min
+Start a predefined package of services from the Eiffel bundle
+$ ./easy2use start Eiffel --package min
 
 Examples :
 Override configurations in config-default.bash file via flags

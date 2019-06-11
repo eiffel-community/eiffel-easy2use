@@ -15,10 +15,10 @@
 #   limitations under the License.
 #
 # Network in Docker. Note! This is not yet propagated to docker-compose.yml.
-NETWORK=eiffel_2.0_1
+NETWORK=eiffel.0_1
 [[ ! -z ${DOCKER_NETWORK_OVERRIDE} ]] && NETWORK=${DOCKER_NETWORK_OVERRIDE}
 #verbose "Network to use: $NETWORK"
  
  
-export EIFFEL2_DOCKER_NETWORK=$NETWORK
-export EIFFEL2_NETWORK_NAME=eiffel2_network
+export EIFFEL_DOCKER_NETWORK=$NETWORK
+export EIFFEL_NETWORK_NAME=eiffel_network

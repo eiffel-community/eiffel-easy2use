@@ -30,270 +30,270 @@ function execute_k8s_command_on_services {
     case $i in
 
       mongodb)
-        local releasename="$K8S_RELEASE_EIFFEL2_MONGODB"
+        local releasename="$K8S_RELEASE_EIFFEL_MONGODB"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL2_MONGODB_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL2_MONGODB_VERSION"
-          fullnameOverride="$K8S_SERVICE_EIFFEL2_MONGODB"
-          service.port="$EIFFEL2_MONGODB_EXTERNAL_PORT"
+                image.repository="$EIFFEL_MONGODB_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_MONGODB_VERSION"
+          fullnameOverride="$K8S_SERVICE_EIFFEL_MONGODB"
+          service.port="$EIFFEL_MONGODB_EXTERNAL_PORT"
         )
         local valuefile="charts/charts_values/mongodb-values.yaml"
         local chart="charts/mongodb-3.0.1.tgz"
         ;;
 
       mongo_seed)
-        local releasename="$K8S_RELEASE_EIFFEL2_MONGODB_SEED"
+        local releasename="$K8S_RELEASE_EIFFEL_MONGODB_SEED"
         local settings=(
-          fullnameOverride="$K8S_RELEASE_EIFFEL2_MONGODB_SEED"
-          configmap.runsh="$K8S_CONFIG_EIFFEL2_MONGODB_SEED_RUNSH"
-          configmap.injectenvvaluestofilessh="$K8S_CONFIG_EIFFEL2_MONGODB_SEED_INJECTENVVALUESTOFILESSH"
-          service.port="$EIFFEL2_MONGODB_EXTERNAL_PORT"
+          fullnameOverride="$K8S_RELEASE_EIFFEL_MONGODB_SEED"
+          configmap.runsh="$K8S_CONFIG_EIFFEL_MONGODB_SEED_RUNSH"
+          configmap.injectenvvaluestofilessh="$K8S_CONFIG_EIFFEL_MONGODB_SEED_INJECTENVVALUESTOFILESSH"
+          service.port="$EIFFEL_MONGODB_EXTERNAL_PORT"
         )
         local valuefile="charts/charts_values/mongodb-seed-values.yaml"
         local chart="charts/mongodb-seed.tgz"
         ;;
 
       rabbitmq)
-        local releasename="$K8S_RELEASE_EIFFEL2_RABBITMQ"
+        local releasename="$K8S_RELEASE_EIFFEL_RABBITMQ"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL2_RABBITMQ_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL2_RABBITMQ_VERSION"
-          ingress.hostName="$K8S_INGRESS_EIFFEL2_RABBITMQ"
-          fullnameOverride="$K8S_SERVICE_EIFFEL2_RABBITMQ"
-          rabbitmq.nodePort="$EIFFEL2_RABBITMQ_AMQP_EXTERNAL_PORT"
-          rabbitmq.managerPort="$EIFFEL2_RABBITMQ_WEB_EXTERNAL_PORT"
+                image.repository="$EIFFEL_RABBITMQ_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_RABBITMQ_VERSION"
+          ingress.hostName="$K8S_INGRESS_EIFFEL_RABBITMQ"
+          fullnameOverride="$K8S_SERVICE_EIFFEL_RABBITMQ"
+          rabbitmq.nodePort="$EIFFEL_RABBITMQ_AMQP_EXTERNAL_PORT"
+          rabbitmq.managerPort="$EIFFEL_RABBITMQ_WEB_EXTERNAL_PORT"
         )
         local valuefile="charts/charts_values/rabbitmq-values.yaml"
         local chart="charts/rabbitmq-2.2.0.tgz"
         ;;
 
       ei_backend_artifact)
-        local releasename="$K8S_RELEASE_EIFFEL2_EI_BACKEND_ARTIFACT"
+        local releasename="$K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL2_EI_BACKEND_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL2_EI_BACKEND_VERSION"
-          eiffel2.configuration="$K8S_CONFIG_EIFFEL2_EI_BACKEND_ARTIFACT"
-          eiffel2.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL2_EI_BACKEND_ARTIFACT"
-          ingress.hostName="$K8S_INGRESS_EIFFEL2_EI_BACKEND_ARTIFACT"
+                image.repository="$EIFFEL_EI_BACKEND_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_EI_BACKEND_VERSION"
+          fullnameOverride="$K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
+          eiffel.configuration="$K8S_CONFIG_EIFFEL_EI_BACKEND_ARTIFACT"
+          eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_EI_BACKEND_ARTIFACT"
+          ingress.hostName="$K8S_INGRESS_EIFFEL_EI_BACKEND_ARTIFACT"
           ingress.enabled="$K8S_Ingress_Enabled"
-          fullnameOverride="$K8S_RELEASE_EIFFEL2_EI_BACKEND_ARTIFACT"
-          eiffel2.servicePort="$EIFFEL2_EI_BACKEND_ARTIFACT_EXTERNAL_PORT"
-          eiffel2.containerPort="$EIFFEL2_EI_BACKEND_ARTIFACT_INTERNAL_PORT"
+          eiffel.servicePort="$EIFFEL_EI_BACKEND_ARTIFACT_EXTERNAL_PORT"
+          eiffel.containerPort="$EIFFEL_EI_BACKEND_ARTIFACT_INTERNAL_PORT"
         )
-        local valuefile="charts/charts_values/eiffel2-ei-backend-artifact-values.yaml"
-        local chart="charts/eiffel2.tgz"
+        local valuefile="charts/charts_values/eiffel-ei-backend-artifact-values.yaml"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       ei_backend_sourcechange)
-        local releasename="$K8S_RELEASE_EIFFEL2_EI_BACKEND_SOURCECHANGE"
+        local releasename="$K8S_RELEASE_EIFFEL_EI_BACKEND_SOURCECHANGE"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL2_EI_BACKEND_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL2_EI_BACKEND_VERSION"
-          eiffel2.configuration="$K8S_CONFIG_EIFFEL2_EI_BACKEND_SOURCECHANGE"
-          eiffel2.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL2_EI_BACKEND_SOURCECHANGE"
-          ingress.hostName="$K8S_INGRESS_EIFFEL2_EI_BACKEND_SOURCECHANGE"
+                image.repository="$EIFFEL_EI_BACKEND_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_EI_BACKEND_VERSION"
+          eiffel.configuration="$K8S_CONFIG_EIFFEL_EI_BACKEND_SOURCECHANGE"
+          eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_EI_BACKEND_SOURCECHANGE"
+          ingress.hostName="$K8S_INGRESS_EIFFEL_EI_BACKEND_SOURCECHANGE"
           ingress.enabled="$K8S_Ingress_Enabled"
-          fullnameOverride="$K8S_RELEASE_EIFFEL2_EI_BACKEND_SOURCECHANGE"
-          eiffel2.servicePort="$EIFFEL2_EI_BACKEND_SOURCECHANGE_EXTERNAL_PORT"
-          eiffel2.containerPort="$EIFFEL2_EI_BACKEND_SOURCECHANGE_INTERNAL_PORT"
+          fullnameOverride="$K8S_RELEASE_EIFFEL_EI_BACKEND_SOURCECHANGE"
+          eiffel.servicePort="$EIFFEL_EI_BACKEND_SOURCECHANGE_EXTERNAL_PORT"
+          eiffel.containerPort="$EIFFEL_EI_BACKEND_SOURCECHANGE_INTERNAL_PORT"
         )
-        local valuefile="charts/charts_values/eiffel2-ei-backend-sourcechange-values.yaml"
-        local chart="charts/eiffel2.tgz"
+        local valuefile="charts/charts_values/eiffel-ei-backend-sourcechange-values.yaml"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       ei_backend_testexecution)
-        local releasename="$K8S_RELEASE_EIFFEL2_EI_BACKEND_TESTEXECUTION"
+        local releasename="$K8S_RELEASE_EIFFEL_EI_BACKEND_TESTEXECUTION"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL2_EI_BACKEND_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL2_EI_BACKEND_VERSION"
-          eiffel2.configuration="$K8S_CONFIG_EIFFEL2_EI_BACKEND_TESTEXECUTION"
-          eiffel2.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL2_EI_BACKEND_TESTEXECUTION"
-          ingress.hostName="$K8S_INGRESS_EIFFEL2_EI_BACKEND_TESTEXECUTION"
+                image.repository="$EIFFEL_EI_BACKEND_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_EI_BACKEND_VERSION"
+          eiffel.configuration="$K8S_CONFIG_EIFFEL_EI_BACKEND_TESTEXECUTION"
+          eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_EI_BACKEND_TESTEXECUTION"
+          ingress.hostName="$K8S_INGRESS_EIFFEL_EI_BACKEND_TESTEXECUTION"
           ingress.enabled="$K8S_Ingress_Enabled"
-          fullnameOverride="$K8S_RELEASE_EIFFEL2_EI_BACKEND_TESTEXECUTION"
-          eiffel2.servicePort="$EIFFEL2_EI_BACKEND_TESTEXECUTION_EXTERNAL_PORT"
-          eiffel2.containerPort="$EIFFEL2_EI_BACKEND_TESTEXECUTION_INTERNAL_PORT"
+          fullnameOverride="$K8S_RELEASE_EIFFEL_EI_BACKEND_TESTEXECUTION"
+          eiffel.servicePort="$EIFFEL_EI_BACKEND_TESTEXECUTION_EXTERNAL_PORT"
+          eiffel.containerPort="$EIFFEL_EI_BACKEND_TESTEXECUTION_INTERNAL_PORT"
         )
-        local valuefile="charts/charts_values/eiffel2-ei-backend-testexecution-values.yaml"
-        local chart="charts/eiffel2.tgz"
+        local valuefile="charts/charts_values/eiffel-ei-backend-testexecution-values.yaml"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       ei_backend_allevents)
-        local releasename="$K8S_RELEASE_EIFFEL2_EI_BACKEND_ALLEVENTS"
+        local releasename="$K8S_RELEASE_EIFFEL_EI_BACKEND_ALLEVENTS"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL2_EI_BACKEND_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL2_EI_BACKEND_VERSION"
-          eiffel2.configuration="$K8S_CONFIG_EIFFEL2_EI_BACKEND_ALLEVENTS"
-          eiffel2.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL2_EI_BACKEND_ALLEVENTS"
-          ingress.hostName="$K8S_INGRESS_EIFFEL2_EI_BACKEND_ALLEVENTS"
+                image.repository="$EIFFEL_EI_BACKEND_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_EI_BACKEND_VERSION"
+          eiffel.configuration="$K8S_CONFIG_EIFFEL_EI_BACKEND_ALLEVENTS"
+          eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_EI_BACKEND_ALLEVENTS"
+          ingress.hostName="$K8S_INGRESS_EIFFEL_EI_BACKEND_ALLEVENTS"
           ingress.enabled="$K8S_Ingress_Enabled"
-          fullnameOverride="$K8S_RELEASE_EIFFEL2_EI_BACKEND_ALLEVENTS"
-          eiffel2.servicePort="$EIFFEL2_EI_BACKEND_ALLEVENTS_EXTERNAL_PORT"
-          eiffel2.containerPort="$EIFFEL2_EI_BACKEND_ALLEVENTS_INTERNAL_PORT"
+          fullnameOverride="$K8S_RELEASE_EIFFEL_EI_BACKEND_ALLEVENTS"
+          eiffel.servicePort="$EIFFEL_EI_BACKEND_ALLEVENTS_EXTERNAL_PORT"
+          eiffel.containerPort="$EIFFEL_EI_BACKEND_ALLEVENTS_INTERNAL_PORT"
         )
-        local valuefile="charts/charts_values/eiffel2-ei-backend-allevents-values.yaml"
-        local chart="charts/eiffel2.tgz"
+        local valuefile="charts/charts_values/eiffel-ei-backend-allevents-values.yaml"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       ei_frontend)
-        local releasename="$K8S_RELEASE_EIFFEL2_EI_FRONTEND"
+        local releasename="$K8S_RELEASE_EIFFEL_EI_FRONTEND"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL2_EI_FRONTEND_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL2_EI_FRONTEND_VERSION"
-          eiffel2.configuration="$K8S_CONFIG_EIFFEL2_EI_FRONTEND"
-          eiffel2.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL2_EI_FRONTEND"
-          ingress.hostName="$K8S_INGRESS_EIFFEL2_EI_FRONTEND"
+                image.repository="$EIFFEL_EI_FRONTEND_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_EI_FRONTEND_VERSION"
+          eiffel.configuration="$K8S_CONFIG_EIFFEL_EI_FRONTEND"
+          eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_EI_FRONTEND"
+          ingress.hostName="$K8S_INGRESS_EIFFEL_EI_FRONTEND"
           ingress.enabled="$K8S_Ingress_Enabled"
-          fullnameOverride="$K8S_RELEASE_EIFFEL2_EI_FRONTEND"
-          eiffel2.servicePort="$EIFFEL2_EI_FRONTEND_EXTERNAL_PORT"
-          eiffel2.containerPort="$EIFFEL2_EI_FRONTEND_INTERNAL_PORT"
+          fullnameOverride="$K8S_RELEASE_EIFFEL_EI_FRONTEND"
+          eiffel.servicePort="$EIFFEL_EI_FRONTEND_EXTERNAL_PORT"
+          eiffel.containerPort="$EIFFEL_EI_FRONTEND_INTERNAL_PORT"
         )
-        local valuefile="charts/charts_values/eiffel2-ei-frontend-values.yaml"
-        local chart="charts/eiffel2.tgz"
+        local valuefile="charts/charts_values/eiffel-ei-frontend-values.yaml"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       dummy_er)
-        local releasename="$K8S_RELEASE_EIFFEL2_DUMMY_ER"
+        local releasename="$K8S_RELEASE_EIFFEL_DUMMY_ER"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL2_DUMMY_ER_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL2_DUMMY_ER_VERSION"
-          eiffel2.configuration="$K8S_CONFIG_EIFFEL2_DUMMY_ER"
-          ingress.hostName="$K8S_INGRESS_EIFFEL2_DUMMY_ER"
+                image.repository="$EIFFEL_DUMMY_ER_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_DUMMY_ER_VERSION"
+          eiffel.configuration="$K8S_CONFIG_EIFFEL_DUMMY_ER"
+          ingress.hostName="$K8S_INGRESS_EIFFEL_DUMMY_ER"
           ingress.enabled="$K8S_Ingress_Enabled"
-          fullnameOverride="$K8S_RELEASE_EIFFEL2_DUMMY_ER"
-          eiffel2.servicePort="$EIFFEL2_DUMMY_ER_EXTERNAL_PORT"
-          eiffel2.containerPort="$EIFFEL2_DUMMY_ER_INTERNAL_PORT"
+          fullnameOverride="$K8S_RELEASE_EIFFEL_DUMMY_ER"
+          eiffel.servicePort="$EIFFEL_DUMMY_ER_EXTERNAL_PORT"
+          eiffel.containerPort="$EIFFEL_DUMMY_ER_INTERNAL_PORT"
         )
-        local valuefile="charts/charts_values/eiffel2-dummy-er-values.yaml"
-        local chart="charts/eiffel2.tgz"
+        local valuefile="charts/charts_values/eiffel-dummy-er-values.yaml"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       vici)
-        local releasename="$K8S_RELEASE_EIFFEL2_VICI"
+        local releasename="$K8S_RELEASE_EIFFEL_VICI"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL2_VICI_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL2_VICI_VERSION"
-          ingress.hostName="$K8S_INGRESS_EIFFEL2_VICI"
+                image.repository="$EIFFEL_VICI_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_VICI_VERSION"
+          ingress.hostName="$K8S_INGRESS_EIFFEL_VICI"
           ingress.enabled="$K8S_Ingress_Enabled"
-          fullnameOverride="$K8S_RELEASE_EIFFEL2_VICI"
-          eiffel2.servicePort="$EIFFEL2_VICI_EXTERNAL_PORT"
-          eiffel2.containerPort="$EIFFEL2_VICI_INTERNAL_PORT"
+          fullnameOverride="$K8S_RELEASE_EIFFEL_VICI"
+          eiffel.servicePort="$EIFFEL_VICI_EXTERNAL_PORT"
+          eiffel.containerPort="$EIFFEL_VICI_INTERNAL_PORT"
         )
-        local valuefile="charts/charts_values/eiffel2-vici-values.yaml"
-        local chart="charts/eiffel2.tgz"
+        local valuefile="charts/charts_values/eiffel-vici-values.yaml"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       remrem_publish)
-        local releasename="$K8S_RELEASE_EIFFEL2_REMREM_PUBLISH"
+        local releasename="$K8S_RELEASE_EIFFEL_REMREM_PUBLISH"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL2_REMREM_PUBLISH_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL2_REMREM_PUBLISH_VERSION"
-          eiffel2.configuration="$K8S_CONFIG_EIFFEL2_REMREM_PUBLISH"
-          eiffel2.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL2_REMREM_PUBLISH"
-          ingress.hostName="$K8S_INGRESS_EIFFEL2_REMREM_PUBLISH"
+                image.repository="$EIFFEL_REMREM_PUBLISH_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_REMREM_PUBLISH_VERSION"
+          eiffel.configuration="$K8S_CONFIG_EIFFEL_REMREM_PUBLISH"
+          eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_REMREM_PUBLISH"
+          ingress.hostName="$K8S_INGRESS_EIFFEL_REMREM_PUBLISH"
           ingress.enabled="$K8S_Ingress_Enabled"
-          fullnameOverride="$K8S_RELEASE_EIFFEL2_REMREM_PUBLISH"
-          eiffel2.servicePort="$EIFFEL2_REMREM_PUBLISH_EXTERNAL_PORT"
-          eiffel2.containerPort="$EIFFEL2_REMREM_PUBLISH_INTERNAL_PORT"
+          fullnameOverride="$K8S_RELEASE_EIFFEL_REMREM_PUBLISH"
+          eiffel.servicePort="$EIFFEL_REMREM_PUBLISH_EXTERNAL_PORT"
+          eiffel.containerPort="$EIFFEL_REMREM_PUBLISH_INTERNAL_PORT"
         )
-        local valuefile="charts/charts_values/eiffel2-remrem-publish-values.yaml"
-        local chart="charts/eiffel2.tgz"
+        local valuefile="charts/charts_values/eiffel-remrem-publish-values.yaml"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       remrem_generate)
-        local releasename="$K8S_RELEASE_EIFFEL2_REMREM_GENERATE"
+        local releasename="$K8S_RELEASE_EIFFEL_REMREM_GENERATE"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL2_REMREM_GENERATE_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL2_REMREM_GENERATE_VERSION"
-          eiffel2.configuration="$K8S_CONFIG_EIFFEL2_REMREM_GENERATE"
-          eiffel2.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL2_REMREM_GENERATE"
-          ingress.hostName="$K8S_INGRESS_EIFFEL2_REMREM_GENERATE"
+                image.repository="$EIFFEL_REMREM_GENERATE_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_REMREM_GENERATE_VERSION"
+          eiffel.configuration="$K8S_CONFIG_EIFFEL_REMREM_GENERATE"
+          eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_REMREM_GENERATE"
+          ingress.hostName="$K8S_INGRESS_EIFFEL_REMREM_GENERATE"
           ingress.enabled="$K8S_Ingress_Enabled"
-          fullnameOverride="$K8S_RELEASE_EIFFEL2_REMREM_GENERATE"
-          eiffel2.servicePort="$EIFFEL2_REMREM_GENERATE_EXTERNAL_PORT"
-          eiffel2.containerPort="$EIFFEL2_REMREM_GENERATE_INTERNAL_PORT"
+          fullnameOverride="$K8S_RELEASE_EIFFEL_REMREM_GENERATE"
+          eiffel.servicePort="$EIFFEL_REMREM_GENERATE_EXTERNAL_PORT"
+          eiffel.containerPort="$EIFFEL_REMREM_GENERATE_INTERNAL_PORT"
         )
-        local valuefile="charts/charts_values/eiffel2-remrem-generate-values.yaml"
-        local chart="charts/eiffel2.tgz"
+        local valuefile="charts/charts_values/eiffel-remrem-generate-values.yaml"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       er)
-        local releasename="$K8S_RELEASE_EIFFEL2_ER"
+        local releasename="$K8S_RELEASE_EIFFEL_ER"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL2_ER_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL2_ER_VERSION"
-          eiffel2.configuration="$K8S_CONFIG_EIFFEL2_ER"
-          eiffel2.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL2_ER"
-          ingress.hostName="$K8S_INGRESS_EIFFEL2_ER"
+                image.repository="$EIFFEL_ER_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_ER_VERSION"
+          eiffel.configuration="$K8S_CONFIG_EIFFEL_ER"
+          eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_ER"
+          ingress.hostName="$K8S_INGRESS_EIFFEL_ER"
           ingress.enabled="$K8S_Ingress_Enabled"
-          fullnameOverride="$K8S_RELEASE_EIFFEL2_ER"
-          eiffel2.servicePort="$EIFFEL2_ER_EXTERNAL_PORT"
-          eiffel2.containerPort="$EIFFEL2_ER_INTERNAL_PORT"
+          fullnameOverride="$K8S_RELEASE_EIFFEL_ER"
+          eiffel.servicePort="$EIFFEL_ER_EXTERNAL_PORT"
+          eiffel.containerPort="$EIFFEL_ER_INTERNAL_PORT"
         )
-        local valuefile="charts/charts_values/eiffel2-er-values.yaml"
-        local chart="charts/eiffel2.tgz"
+        local valuefile="charts/charts_values/eiffel-er-values.yaml"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       jenkins)
-        local releasename="$K8S_RELEASE_EIFFEL2_JENKINS"
+        local releasename="$K8S_RELEASE_EIFFEL_JENKINS"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL2_JENKINS_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL2_JENKINS_IMAGE_BUILD_VERSION"
-          ingress.hostName="$K8S_INGRESS_EIFFEL2_JENKINS"
-          eiffel2.configurationEnvironmentVars="$K8S_CONFIG_EIFFEL2_JENKINS"
+                image.repository="$EIFFEL_JENKINS_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_JENKINS_IMAGE_BUILD_VERSION"
+          ingress.hostName="$K8S_INGRESS_EIFFEL_JENKINS"
+          eiffel.configurationEnvironmentVars="$K8S_CONFIG_EIFFEL_JENKINS"
           ingress.enabled="$K8S_Ingress_Enabled"
-          fullnameOverride="$K8S_RELEASE_EIFFEL2_JENKINS"
-          eiffel2.servicePort="$EIFFEL2_JENKINS_EXTERNAL_PORT"
-          eiffel2.containerPort="$EIFFEL2_JENKINS_INTERNAL_PORT"
+          fullnameOverride="$K8S_RELEASE_EIFFEL_JENKINS"
+          eiffel.servicePort="$EIFFEL_JENKINS_EXTERNAL_PORT"
+          eiffel.containerPort="$EIFFEL_JENKINS_INTERNAL_PORT"
         )
-        local valuefile="charts/charts_values/eiffel2-jenkins-values.yaml"
-        local chart="charts/eiffel2.tgz"
+        local valuefile="charts/charts_values/eiffel-jenkins-values.yaml"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       jenkins_fem)
-        local releasename="$K8S_RELEASE_EIFFEL2_JENKINS_FEM"
+        local releasename="$K8S_RELEASE_EIFFEL_JENKINS_FEM"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL2_JENKINS_FEM_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL2_JENKINS_PLUGIN_VERSION"
-          ingress.hostName="$K8S_INGRESS_EIFFEL2_JENKINS_FEM"
-          eiffel2.configurationEnvironmentVars="$K8S_CONFIG_EIFFEL2_JENKINS_FEM"
+                image.repository="$EIFFEL_JENKINS_FEM_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_JENKINS_PLUGIN_VERSION"
+          ingress.hostName="$K8S_INGRESS_EIFFEL_JENKINS_FEM"
+          eiffel.configurationEnvironmentVars="$K8S_CONFIG_EIFFEL_JENKINS_FEM"
           ingress.enabled="$K8S_Ingress_Enabled"
-          fullnameOverride="$K8S_RELEASE_EIFFEL2_JENKINS_FEM"
-          eiffel2.servicePort="$EIFFEL2_JENKINS_FEM_EXTERNAL_PORT"
-          eiffel2.containerPort="$EIFFEL2_JENKINS_FEM_INTERNAL_PORT"
+          fullnameOverride="$K8S_RELEASE_EIFFEL_JENKINS_FEM"
+          eiffel.servicePort="$EIFFEL_JENKINS_FEM_EXTERNAL_PORT"
+          eiffel.containerPort="$EIFFEL_JENKINS_FEM_INTERNAL_PORT"
         )
-        local valuefile="charts/charts_values/eiffel2-jenkins-fem-values.yaml"
-        local chart="charts/eiffel2.tgz"
+        local valuefile="charts/charts_values/eiffel-jenkins-fem-values.yaml"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       nexus)
-        local releasename="$K8S_RELEASE_EIFFEL2_NEXUS3"
+        local releasename="$K8S_RELEASE_EIFFEL_NEXUS3"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL2_PLUGIN_NEXUS_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL2_PLUGIN_NEXUS_VERSION"
-          ingress.hostName="$K8S_INGRESS_EIFFEL2_NEXUS3"
+                image.repository="$EIFFEL_PLUGIN_NEXUS_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_PLUGIN_NEXUS_VERSION"
+          ingress.hostName="$K8S_INGRESS_EIFFEL_NEXUS3"
           ingress.enabled="$K8S_Ingress_Enabled"
-          fullnameOverride="$K8S_RELEASE_EIFFEL2_NEXUS3"
-          eiffel2.servicePort="$EIFFEL2_NEXUS_EXTERNAL_PORT"
-          eiffel2.containerPort="$EIFFEL2_NEXUS_INTERNAL_PORT"
+          fullnameOverride="$K8S_RELEASE_EIFFEL_NEXUS3"
+          eiffel.servicePort="$EIFFEL_NEXUS_EXTERNAL_PORT"
+          eiffel.containerPort="$EIFFEL_NEXUS_INTERNAL_PORT"
         )
-        local valuefile="charts/charts_values/eiffel2-nexus3-values.yaml"
-        local chart="charts/eiffel2.tgz"
+        local valuefile="charts/charts_values/eiffel-nexus3-values.yaml"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
           

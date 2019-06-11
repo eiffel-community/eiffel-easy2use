@@ -15,7 +15,7 @@
 #   limitations under the License.
 #
 ##-------------------------------------------------------------------------------------
-## Eiffel 2.0 eiffel-er Helm values
+## Eiffel eiffel-intelligence-backend artifact Helm values
 ##
 ## Author: michael.frick@ericsson.com
 ##
@@ -46,13 +46,14 @@ image:
 ## does your cluster have rbac enabled? assume yes by default
 rbacEnabled: false
 
-## section of specific values for eiffel2
-eiffel2:
+## section of specific values for eiffel
+eiffel:
   # Serviceport and ingress mapping to service
-  servicePort: 8084
+  servicePort: 8090
+
   # POD container port and portname for mapping to service
-  containerPort: 8080
-  containerPortName: er
+  containerPort: 8090
+  containerPortName: eiartifact
 
   # Nodeport proxy
   nodePort:
@@ -60,6 +61,8 @@ eiffel2:
   # Volume Mount Path to ConfigMap
   volumeMountPath: /usr/local/tomcat/config
 
+
+  # pullsecret
 
   ## Disk free limit
   diskFreeLimit: '"6GiB"'
@@ -69,7 +72,6 @@ eiffel2:
 
   ## Configuration file content - for spring-boot application.properties injection
   configuration: injected
-
 
 ## Kubernetes service type
 serviceType: ClusterIP
@@ -81,7 +83,7 @@ persistence:
   storageClass: "erikube-nfs"
   accessMode: ReadWriteOnce
 
-  # If you change this value, you might have to adjust `eiffel2.diskFreeLimit` as well.
+  # If you change this value, you might have to adjust `eiffel.diskFreeLimit` as well.
   size: 8Gi
 
 ## Configure resource requests and limits
@@ -99,7 +101,7 @@ nodeSelector: {}
 tolerations: []
 affinity: {}
 
-## annotations for eiffel2 pods
+## annotations for eiffel pods
 podAnnotations: {}
 
 ## Configure the ingress resource that allows you to access the
