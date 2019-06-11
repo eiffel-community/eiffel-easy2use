@@ -25,8 +25,6 @@ function execute_k8s_command_on_services {
 
   local failed=0
 
-echo "NAME: $K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
-
   for i in $services
   do
     case $i in
@@ -77,16 +75,16 @@ echo "NAME: $K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
                 image.repository="$EIFFEL_EI_BACKEND_IMAGE_TAG_NAME"
           image.tag="$EIFFEL_EI_BACKEND_VERSION"
+          fullnameOverride="$K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.configuration="$K8S_CONFIG_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_EI_BACKEND_ARTIFACT"
           ingress.hostName="$K8S_INGRESS_EIFFEL_EI_BACKEND_ARTIFACT"
           ingress.enabled="$K8S_Ingress_Enabled"
-          fullnameOverride="$K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.servicePort="$EIFFEL_EI_BACKEND_ARTIFACT_EXTERNAL_PORT"
           eiffel.containerPort="$EIFFEL_EI_BACKEND_ARTIFACT_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-ei-backend-artifact-values.yaml"
-        local chart="charts/eiffel.tgz"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       ei_backend_sourcechange)
@@ -104,7 +102,7 @@ echo "NAME: $K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.containerPort="$EIFFEL_EI_BACKEND_SOURCECHANGE_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-ei-backend-sourcechange-values.yaml"
-        local chart="charts/eiffel.tgz"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       ei_backend_testexecution)
@@ -122,7 +120,7 @@ echo "NAME: $K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.containerPort="$EIFFEL_EI_BACKEND_TESTEXECUTION_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-ei-backend-testexecution-values.yaml"
-        local chart="charts/eiffel.tgz"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       ei_backend_allevents)
@@ -140,7 +138,7 @@ echo "NAME: $K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.containerPort="$EIFFEL_EI_BACKEND_ALLEVENTS_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-ei-backend-allevents-values.yaml"
-        local chart="charts/eiffel.tgz"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       ei_frontend)
@@ -158,7 +156,7 @@ echo "NAME: $K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.containerPort="$EIFFEL_EI_FRONTEND_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-ei-frontend-values.yaml"
-        local chart="charts/eiffel.tgz"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       dummy_er)
@@ -175,7 +173,7 @@ echo "NAME: $K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.containerPort="$EIFFEL_DUMMY_ER_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-dummy-er-values.yaml"
-        local chart="charts/eiffel.tgz"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       vici)
@@ -191,7 +189,7 @@ echo "NAME: $K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.containerPort="$EIFFEL_VICI_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-vici-values.yaml"
-        local chart="charts/eiffel.tgz"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       remrem_publish)
@@ -209,7 +207,7 @@ echo "NAME: $K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.containerPort="$EIFFEL_REMREM_PUBLISH_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-remrem-publish-values.yaml"
-        local chart="charts/eiffel.tgz"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       remrem_generate)
@@ -227,7 +225,7 @@ echo "NAME: $K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.containerPort="$EIFFEL_REMREM_GENERATE_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-remrem-generate-values.yaml"
-        local chart="charts/eiffel.tgz"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       er)
@@ -245,7 +243,7 @@ echo "NAME: $K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.containerPort="$EIFFEL_ER_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-er-values.yaml"
-        local chart="charts/eiffel.tgz"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       jenkins)
@@ -262,7 +260,7 @@ echo "NAME: $K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.containerPort="$EIFFEL_JENKINS_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-jenkins-values.yaml"
-        local chart="charts/eiffel.tgz"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       jenkins_fem)
@@ -279,7 +277,7 @@ echo "NAME: $K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.containerPort="$EIFFEL_JENKINS_FEM_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-jenkins-fem-values.yaml"
-        local chart="charts/eiffel.tgz"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
       nexus)
@@ -295,7 +293,7 @@ echo "NAME: $K8S_RELEASE_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.containerPort="$EIFFEL_NEXUS_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-nexus3-values.yaml"
-        local chart="charts/eiffel.tgz"
+        local chart="charts/eiffel-1.0.0.tgz"
         ;;
 
           
