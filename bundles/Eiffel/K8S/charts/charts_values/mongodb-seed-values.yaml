@@ -37,12 +37,6 @@ configmap:
           "dummyparam":"dummyvalue"
         }
       ]
-    waitlistjson: |
-      [
-        {
-          "dummyparam":"dummyvalue"
-        }
-      ]
     subscriptionrepeathandlerjson: |
       [
         {
@@ -65,6 +59,7 @@ configmap:
       [
         {
           "subscriptionName" : "Subscription1_FEM_JENKINS",
+          "ldapUserName": "",
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
@@ -74,10 +69,6 @@ configmap:
               {
                   "formkey" : "json",
                   "formvalue" : "{parameter: [{ name: 'jsonparams', value : to_string(@) }]}"
-              },
-              {
-                  "formkey" : "Authorization",
-                  "formvalue" : "Basic YWRtaW46YWRtaW4="
               }
           ],
           "requirements" : [
@@ -89,13 +80,15 @@ configmap:
                   ]
               }
           ],
-          "userName" : "",
+          "userName" : "admin",
+          "password" : "admin",
           "notificationMessageKeyValuesAuth" : [],
           "authenticationType" : "BASIC_AUTH",
           "token" : "admin"
       },
       {
           "subscriptionName" : "Subscription2_FEM_JENKINS",
+          "ldapUserName": "",
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
@@ -105,10 +98,6 @@ configmap:
               {
                   "formkey" : "json",
                   "formvalue" : "{parameter: [{ name: 'jsonparams', value : to_string(@) }]}"
-              },
-              {
-                  "formkey" : "Authorization",
-                  "formvalue" : "Basic YWRtaW46YWRtaW4="
               }
           ],
           "requirements" : [
@@ -120,13 +109,15 @@ configmap:
                   ]
               }
           ],
-          "userName" : "",
+          "userName" : "admin",
+          "password" : "admin",
           "notificationMessageKeyValuesAuth" : [],
           "authenticationType" : "BASIC_AUTH",
           "token" : "admin"
       },
         {
           "subscriptionName" : "Subscription1_JENKINS",
+          "ldapUserName": "",
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
@@ -136,10 +127,6 @@ configmap:
               {
                   "formkey" : "json",
                   "formvalue" : "{parameter: [{ name: 'jsonparams', value : to_string(@) }]}"
-              },
-              {
-                  "formkey" : "Authorization",
-                  "formvalue" : "Basic YWRtaW46YWRtaW4="
               }
           ],
           "requirements" : [
@@ -151,13 +138,15 @@ configmap:
                   ]
               }
           ],
-          "userName" : "",
+          "userName" : "admin",
+          "password" : "admin",
           "notificationMessageKeyValuesAuth" : [],
           "authenticationType" : "BASIC_AUTH",
           "token" : "admin"
       },
       {
           "subscriptionName" : "Subscription2_JENKINS",
+          "ldapUserName": "",
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
@@ -167,10 +156,6 @@ configmap:
               {
                   "formkey" : "json",
                   "formvalue" : "{parameter: [{ name: 'jsonparams', value : to_string(@) }]}"
-              },
-              {
-                  "formkey" : "Authorization",
-                  "formvalue" : "Basic YWRtaW46YWRtaW4="
               }
           ],
           "requirements" : [
@@ -182,7 +167,8 @@ configmap:
                   ]
               }
           ],
-          "userName" : "",
+          "userName" : "admin",
+          "password" : "admin",
           "notificationMessageKeyValuesAuth" : [],
           "authenticationType" : "BASIC_AUTH",
           "token" : "admin"
@@ -192,6 +178,7 @@ configmap:
       [
         {
           "subscriptionName" : "Subscription1_FEM_JENKINS",
+          "ldapUserName": "",
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
@@ -201,10 +188,6 @@ configmap:
               {
                   "formkey" : "json",
                   "formvalue" : "{parameter: [{ name: 'jsonparams', value : to_string(@) }]}"
-              },
-              {
-                  "formkey" : "Authorization",
-                  "formvalue" : "Basic YWRtaW46YWRtaW4="
               }
           ],
           "requirements" : [
@@ -216,13 +199,15 @@ configmap:
                   ]
               }
           ],
-          "userName" : "",
+          "userName" : "admin",
+          "password" : "admin",
           "notificationMessageKeyValuesAuth" : [],
           "authenticationType" : "BASIC_AUTH",
           "token" : "admin"
       },
       {
         "subscriptionName" : "Subscription1_JENKINS",
+        "ldapUserName": "",
         "repeat" : false,
         "created" : 1523473956269,
         "notificationType" : "REST_POST",
@@ -232,10 +217,6 @@ configmap:
             {
                 "formkey" : "json",
                 "formvalue" : "{parameter: [{ name: 'jsonparams', value : to_string(@) }]}"
-            },
-            {
-                "formkey" : "Authorization",
-                "formvalue" : "Basic YWRtaW46YWRtaW4="
             }
         ],
         "requirements" : [
@@ -247,7 +228,8 @@ configmap:
                 ]
             }
         ],
-        "userName" : "",
+        "userName" : "admin",
+        "password" : "admin",
         "notificationMessageKeyValuesAuth" : [],
         "authenticationType" : "BASIC_AUTH",
         "token" : "admin"
@@ -257,6 +239,7 @@ configmap:
       [
         {
           "subscriptionName" : "Subscription1_FEM_JENKINS",
+          "ldapUserName": "",
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
@@ -266,10 +249,6 @@ configmap:
               {
                   "formkey" : "json",
                   "formvalue" : "{parameter: [{ name: 'jsonparams', value : to_string(@) }]}"
-              },
-              {
-                  "formkey" : "Authorization",
-                  "formvalue" : "Basic YWRtaW46YWRtaW4="
               }
           ],
           "requirements" : [
@@ -281,13 +260,15 @@ configmap:
                   ]
               }
           ],
-          "userName" : "",
+          "userName" : "admin",
+          "password" : "admin",
           "notificationMessageKeyValuesAuth" : [],
           "authenticationType" : "BASIC_AUTH",
           "token" : "admin"
       },
       {
         "subscriptionName" : "Subscription1_JENKINS",
+        "ldapUserName": "",
         "repeat" : false,
         "created" : 1523473956269,
         "notificationType" : "REST_POST",
@@ -297,10 +278,6 @@ configmap:
             {
                 "formkey" : "json",
                 "formvalue" : "{parameter: [{ name: 'jsonparams', value : to_string(@) }]}"
-            },
-            {
-                "formkey" : "Authorization",
-                "formvalue" : "Basic YWRtaW46YWRtaW4="
             }
         ],
         "requirements" : [
@@ -312,7 +289,8 @@ configmap:
                 ]
             }
         ],
-        "userName" : "",
+        "userName" : "admin",
+        "password" : "admin",
         "notificationMessageKeyValuesAuth" : [],
         "authenticationType" : "BASIC_AUTH",
         "token" : "admin"
@@ -322,6 +300,7 @@ configmap:
       [
         {
           "subscriptionName" : "Subscription1_FEM_JENKINS",
+          "ldapUserName": "",
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
@@ -331,10 +310,6 @@ configmap:
               {
                   "formkey" : "json",
                   "formvalue" : "{parameter: [{ name: 'jsonparams', value : to_string(@) }]}"
-              },
-              {
-                  "formkey" : "Authorization",
-                  "formvalue" : "Basic YWRtaW46YWRtaW4="
               }
           ],
           "requirements" : [
@@ -346,13 +321,15 @@ configmap:
                   ]
               }
           ],
-          "userName" : "",
+          "userName" : "admin",
+          "password" : "admin",
           "notificationMessageKeyValuesAuth" : [],
           "authenticationType" : "BASIC_AUTH",
           "token" : "admin"
         },
         {
           "subscriptionName" : "Subscription2_FEM_JENKINS",
+          "ldapUserName": "",
           "repeat" : false,
           "created" : 1523473956269,
           "notificationType" : "REST_POST",
@@ -362,10 +339,6 @@ configmap:
               {
                   "formkey" : "json",
                   "formvalue" : "{parameter: [{ name: 'jsonparams', value : to_string(@) }]}"
-              },
-              {
-                  "formkey" : "Authorization",
-                  "formvalue" : "Basic YWRtaW46YWRtaW4="
               }
           ],
           "requirements" : [
@@ -377,13 +350,15 @@ configmap:
                   ]
               }
           ],
-          "userName" : "",
+          "userName" : "admin",
+          "password" : "admin",
           "notificationMessageKeyValuesAuth" : [],
           "authenticationType" : "BASIC_AUTH",
           "token" : "admin"
         },
         {
         "subscriptionName" : "Subscription1_JENKINS",
+        "ldapUserName": "",
         "repeat" : false,
         "created" : 1523473956269,
         "notificationType" : "REST_POST",
@@ -393,10 +368,6 @@ configmap:
             {
                 "formkey" : "json",
                 "formvalue" : "{parameter: [{ name: 'jsonparams', value : to_string(@) }]}"
-            },
-            {
-                "formkey" : "Authorization",
-                "formvalue" : "Basic YWRtaW46YWRtaW4="
             }
         ],
         "requirements" : [
@@ -408,13 +379,15 @@ configmap:
                 ]
             }
         ],
-        "userName" : "",
+        "userName" : "admin",
+        "password" : "admin",
         "notificationMessageKeyValuesAuth" : [],
         "authenticationType" : "BASIC_AUTH",
         "token" : "admin"
         },
         {
         "subscriptionName" : "Subscription2_JENKINS",
+        "ldapUserName": "",
         "repeat" : false,
         "created" : 1523473956269,
         "notificationType" : "REST_POST",
@@ -424,10 +397,6 @@ configmap:
             {
                 "formkey" : "json",
                 "formvalue" : "{parameter: [{ name: 'jsonparams', value : to_string(@) }]}"
-            },
-            {
-                "formkey" : "Authorization",
-                "formvalue" : "Basic YWRtaW46YWRtaW4="
             }
         ],
         "requirements" : [
@@ -439,7 +408,8 @@ configmap:
                 ]
             }
         ],
-        "userName" : "",
+        "userName" : "admin",
+        "password" : "admin",
         "notificationMessageKeyValuesAuth" : [],
         "authenticationType" : "BASIC_AUTH",
         "token" : "admin"
