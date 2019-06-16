@@ -15,5 +15,7 @@
    limitations under the License.
 --->
 # Bundles
- 1. [**Eiffel**](./Bundle_Eiffel.md)
+ 1. [**GitLab**](./Bundle_GitLab.md)
  2. [**Cx**](./Bundle_Cx.md)
+ 3. [**Eiffel**](./Bundle_Eiffel.md)
+ 

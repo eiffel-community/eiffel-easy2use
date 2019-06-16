@@ -1,0 +1,63 @@
+#
+#   Copyright 2019 Ericsson AB.
+#   For a full list of individual contributors, please see the commit history.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+#################################################################################################
+# Cx Bundle Easy2Use -> OBS NOT for Production
+#
+# run:         docker-compose up
+# stop:        docker-compose stop
+# stop/remove: docker-compose down --volumes
+#
+# Cleanup/Remove (if needed):
+#     Dangling Volumes:   docker volume rm `docker volume ls -q -f dangling=true`
+#     Unused Images:      docker images -q | xargs docker rmi
+#     Stopped containers: docker rm `docker ps -a -q`
+#
+# Author: michael.frick@ericsson.com
+#
+##################################################################################################
+version: "3.7"
+services:
+  cx_gerrit:
+    restart: always
+    image: ${CX_GERRIT_IMAGE_REGISTRY}/${CX_GERRIT_IMAGE_REPOSITORY}:${CX_GERRIT_VERSION}
+    expose:
+      - "${CX_GERRIT_INTERNAL_PORT}"
+      - 29418
+    ports:
+      - "${CX_GERRIT_EXTERNAL_PORT}:${CX_GERRIT_INTERNAL_PORT}"
+      - 29418:29418
+    networks:
+          cx_1.0_1:
+            aliases:
+              - ${CX_GERRIT}
+
+
+  cx_gerrit_postgres_configurations:
+      image: ${CX_GERRIT_POSTGRES_CONFIGURATIONS_IMAGE_REPOSITORY}:${CX_GERRIT_POSTGRES_CONFIGURATIONS_IMAGE_VERSION}
+      depends_on:
+        - cx_gerrit
+      networks:
+        cx_1.0_1:
+          aliases:
+            - ${CX_GERRIT_POSTGRES_CONFIG}    
+
+
+
+
+
+networks:
+  cx_1.0_1:

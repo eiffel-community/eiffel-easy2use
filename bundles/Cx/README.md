@@ -20,9 +20,9 @@ GENERAL INFORMATION
 
 To provide a Cx bundle with pipeline as code setup which executes CI pipeline build steps in Docker containers to minimize state on CI server (Cattle principle).
 
-The execution flow and docker containers used for the build steps will be re-used in included build engines Jenkins & Argo. Eiffel 2.0 events will be generated in build steps to log Cx execution activities.
+The execution flow and docker containers used for the build steps will be re-used in included build engines Jenkins & Argo. Eiffel events will be generated in build steps to log Cx execution activities.
 
-Dependent Eiffel 2.0 services will be loaded from the Eiffel2 bundle to provide capability to log/vizualize pipeline activities via Eiffel 2.0 events.
+Dependent Eiffel services will be loaded from the Eiffel bundle to provide capability to log/vizualize pipeline activities via Eiffel events.
 
 GitOPS
 
@@ -34,7 +34,7 @@ Included Features
 CI:
  - 2 Java Microservices included (ms-frontend & ms-backend)
  - CI Engines included with pipeline as code: Jenkins Pipeline (ms-frontend) & Argo CI (ms-backend)
- - Eiffel 2.0 event generated & CI triggered
+ - Eiffel events generated & CI triggered
  
 CD:
  - GITOPS With Argo CD (automatically sync configuration in GIT repo with deployment in Kubernetes for specific branches : dev/stage/prod)
@@ -65,7 +65,7 @@ Components included in Cx bundle
 - Minio (S3 compatible storage)
 - Chartmuseum
 
-Dependent Components Included from Eiffel2 Bundle
+Dependent Components Included from Eiffel Bundle
 - RabbitMQ (Message Bus)
 - MongoDB  & Data Seeding 
 - RemRem Generate
@@ -101,7 +101,7 @@ Alt1) Deploy CX bundle with all components including Argo
 
     basedomain name is the basedomainname for the K8S cluster, if using local k8s kluster use ex. mylocalkube.com
 
-    OBS You need to answer Y twice, first for the Cx bundle installs and then the dependent services from the Eiffel2 bundle!
+    OBS You need to answer Y twice, first for the Cx bundle installs and then the dependent services from the Eiffel bundle!
 
     Argo already installed if error printput is generated →   Easy2Use: Warning: Could not install additional installs: kubectl create serviceaccount --namespace kube-system argo, See Alt2 below!
 
@@ -114,7 +114,7 @@ If Argo already implemented in K8S cluster. With this deployement Argo GUI/Artif
 
     basedomain name is the basedomainname for the K8S cluster, if using local k8s kluster use ex. mylocalkube.com
 
-    OBS You need to answer Y twice, first for the Cx bundle installs and then the dependent services from the Eiffel2 bundle!
+    OBS You need to answer Y twice, first for the Cx bundle installs and then the dependent services from the Eiffel bundle!
 
 
 List Service URLs
@@ -124,8 +124,8 @@ EasyUse list command will both list URLs (ingresses) to the deployed K8S service
 
 $ ./easy2use list Cx -t Kubernetes -n <namespace>
 
-   OBS For included Eiffel2 components do: 
-        ./easy2use list Eiffel2 -t Kubernetes -n <namespace>
+   OBS For included Eiffel components do: 
+        ./easy2use list Eiffel -t Kubernetes -n <namespace>
 
 
 List HOSTS files entries for local K8S 
@@ -159,7 +159,7 @@ OBS Argo are a cluster global release, so it will be removed even if it's deploy
 
     $ ./easy2use remove Cx -t Kubernetes -n <namespace> 
 
-    OBS You need to answer Y twice, first for the Cx bundle removals and then the dependent services from the Eiffel2 bundle!
+    OBS You need to answer Y twice, first for the Cx bundle removals and then the dependent services from the Eiffel bundle!
 
 Alt2) Deploy CX bundle with all components including Argo-Events and excluding Argo  
   
@@ -167,7 +167,7 @@ Alt2) Deploy CX bundle with all components including Argo-Events and excluding A
     $ ./easy2use remove Cx -t Kubernetes -n <namespace> -p min
 
 
-    OBS You need to answer Y twice, first for the Cx bundle removals and then the dependent services from the Eiffel2 bundle!
+    OBS You need to answer Y twice, first for the Cx bundle removals and then the dependent services from the Eiffel bundle!
 
 
     
