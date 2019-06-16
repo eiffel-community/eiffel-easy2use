@@ -284,8 +284,8 @@ function execute_k8s_command_on_services {
         local releasename="$K8S_RELEASE_EIFFEL_NEXUS3"
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL_PLUGIN_NEXUS_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL_PLUGIN_NEXUS_VERSION"
+                image.repository="$EIFFEL_NEXUS_IMAGE_TAG_NAME"
+          image.tag="$EIFFEL_NEXUS_VERSION"
           ingress.hostName="$K8S_INGRESS_EIFFEL_NEXUS3"
           ingress.enabled="$K8S_Ingress_Enabled"
           fullnameOverride="$K8S_RELEASE_EIFFEL_NEXUS3"

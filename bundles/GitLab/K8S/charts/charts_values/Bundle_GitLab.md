@@ -107,11 +107,11 @@ This is a schematic picture of the environment:
 <br><br>
 <img src="./images/cx-pipelineascode-principles.png" alt="Eiffel Easy2Use Cx pipeline as code principles" width="750"/>
 <br><br>
-<img src="./images/cx-jenkins-pre-post-merge-principles.png" alt="Eiffel Easy2Use Cx Jenkins pre post merge pipeline principles" width="750">
+<img src="./images/cx-jenkins-pre-post-merge-principles.png" alt="Eiffel Easy2Use Cx Jenkins pre post merge pipline principles" width="750">
 <br><br>
-<img src="./images/cx-argo-pre-post-merge-principles.png" alt="Eiffel Easy2Use Cx Argo CI pre post merge pipeline principles" width="750">
+<img src="./images/cx-argo-pre-post-merge-principles.png" alt="Eiffel Easy2Use Cx Argo CI pre post merge pipline principles" width="750">
 <br><br>
-<img src="./images/cx-pipeline-events.png" alt="Eiffel Easy2Use Cx Eiffel Events Generated in CI pipelines" width="750">
+<img src="./images/cx-pipeline-events.png" alt="Eiffel Easy2Use Cx Eiffel Events Generated in CI piplines" width="750">
 
 ## Usage
 ### Bundle Information
@@ -147,7 +147,7 @@ export CX_IMAGE_REPOSITORY_ARGO_K8S_SECRET_PSW="\<Password\>"
 
 
 ## Start Cx Bundle
-Argo can only be deployed once per cluster, but Argo-events can be deployed in multiple namespaces in the same cluster.
+Argo can only be deployed once per cluster, bur Argo-events can be deployed in multiple namespaces in the same cluster.
 
 Note: the Gerrit server startup can take a few minutes (seeding etc), so be patient!
 
