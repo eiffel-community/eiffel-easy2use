@@ -42,8 +42,10 @@ The Easy2Use CLI supports standard docker-compose and helm charts for deploying 
 
 # Included Bundles
 
+* GitLab
+* Cx
 * Eiffel
-* Cx 
+ 
 
 # About this repository
 The contents of this repository are licensed under the [Apache License 2.0](./LICENSE).
