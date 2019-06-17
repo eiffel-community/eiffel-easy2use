@@ -31,9 +31,9 @@ CI:
  - Eiffel event generated
  
 CD:
- - CD Pipelines with kubectl deployment via HELM templates, helm charts included in ms-frontend & ms-backend
- - Pre-merge CD pipeline (merge request) deployement to dev
- - Post-merge CD pipeline (merge request) deployement to stage
+ - CD Pipelines with kubectl deployment via HELM templates, helm charts included in ms-frontend & ms-backend microservices
+ - Pre-merge CD pipeline (merge request) deployment to dev
+ - Post-merge CD pipeline (merge request) deployment to stage
  - Deployment to production is triggered via manually decision in GiLab GUI
  - Immutable Docker Images are used together with microservices config injection to configure microservices in the different K8S target environments
 
@@ -48,7 +48,7 @@ GitLab
 ## Components included in Cx bundle
 Component | Service name | User/PSW | Ingress | Info
 ------------- | ------------ | -------- | ------- | ------------
-GitLab | gitlab_gitlab | NA | gitlab-\<namespace\>.\<domainname\> | user account needs to be created after startup
+GitLab | gitlab_gitlab | NA | gitlab-\<domainname\> | user account needs to be created after startup
 <b>Services Loaded from Eiffel Bundle*</b> | | | 
 RabbitMQ (Message Bus) | rabbitmq | myuser / myuser | eiffel-rabbitmq-\<namespace\>.\<domainname\>	
 MongoDB & Data Seeding | mongodb<br> mongo_seed | N/A | N/A | The seed-data folder in Easy2Use contains data that can be seeded into the MongoDB instance.
