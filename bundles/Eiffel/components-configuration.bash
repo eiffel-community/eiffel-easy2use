@@ -124,7 +124,7 @@ export DOCKER_CONFIG_EIFFEL_EI_FRONTEND=$CONFIG_EIFFEL_EI_FRONTEND_WITHOUT_COMMA
 export CONFIG_EIFFEL_EI_BACKEND_ALLEVENTS="
 SpringApplicationName=${EIFFEL_EI_BACKEND_ALLEVENTS}
 server.port=${EIFFEL_EI_BACKEND_ALLEVENTS_INTERNAL_PORT}
-rules.path=/rules/AllEventsRules-Eiffel-Toulouse-Version.json
+rules.path=/rules/AllEventsRules-Eiffel-Agen-Version.json
 rabbitmq.domainId=${EIFFEL_RABBITMQ_DOMAIN_ID}
 rabbitmq.componentName=eiffelintelligence-allevents
 rabbitmq.waitlist.queue.suffix=waitlist-allevents
@@ -199,7 +199,7 @@ WAIT_DB_HOSTS=$EIFFEL_MONGODB:${EIFFEL_MONGODB_APPLICATION_PORT}"
 export CONFIG_EIFFEL_EI_BACKEND_ARTIFACT="
 SpringApplicationName=${EIFFEL_EI_BACKEND_ARTIFACT}
 server.port=${EIFFEL_EI_BACKEND_ARTIFACT_INTERNAL_PORT}
-rules.path=/rules/ArtifactRules-Eiffel-Toulouse-Version.json
+rules.path=/rules/ArtifactRules-Eiffel-Agen-Version.json
 rabbitmq.domainId=${EIFFEL_RABBITMQ_DOMAIN_ID}
 rabbitmq.componentName=eiffelintelligence-artifact
 rabbitmq.waitlist.queue.suffix=waitlist-artifact
@@ -275,7 +275,7 @@ WAIT_DB_HOSTS=$EIFFEL_MONGODB:${EIFFEL_MONGODB_APPLICATION_PORT}"
 export CONFIG_EIFFEL_EI_BACKEND_TESTEXECUTION="
 SpringApplicationName=${EIFFEL_EI_BACKEND_TESTEXECUTION}
 server.port=${EIFFEL_EI_BACKEND_TESTEXECUTION_INTERNAL_PORT}
-rules.path=/rules/TestExecutionObjectRules-Eiffel-Toulouse-Version.json
+rules.path=/rules/TestExecutionObjectRules-Eiffel-Agen-Version.json
 rabbitmq.domainId=${EIFFEL_RABBITMQ_DOMAIN_ID}
 rabbitmq.componentName=eiffelintelligence-testexecution
 rabbitmq.waitlist.queue.suffix=waitlist-testexecution
@@ -351,7 +351,7 @@ WAIT_DB_HOSTS=$EIFFEL_MONGODB:${EIFFEL_MONGODB_APPLICATION_PORT}"
 export CONFIG_EIFFEL_EI_BACKEND_SOURCECHANGE="
 SpringApplicationName=${EIFFEL_EI_BACKEND_SOURCECHANGE}
 server.port=${EIFFEL_EI_BACKEND_SOURCECHANGE_INTERNAL_PORT}
-rules.path=/rules/SourceChangeObjectRules-Eiffel-Toulouse-Version.json
+rules.path=/rules/SourceChangeObjectRules-Eiffel-Agen-Version.json
 rabbitmq.domainId=${EIFFEL_RABBITMQ_DOMAIN_ID}
 rabbitmq.componentName=eiffelintelligence-sourcechange
 rabbitmq.waitlist.queue.suffix=waitlist-sourcechange
@@ -481,13 +481,11 @@ index.dynamicIndex.fileUpdatePeriod=30"
 export K8S_CONFIG_EIFFEL_ER="|-
 $CONFIG_EIFFEL_ER"
 
-export K8S_ENV_CONFIG_EIFFEL_ER="WAIT_MB_HOSTS: '$EIFFEL_RABBITMQ\:${EIFFEL_RABBITMQ_WEB_APPLICATION_PORT}'
-WAIT_DB_HOSTS: '$EIFFEL_MONGODB\:${EIFFEL_MONGODB_APPLICATION_PORT}'"
+export K8S_ENV_CONFIG_EIFFEL_ER="WAIT_HOSTS: '$EIFFEL_RABBITMQ\:${EIFFEL_RABBITMQ_WEB_APPLICATION_PORT} $EIFFEL_MONGODB\:${EIFFEL_MONGODB_APPLICATION_PORT}'"
 
 # Docker format
 export DOCKER_CONFIG_EIFFEL_ER="$CONFIG_EIFFEL_ER
-WAIT_MB_HOSTS=$EIFFEL_RABBITMQ:${EIFFEL_RABBITMQ_WEB_APPLICATION_PORT}
-WAIT_DB_HOSTS=$EIFFEL_MONGODB:${EIFFEL_MONGODB_APPLICATION_PORT}"
+WAIT_HOSTS=$EIFFEL_RABBITMQ:${EIFFEL_RABBITMQ_WEB_APPLICATION_PORT} $EIFFEL_MONGODB:${EIFFEL_MONGODB_APPLICATION_PORT}"
 
 ### End of Eiffel-ER service ###
 
