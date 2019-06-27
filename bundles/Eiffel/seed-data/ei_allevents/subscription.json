@@ -17,7 +17,7 @@
         {
             "conditions" : [
                 {
-                    "jmespath" : "meta.type=='EiffelArtifactCreatedEvent' && data.gav.groupId=='com.othercompany.library'"
+                    "jmespath" : "meta.type=='EiffelArtifactCreatedEvent' && identity=='pkg:maven/com.othercompany.library/required@required'"
                 }
             ]
         }
@@ -45,7 +45,7 @@
         {
             "conditions" : [
                 {
-                    "jmespath" : "meta.type=='EiffelArtifactCreatedEvent' && data.gav.groupId=='com.othercompany.library'"
+                    "jmespath" : "meta.type=='EiffelArtifactCreatedEvent' && identity=='pkg:maven/com.othercompany.library/required@required'"
                 }
             ]
         }
