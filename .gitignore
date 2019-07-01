@@ -47,3 +47,4 @@ work/
 
 # Docker seeded env files
 bundles/Eiffel/docker-env-files/
+bundles/Eiffel/jenkins-config-files/

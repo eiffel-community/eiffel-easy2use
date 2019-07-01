@@ -377,6 +377,19 @@ services:
       - ei_backend_sourcechange
     env_file:
       - ./docker-env-files/eiffel-jenkins.env
+    volumes:
+      - ./jenkins-config-files/com.ericsson.eiffel.fem.config.EiffelJenkinsGlobalConfiguration.xml:/var/jenkins_tmp/com.ericsson.eiffel.fem.config.EiffelJenkinsGlobalConfiguration.xml
+      - ./jenkins-config-files/security.groovy:/var/jenkins_tmp/security.groovy
+      - ./jenkins-config-files/ei-artifact-triggered-job.xml:/var/jenkins_tmp/ei-artifact-triggered-job-config.xml
+      - ./jenkins-config-files/ei-artifact-triggered-parameterized-job.xml:/var/jenkins_tmp/ei-artifact-triggered-parameterized-job-config.xml
+      - ./jenkins-config-files/ei-sourcechange-triggered-job.xml:/var/jenkins_tmp/ei-sourcechange-triggered-job-config.xml
+      - ./jenkins-config-files/ei-testexecution-triggered-job.xml:/var/jenkins_tmp/ei-testexecution-triggered-job-config.xml
+      - ./jenkins-config-files/event-triggered-job.xml:/var/jenkins_tmp/event-triggered-job-config.xml
+      - ./jenkins-config-files/send_eiffel_event.xml:/var/jenkins_tmp/send_eiffel_event-config.xml
+      - ./jenkins-config-files/upload_artifact_to_arm_curl.xml:/var/jenkins_tmp/upload_artifact_to_arm_curl-config.xml
+      - ./jenkins-config-files/prepare-config-files.bash:/var/jenkins_tmp/prepare-config-files.bash
+    command:
+      - /var/jenkins_tmp/prepare-config-files.bash
     networks:
           eiffel.0_1:
             aliases:
