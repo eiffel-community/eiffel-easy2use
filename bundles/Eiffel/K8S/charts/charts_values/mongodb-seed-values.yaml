@@ -75,7 +75,7 @@ configmap:
               {
                   "conditions" : [
                       {
-                          "jmespath" : "gav.groupId=='com.othercompany.library'"
+                          "jmespath" : "identity=='pkg:maven/com.othercompany.library/required@required'"
                       }
                   ]
               }
@@ -104,7 +104,7 @@ configmap:
               {
                   "conditions" : [
                       {
-                          "jmespath" : "gav.groupId=='com.othercompany.library'"
+                          "jmespath" : "identity=='pkg:maven/com.othercompany.library/required@required'"
                       }
                   ]
               }
@@ -133,7 +133,7 @@ configmap:
               {
                   "conditions" : [
                       {
-                          "jmespath" : "gav.groupId=='com.othercompany.library'"
+                          "jmespath" : "identity=='pkg:maven/com.othercompany.library/required@required'"
                       }
                   ]
               }
@@ -162,7 +162,7 @@ configmap:
               {
                   "conditions" : [
                       {
-                          "jmespath" : "gav.groupId=='com.othercompany.library'"
+                          "jmespath" : "identity=='pkg:maven/com.othercompany.library/required@required'"
                       }
                   ]
               }
@@ -316,7 +316,7 @@ configmap:
               {
                   "conditions" : [
                       {
-                          "jmespath" : "meta.type=='EiffelArtifactCreatedEvent' && data.gav.groupId=='com.othercompany.library'"
+                          "jmespath" : "meta.type=='EiffelArtifactCreatedEvent' && data.identity=='pkg:maven/com.othercompany.library/required@required'"
                       }
                   ]
               }
@@ -345,7 +345,7 @@ configmap:
               {
                   "conditions" : [
                       {
-                          "jmespath" : "meta.type=='EiffelArtifactCreatedEvent' && data.gav.groupId=='com.othercompany.library'"
+                          "jmespath" : "meta.type=='EiffelArtifactCreatedEvent' && data.identity=='pkg:maven/com.othercompany.library/required@required'"
                       }
                   ]
               }
@@ -374,7 +374,7 @@ configmap:
             {
                 "conditions" : [
                     {
-                        "jmespath" : "meta.type=='EiffelArtifactCreatedEvent' && data.gav.groupId=='com.othercompany.library'"
+                        "jmespath" : "meta.type=='EiffelArtifactCreatedEvent' && data.identity=='pkg:maven/com.othercompany.library/required@required'"
                     }
                 ]
             }
@@ -403,7 +403,7 @@ configmap:
             {
                 "conditions" : [
                     {
-                        "jmespath" : "meta.type=='EiffelArtifactCreatedEvent' && data.gav.groupId=='com.othercompany.library'"
+                        "jmespath" : "meta.type=='EiffelArtifactCreatedEvent' && data.identity=='pkg:maven/com.othercompany.library/required@required'"
                     }
                 ]
             }
