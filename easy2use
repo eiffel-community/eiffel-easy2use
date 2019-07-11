@@ -808,7 +808,7 @@ echo ""
 
 source utilities/cli/cli_utils.bash
 
-CLI_ROOT=$(dirname $(realpath $0))
+CLI_ROOT=$(dirname $(readlink -f $0 || realpath $0))
 verbose "CLI root: ${CLI_ROOT}"
 cd ${CLI_ROOT}
 
