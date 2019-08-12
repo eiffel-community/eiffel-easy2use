@@ -501,7 +501,7 @@ rabbitmq.instances.jsonlist=[\
 { \"mp\": \"eiffelsemantics\"\, \"host\": \"${EIFFEL_RABBITMQ}\"\, \"port\": \"${EIFFEL_RABBITMQ_AMQP_APPLICATION_PORT}\"\, \"username\": \"${EIFFEL_RABBITMQ_USER}\"\, \"password\": \"${EIFFEL_RABBITMQ_PASSWORD}\"\, \"tls\": \"${EIFFEL_REMREM_PUBLISH_RABBITMQ_TLS}\"\, \"exchangeName\": \"${EIFFEL_RABBITMQ_EXCHANGE}\"\, \"domainId\": \"${EIFFEL_RABBITMQ_DOMAIN_ID}\"\, \"createExchangeIfNotExisting\": true}\
 ]
 generate.server.uri=${EIFFEL_REMREM_GENERATE_URL}
-generate.server.path=
+generate.server.path=/
 activedirectory.publish.enabled=false
 activedirectory.ldapUrl=
 activedirectory.managerPassword=
