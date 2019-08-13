@@ -21,5 +21,5 @@
 ##
 ##--------------------------------------------------------------------------------------
 
-k8s_package_services="cx_gerrit cx_artifactory cx_jenkins cx_argo cx_argo_events cx_argocd cx_minio cx_chartmuseum cx_gerrit_postgres_configurations cx_keycloak"
+k8s_package_services="cx_gerrit cx_artifactory cx_jenkins cx_argo cx_argo_rollout cx_argo_events cx_argocd cx_minio cx_chartmuseum cx_gerrit_postgres_configurations cx_keycloak"
 

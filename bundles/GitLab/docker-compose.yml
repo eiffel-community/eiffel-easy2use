@@ -15,7 +15,7 @@
 #   limitations under the License.
 #
 #################################################################################################
-# Cx Bundle Easy2Use -> OBS NOT for Production
+# GitLab Bundle Easy2Use -> OBS NOT for Production
 #
 # run:         docker-compose up
 # stop:        docker-compose stop
@@ -31,33 +31,8 @@
 ##################################################################################################
 version: "3.7"
 services:
-  cx_gerrit:
-    restart: always
-    image: ${CX_GERRIT_IMAGE_REGISTRY}/${CX_GERRIT_IMAGE_REPOSITORY}:${CX_GERRIT_VERSION}
-    expose:
-      - "${CX_GERRIT_INTERNAL_PORT}"
-      - 29418
-    ports:
-      - "${CX_GERRIT_EXTERNAL_PORT}:${CX_GERRIT_INTERNAL_PORT}"
-      - 29418:29418
-    networks:
-          cx_1.0_1:
-            aliases:
-              - ${CX_GERRIT}
-
-
-  cx_gerrit_postgres_configurations:
-      image: ${CX_GERRIT_POSTGRES_CONFIGURATIONS_IMAGE_REPOSITORY}:${CX_GERRIT_POSTGRES_CONFIGURATIONS_IMAGE_VERSION}
-      depends_on:
-        - cx_gerrit
-      networks:
-        cx_1.0_1:
-          aliases:
-            - ${CX_GERRIT_POSTGRES_CONFIG}    
-
-
-
-
+  xx_xxxxx:
+    
 
 networks:
-  cx_1.0_1:
+  gitlab_1.0_1:

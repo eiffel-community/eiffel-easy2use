@@ -23,4 +23,4 @@ source config-k8s.bash
 
 export HOST=${target_host}
 
-echo "Kubernetes for Cx Bundle environment prepared. Now you can start use docker-compose/docker/kubectl/helm commands in Cx Bundle."
+echo "Kubernetes for GitLab Bundle environment prepared. Now you can start use docker-compose/docker/kubectl/helm commands in GitLab Bundle."

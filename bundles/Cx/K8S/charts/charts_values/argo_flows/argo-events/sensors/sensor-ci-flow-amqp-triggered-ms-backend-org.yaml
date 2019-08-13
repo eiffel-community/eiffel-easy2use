@@ -321,9 +321,7 @@ spec:
                                                 --arg sourceHost_ \"{{workflow.parameters.sourceHost}}\"                            \
                                                 --arg sourceName_ \"{{workflow.parameters.sourceName}}\"                            \ 
                                                 --arg sourceUri_  \"{{workflow.parameters.sourceUri}}\"                             \
-                                                --arg groupId_ \"{{workflow.outputs.parameters.POMgroupId}}\"                       \ 
-                                                --arg artifactId_ \"{{workflow.outputs.parameters.POMartifactId}}\"                 \
-                                                --arg version_ \"{{workflow.outputs.parameters.POMversion}}\"                       \
+                                                --arg identity_ \"pkg:maven/{{workflow.outputs.parameters.POMgroupId}}/{{workflow.outputs.parameters.POMartifactId}}@{{workflow.outputs.parameters.POMversion}}\"  \ 
                                                 --arg buildCommand_ \"$buildCommand\"                                               \
                                                 --arg artifactName_ \"{{workflow.outputs.parameters.POMartifactId}}\"               \
                                                 --arg edCompileEventId_ $edCompileEventId                                           \
@@ -341,11 +339,7 @@ spec:
                               },                                                                                                    \
                             eventParams: {                                                                                          \
                                             data: {                                                                                 \
-                                              gav: {                                                                                \
-                                                  groupId: $groupId_,                                                               \
-                                                  artifactId: $artifactId_,                                                         \
-                                                  version: $version_                                                                \
-                                              },                                                                                    \
+                                              identity: $identity_,                                                                 \
                                               buildCommand: $buildCommand_,                                                         \
                                               name: $artifactName_,                                                                 \
                                             },                                                                                      \
@@ -685,9 +679,7 @@ spec:
                                                 --arg sourceHost_ \"{{workflow.parameters.sourceHost}}\"                            \
                                                 --arg sourceName_ \"{{workflow.parameters.sourceName}}\"                            \ 
                                                 --arg sourceUri_  \"{{workflow.parameters.sourceUri}}\"                             \
-                                                --arg groupId_ \"{{workflow.outputs.parameters.POMgroupId}}\"                       \ 
-                                                --arg artifactId_ \"{{workflow.outputs.parameters.POMartifactId}}\"                 \
-                                                --arg version_ \"{{workflow.outputs.parameters.POMversion}}\"                       \
+                                                --arg identity_ \"pkg:docker/$IMAGE_PATH@$IMAGE_VERSION_TAG\"                       \ 
                                                 --arg buildCommand_ \"$buildCommand\"                                               \
                                                 --arg artifactName_ \"{{workflow.outputs.parameters.POMartifactId}}\"               \
                                                 --arg edImageBuildEventId_ $edImageBuildEventId                                     \
@@ -705,11 +697,7 @@ spec:
                               },                                                                                                    \
                             eventParams: {                                                                                          \
                                             data: {                                                                                 \
-                                              gav: {                                                                                \
-                                                  groupId: $groupId_,                                                               \
-                                                  artifactId: $artifactId_,                                                         \
-                                                  version: $version_                                                                \
-                                              },                                                                                    \
+                                              identity: $identity_,                                                                 \
                                               buildCommand: $buildCommand_,                                                         \
                                               name: $artifactName_,                                                                 \
                                             },                                                                                      \

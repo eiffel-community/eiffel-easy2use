@@ -222,6 +222,20 @@ function execute_k8s_command_on_services {
         ;;
 
 
+      cx_argo_rollout)  
+        # Argo rollout Installs   
+        additional_installs+=( "kubectl apply -n ${K8S_NAMESPACE} -f charts/charts_values/argo_flows/deploy/argo-rollout.yaml" )        
+
+        # Argo rollout Removals     
+        additional_removals+=( "kubectl delete -n ${K8S_NAMESPACE} -f charts/charts_values/argo_flows/deploy/argo-rollout.yaml" )
+        
+        local releasename="null"
+        local settings=""
+        local valuefile=""
+        local chart="" 
+        ;;  
+
+
 
       cx_minio)
         

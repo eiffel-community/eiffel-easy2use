@@ -181,9 +181,6 @@ NA
  - Click Rigister tab 
  - Fill-in required text fields
  - Click Register
-
-
-- https://github.com/eiffelci/eiffel-ms-backend-ci-test.git
  
 ### 3. Import Projects
 #### 3.1 Import ms-frontend

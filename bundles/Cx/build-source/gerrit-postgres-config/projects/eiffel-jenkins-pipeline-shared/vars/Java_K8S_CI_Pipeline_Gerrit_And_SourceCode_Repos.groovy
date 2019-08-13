@@ -434,14 +434,14 @@ def call(body) {
                   artifactId = ARTIFACTSPLIT[2]
                   artifactVersion = ARTIFACTSPLIT[3]
                   artifactName = ARTIFACTSPLIT[2]
+                  identity="pkg:maven/${artifactGroupId}/${artifactId}@${artifactVersion}"
+
 
                   tmpArtCId =
                     sendArtCEvent(edCompileEventId,
                                   cdCompileEventId,
                                   "${pipelineParams.BUILD_COMMAND}",
-                                  artifactGroupId,
-                                  artifactId,
-                                  artifactVersion,
+                                  identity,
                                   artifactName,
                                   REMREM_PUBLISH_GEN_PUB_URL,
                                   REMREM_GENERATE_URL,
@@ -698,13 +698,12 @@ def call(body) {
                         artifactId="${ARTIFACTSPLIT[2]}"
                         artifactVersion="${IMG_TAG_VERSION}"
                         artifactName="${ARTIFACTSPLIT[2]}"
+                        identity="pkg:docker/${IMG_REG_PATH}@${IMG_TAG_VERSION}"
                         artCImageBuildEventId =
                           sendArtCEvent(edImageBuildEventId,
                                         cdImageBuildEventId,
                                         "docker build --no-cache=true -t ${IMG_TAG_VERSION} -f ${app_n_dockerfile_path}/Dockerfile ${app_n_dockerfile_path}",
-                                        "${artifactGroupId}",
-                                        "${artifactId}",
-                                        "${artifactVersion}",
+                                        "${identity}",
                                         "${artifactName}",
                                         REMREM_PUBLISH_GEN_PUB_URL,
                                         REMREM_GENERATE_URL,
@@ -971,7 +970,7 @@ String sendCLMEvent(artCEventId, clName, remremGenerateAndPublishUri,
 
 
 String sendArtCEvent(edEventId, cdEventId, buildCommand,
-                     groupId, artifactId, version, artifactName,
+                     identity, artifactName,
                      remremGenerateAndPublishUri, remremGenerateUri,
                      remremPublishUri) {
   // Define/collect data for the event message
@@ -995,11 +994,7 @@ String sendArtCEvent(edEventId, cdEventId, buildCommand,
     ],
     "eventParams": [
       "data": [
-        "gav": [
-          "groupId": "${groupId}",
-          "artifactId": "${artifactId}",
-          "version": "${version}"
-        ],
+        "identity": "${identity}",
         "buildCommand": "${buildCommand}",
         "name": "${artifactName}",
       ],

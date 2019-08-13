@@ -29,8 +29,8 @@ kubectl create -f https://raw.githubusercontent.com/kubernetes/heapster/master/d
 kubectl create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/grafana.yaml
 
 # Add NGINX
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml
+helm install stable/nginx-ingress --name my-nginx --replace
+helm install stable/nginx-ingress --name my-nginx --set rbac.create=true --replace
 
 # Install Tiller
 helm init
