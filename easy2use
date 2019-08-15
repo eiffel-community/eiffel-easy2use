@@ -598,9 +598,12 @@ function remove_dependencies {
   cd ${CLI_ROOT}
 
   local dependencies_array_constant="CONF_${bundle}_DEPENDENCIES_BUNDLES[@]"
-  if [ ! -z ${!dependencies_array_constant} ]
+  debug "Dependencies variable: $dependencies_array_constant"
+  local dereferenced_dependencies=("${!dependencies_array_constant}")
+  local number_of_dependencies=${#dereferenced_dependencies[*]}
+  if [ $number_of_dependencies -gt 0 ]
   then
-    print "Removing dependent bundles and services"
+    print "Removing dependent bundles and services for $bundle"
     for bundle_dependency in "${!dependencies_array_constant}"
     do
       debug "Bundle dependency: ${bundle_dependency}"
@@ -610,6 +613,7 @@ function remove_dependencies {
       verbose "Dependent service(s): ${dependent_services}"
       do_run remove "${dependent_bundle}" "" "${dependent_services}"
     done
+    print "Done removing dependent bundles and services for $bundle"
   fi
 }
 
@@ -635,9 +639,11 @@ function restart_dependencies {
 
   local dependencies_array_constant="CONF_${bundle}_DEPENDENCIES_BUNDLES[@]"
   debug "Dependencies variable: $dependencies_array_constant"
-  if [ ! -z ${!dependencies_array_constant} ]
+  local dereferenced_dependencies=("${!dependencies_array_constant}")
+  local number_of_dependencies=${#dereferenced_dependencies[*]}
+  if [ $number_of_dependencies -gt 0 ]
   then
-    print "Restarting dependent bundles and services"
+    print "Restarting dependent bundles and services for $bundle"
     for bundle_dependency in "${!dependencies_array_constant}"
     do
       debug "Bundle dependency: ${bundle_dependency}"
@@ -648,6 +654,7 @@ function restart_dependencies {
       verbose "Dependent service(s): ${dependent_services}"
       do_run restart "$dependent_bundle" "" "$dependent_services"
     done
+    print "Done restarting dependent bundles and services for $bundle"
   fi
 }
 
@@ -665,9 +672,11 @@ function start_dependencies {
 
   local dependencies_array_constant="CONF_${bundle}_DEPENDENCIES_BUNDLES[@]"
   debug "Dependencies variable: $dependencies_array_constant"
-  if [ ! -z ${!dependencies_array_constant} ]
+  local dereferenced_dependencies=("${!dependencies_array_constant}")
+  local number_of_dependencies=${#dereferenced_dependencies[*]}
+  if [ $number_of_dependencies -gt 0 ]
   then
-    print "Starting dependent bundles and services"
+    print "Starting dependent bundles and services for $bundle"
     for bundle_dependency in "${!dependencies_array_constant}"
     do
       debug "Bundle dependency: ${bundle_dependency}"
@@ -678,6 +687,7 @@ function start_dependencies {
       verbose "Dependent service(s): ${dependent_services}"
       do_run start "$dependent_bundle" "" "$dependent_services"
     done
+    print "Done starting dependent bundles and services for $bundle"
   fi
 }
 
@@ -694,9 +704,12 @@ function stop_dependencies {
   cd ${CLI_ROOT}
 
   local dependencies_array_constant="CONF_${bundle}_DEPENDENCIES_BUNDLES[@]"
-  if [ ! -z ${!dependencies_array_constant} ]
+  debug "Dependencies variable: $dependencies_array_constant"
+  local dereferenced_dependencies=("${!dependencies_array_constant}")
+  local number_of_dependencies=${#dereferenced_dependencies[*]}
+  if [ $number_of_dependencies -gt 0 ]
   then
-    print "Stopping dependent bundles and services"
+    print "Stopping dependent bundles and services for $bundle"
     for bundle_dependency in "${!dependencies_array_constant}"
     do
       debug "Bundle dependency: ${bundle_dependency}"
@@ -706,6 +719,7 @@ function stop_dependencies {
       verbose "Dependent service(s): ${dependent_services}"
       do_run stop "${dependent_bundle}" "" "${dependent_services}"
     done
+    print "Done stopping dependent bundles and services for $bundle"
   fi
 }
 
