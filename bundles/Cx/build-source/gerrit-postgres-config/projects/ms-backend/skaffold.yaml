@@ -1,0 +1,150 @@
+#
+#   Copyright 2019 Ericsson AB.
+#   For a full list of individual contributors, please see the commit history.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+##-------------------------------------------------------------------------------------
+## myapplication Generic skaffold file 
+##
+## Maintainer: michael.frick@ericsson.com
+##
+##--------------------------------------------------------------------------------------
+apiVersion: skaffold/v1beta13
+kind: Config
+profiles:
+    ###########################################################################################################################
+    # Local development with deployment in local K8S Cluster
+    # Docker registry is not used, local docker daemon's cache will be used for docker image build and pull via helm charts 
+    #
+    # Info: This is the fastest way to build/deploy because no push/pull via docker registry will be peformed, images handled 
+    #       via the local docker daemon cache
+    #
+    # Pre-req: 
+    #     build.local.push: false
+    #
+    # Naming Convention Built Image: build.artifacts.image  registry/repo/imagename  -> registry/repo/imagename:LOCDEV
+    #
+    # Set Ingress: 
+    #    deploy.helm.releases.setValues.ingress.hosts[0]: subdomain.<K8S local cluster basedomain>  ex. myapp.mylocalkube.com
+    #
+    #    Update your HOSTS file:
+    #    127.0.0.1   myapp.mylocalkube.com     For Windows Docker-for-windows with Hyper-v
+    #                                          To get IP adress for minikube do: minikube ip                                
+    #                  
+    # Run with:
+    #     skaffold dev 
+    #
+    ###########################################################################################################################       
+  - name: local_dev  
+    build:
+      tagPolicy:
+        envTemplate:
+          template: "{{.IMAGE_NAME}}:LOCDEV"
+      local:
+        push: false     # If push images when running in a local dev cluster (docker-for-windows, minikube etc)
+      artifacts:
+      - image: CX_IMAGE_REGISTRY_SED/CX_IMAGE_REPOSITORY_SED/ms-backend
+        docker: 
+          dockerfile: src/main/docker/Dockerfile
+          noCache: false
+        context: . 
+    deploy:
+      helm:   # remote: true     hur pekar man på annat gitrepo... ex som används vid gitops setup med ArgoCD?
+        releases:
+        - name: mydevapplication 
+          recreatePods: true
+          chartPath: deployment/Helm
+          valuesFiles: 
+            - ../deployments/ms-backend/values-dev.yaml
+          values:
+            image: CX_IMAGE_REGISTRY_SED/CX_IMAGE_REPOSITORY_SED/ms-backend 
+          setValues:
+            ingress.hosts[0]: myapp.mylocalkube.com  # Needs to be added to your HOSTS file ex. 127.0.0.1   myapp.mylocalkube.com
+            image.pullPolicy: Never                             
+          imageStrategy: 
+            helm:
+              explicitRegistry: false
+    activation: # See contexts: $ kubectl config get-context, switch context: $ kubectl config use-context choosencontext
+                # Add context to your local K8S cluster:
+      - kubeContext: docker-desktop      
+      - kubeContext: minikube
+    #    
+    ###########################################################################################################################
+    # Local development with deployment in Remote K8S Cluster 
+    # Docker registry will be used and needs to be specified with skaffold ----default-repo dockeregistry/dockerrepostitory
+    # 
+    # Pre-req: 
+    #     build.local.push: true
+    #  
+    # To activate this profile add your remote kubecontext in:
+    #     activation.kubeContext: "context_to_your_remote_cluster"
+    # 
+    # Naming Convention Built Image: build.artifacts.image  registry/repo/imagename  -> default-repo/registry_repo_imagename:REMDEV
+    #
+    # Set Ingress: 
+    #    deploy.helm.releases.setValues.ingress.hosts[0]: subdomain.<K8S remote cluster basedomain>   
+    # 
+    # If your docker registry do NOT have anonymous user Image push/pull defined do:
+    #    1. Login to Docker registry to be able to push images from your local docker daemon to your docker registry
+    #       $ docker login dockeregistry
+    #
+    #    2. Remote K8S cluster need to have a pullsecret defined in a K8S secret
+    #           Update the folowing params below:
+    #                            image.pullSecret: mypullsecret            
+    #                            imageCredentials.registry: your-registry
+    #                            imageCredentials.username: username
+    #                            imageCredentials.password: password
+    #
+    #        # OBS Remove values before commit/push updates for this repo!!!
+    #
+    # Run with:
+    #     skaffold dev --default-repo dockeregistry/dockerrepostitory    Ex. for Dockerhub "docker.io/myrepo"
+    #    
+    ###########################################################################################################################      
+  - name: remote_dev  
+    build:
+      tagPolicy:
+        envTemplate:
+          template: "{{.IMAGE_NAME}}:REMDEV"
+      local:
+        push: true     # If push images when running in a local dev cluster (docker-for-windows, minikube etc)
+      artifacts:
+      - image: CX_IMAGE_REGISTRY_SED/CX_IMAGE_REPOSITORY_SED/ms-backend
+        docker: 
+          dockerfile: src/main/docker/Dockerfile
+          noCache: false
+        context: . 
+    deploy:
+      helm:   # remote: true     hur pekar man på annat gitrepo... ex som används vid gitops setup med ArgoCD?
+        releases:
+        - name: mydevapplication 
+          recreatePods: true
+          chartPath: deployment/Helm
+          valuesFiles: 
+            - deployment/Helm/values.yaml
+          values:
+            image: CX_IMAGE_REGISTRY_SED/CX_IMAGE_REPOSITORY_SED/ms-backend 
+          setValues:  # OBS Remove values before commit/push updates for this repo!!!
+            ingress.hosts[0]: myremote.<K8S cluster basdomain>  
+            image.pullPolicy: Always  
+            image.pullSecret: mypullsecret            
+            imageCredentials.registry: 
+            imageCredentials.username: 
+            imageCredentials.password: 
+          imageStrategy: 
+            helm:
+              explicitRegistry: false  
+    activation: # See contexts: $ kubectl config get-context, switch context: $ kubectl config use-context choosencontext
+                # add context to your remote K8S cluster:
+      - kubeContext:  xxxx         

@@ -15,20 +15,20 @@
 #   limitations under the License.
 #
 ##-------------------------------------------------------------------------------------
-## myapplication Generic Service
-## 
+## myapplication Generic Service 
+##
 ## Maintainer: michael.frick@ericsson.com
 ##
 ##--------------------------------------------------------------------------------------
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "myapplication.fullname" . }}
+  name: {{ include "myapplication.fullname" . }}
   labels:
-    app: {{ template "myapplication.name" . }}
-    chart: {{ template "myapplication.chart" .  }}
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
+    app.kubernetes.io/name: {{ include "myapplication.name" . }}
+    helm.sh/chart: {{ include "myapplication.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   type: {{ .Values.serviceType }}
   ports:
@@ -40,5 +40,5 @@ spec:
     nodePort: {{ .Values.myapplication.nodePort }}
     {{- end }}
   selector:
-    app: {{ template "myapplication.name" . }}
-    release: "{{ .Release.Name }}"
+    app.kubernetes.io/name: {{ include "myapplication.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
