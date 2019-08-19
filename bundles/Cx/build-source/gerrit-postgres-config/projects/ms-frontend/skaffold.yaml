@@ -15,7 +15,7 @@
 #   limitations under the License.
 #
 ##-------------------------------------------------------------------------------------
-## ms-backend Generic skaffold file 
+## ms-frontend skaffold file 
 ##
 ## Maintainer: michael.frick@ericsson.com
 ##
@@ -54,7 +54,7 @@ profiles:
       local:
         push: false     # If push images when running in a local dev cluster (docker-for-windows, minikube etc)
       artifacts:
-      - image: CX_IMAGE_REGISTRY_SED/CX_IMAGE_REPOSITORY_SED/ms-backend
+      - image: CX_IMAGE_REGISTRY_SED/CX_IMAGE_REPOSITORY_SED/ms-frontend
         docker: 
           dockerfile: src/main/docker/Dockerfile
           noCache: false
@@ -62,17 +62,16 @@ profiles:
     deploy:
       helm:   
         releases:
-        - name: ms-backend-local-dev 
+        - name: ms-frontend-local-dev 
           recreatePods: true
           chartPath: ../deployments/ms-backend
           valuesFiles: 
-            - ../deployments/ms-backend/values-dev.yaml
+            - ../deployments/ms-frontend/values-dev.yaml
           values:
-            image: CX_IMAGE_REGISTRY_SED/CX_IMAGE_REPOSITORY_SED/ms-backend 
+            image: CX_IMAGE_REGISTRY_SED/CX_IMAGE_REPOSITORY_SED/ms-frontend 
           setValues:
-            ingress.hosts[0]: ms-backend-local-dev.mylocalkube.com  # Needs to be added to your HOSTS file ex. 127.0.0.1   myapp.mylocalkube.com
+            ingress.hosts[0]: ms-frontend-local-dev.mylocalkube.com  # Needs to be added to your HOSTS file ex. 127.0.0.1   myapp.mylocalkube.com
             image.pullPolicy: Never    
-            argorollouts: false                         
           imageStrategy: 
             helm:
               explicitRegistry: false
@@ -121,7 +120,7 @@ profiles:
       local:
         push: true     # If push images when running in a local dev cluster (docker-for-windows, minikube etc)
       artifacts:
-      - image: CX_IMAGE_REGISTRY_SED/CX_IMAGE_REPOSITORY_SED/ms-backend
+      - image: CX_IMAGE_REGISTRY_SED/CX_IMAGE_REPOSITORY_SED/ms-frontend
         docker: 
           dockerfile: src/main/docker/Dockerfile
           noCache: false
@@ -129,21 +128,20 @@ profiles:
     deploy:
       helm:   
         releases:
-        - name: mydevapplication 
+        - name: ms-frontend-remote-dev 
           recreatePods: true
           chartPath: ../deployments/ms-backend
           valuesFiles: 
-            - ../deployments/ms-backend/values-dev.yaml
+            - ../deployments/ms-frontend/values-dev.yaml
           values:
-            image: CX_IMAGE_REGISTRY_SED/CX_IMAGE_REPOSITORY_SED/ms-backend 
+            image: CX_IMAGE_REGISTRY_SED/CX_IMAGE_REPOSITORY_SED/ms-frontend 
           setValues:  # OBS Remove values before commit/push updates for this repo!!!
-            ingress.hosts[0]: ms-backend-remote-dev.K8S_DOMAIN_NAME_TO_SED 
+            ingress.hosts[0]: ms-frontend-remote-dev.K8S_DOMAIN_NAME_TO_SED  
             image.pullPolicy: Always  
             image.pullSecret: mypullsecret            
             imageCredentials.registry: 
             imageCredentials.username: 
             imageCredentials.password: 
-            argorollouts: false
           imageStrategy: 
             helm:
               explicitRegistry: false  

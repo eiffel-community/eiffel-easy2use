@@ -20,7 +20,7 @@
 ## Maintainer: michael.frick@ericsson.com
 ##
 ##--------------------------------------------------------------------------------------
-{{- if .Values.argorollout }}
+{{- if .Values.argorollouts }}
 apiVersion: argoproj.io/v1alpha1 # Changed from apps/v1
 kind: Rollout # Changed from Deployment
 # ----- Everything below this comment is the same as a deployment -----
@@ -37,6 +37,16 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  {{- if .Values.argorollouts }}
+  minReadySeconds: 30
+  revisionHistoryLimit: 3
+  strategy:
+  # ----- Everything above this comment are the same as a deployment -----
+      canary: # A new field that used to provide configurable options for a Canary strategy
+        steps:
+        - setWeight: 20
+        - pause: {}
+  {{- end }} 
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "myapplication.name" . }}
@@ -72,9 +82,10 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command:
+          {{- if .Values.resources}}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- end }}
           ports:
           - name: {{ .Values.myapplication.containerPortName }}
             containerPort: {{ .Values.myapplication.containerPort }}
@@ -141,13 +152,3 @@ spec:
             claimName: myapp-vol
   {{- end }}
   {{- end }}
-{{- if .Values.argorollout }}
-minReadySeconds: 30
-revisionHistoryLimit: 3
-strategy:
-# ----- Everything above this comment are the same as a deployment -----
-    canary: # A new field that used to provide configurable options for a Canary strategy
-      steps:
-      - setWeight: 20
-      - pause: {}
-{{- end }} 

@@ -95,7 +95,7 @@ spec:
                   - name: sourceUri
                     value: http://GERRIT_INGRESS_SED  
                   - name: dockerImage
-                    value: eiffelericsson/jdk8mvndockergitjq:latest                             
+                    value: eiffelericsson/jdk8mvndockergitjq:latest                                    
                 templates:
                 - name: ciworkflow
                   #inputs:
@@ -588,8 +588,8 @@ spec:
                             IMAGE_VERSION_TAG={{workflow.outputs.parameters.POMversion}}-$BRANCH-$GIT_SHORT_COMMIT &&
                             IMAGE_VERSION_NAME_TAG=$IMAGE_PATH:$IMAGE_VERSION_TAG &&                    
                             
-                            buildCommand=\"docker build --no-cache=true -t $IMAGE_VERSION_NAME_TAG -f /ms-backend/src/main/docker/Dockerfile /ms-backend/src/main/docker\" &&
-                            docker build --no-cache=true -t $IMAGE_VERSION_NAME_TAG -f /ms-backend/src/main/docker/Dockerfile /ms-backend/src/main/docker &&
+                            buildCommand=\"docker build --build-arg POM_PATH=../../../pom.xml --no-cache=true -t $IMAGE_VERSION_NAME_TAG -f /ms-backend/src/main/docker/Dockerfile /ms-backend/src/main/docker\" &&
+                            docker build --build-arg POM_PATH=../../../pom.xml --no-cache=true -t $IMAGE_VERSION_NAME_TAG -f /ms-backend/src/main/docker/Dockerfile /ms-backend/src/main/docker &&
 
                             docker push $IMAGE_VERSION_NAME_TAG &&       
 
