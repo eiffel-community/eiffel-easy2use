@@ -56,7 +56,7 @@ profiles:
       artifacts:
       - image: CX_IMAGE_REGISTRY_SED/CX_IMAGE_REPOSITORY_SED/ms-frontend
         docker: 
-          dockerfile: src/main/docker/Dockerfile
+          dockerfile: src/main/docker/DockerfileDev
           noCache: false
         context: . 
     deploy:
@@ -122,7 +122,7 @@ profiles:
       artifacts:
       - image: CX_IMAGE_REGISTRY_SED/CX_IMAGE_REPOSITORY_SED/ms-frontend
         docker: 
-          dockerfile: src/main/docker/Dockerfile
+          dockerfile: src/main/docker/DockerfileDev
           noCache: false
         context: . 
     deploy:

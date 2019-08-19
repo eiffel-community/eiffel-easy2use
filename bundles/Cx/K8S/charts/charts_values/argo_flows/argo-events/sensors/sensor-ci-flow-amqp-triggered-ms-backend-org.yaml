@@ -571,6 +571,8 @@ spec:
                             
                             cd ms-backend &&
 
+                            ls &&
+
                             GIT_SHORT_COMMIT=$(git log -n 1 --pretty=format:'%h') &&
 
                             echo $GIT_SHORT_COMMIT &&
@@ -588,8 +590,8 @@ spec:
                             IMAGE_VERSION_TAG={{workflow.outputs.parameters.POMversion}}-$BRANCH-$GIT_SHORT_COMMIT &&
                             IMAGE_VERSION_NAME_TAG=$IMAGE_PATH:$IMAGE_VERSION_TAG &&                    
                             
-                            buildCommand=\"docker build --build-arg POM_PATH=../../../pom.xml --no-cache=true -t $IMAGE_VERSION_NAME_TAG -f /ms-backend/src/main/docker/Dockerfile /ms-backend/src/main/docker\" &&
-                            docker build --build-arg POM_PATH=../../../pom.xml --no-cache=true -t $IMAGE_VERSION_NAME_TAG -f /ms-backend/src/main/docker/Dockerfile /ms-backend/src/main/docker &&
+                            buildCommand=\"docker build --no-cache=true -t $IMAGE_VERSION_NAME_TAG -f /ms-backend/src/main/docker/Dockerfile /ms-backend/src/main/docker\" &&
+                            docker build --no-cache=true -t $IMAGE_VERSION_NAME_TAG -f /ms-backend/src/main/docker/Dockerfile /ms-backend/src/main/docker &&
 
                             docker push $IMAGE_VERSION_NAME_TAG &&       
 
