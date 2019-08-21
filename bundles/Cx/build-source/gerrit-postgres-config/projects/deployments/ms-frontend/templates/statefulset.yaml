@@ -46,11 +46,9 @@ spec:
 {{ toYaml .Values.podAnnotations | indent 8 }}
       {{- end }}
     spec:
-      {{- if .Values.image.pullSecrets }}
-      imagePullSecrets:
-      {{- range .Values.image.pullSecrets }}
-        - name: {{ . }}
-      {{- end}}
+      {{- if .Values.image.pullSecret }}
+      imagePullSecrets: 
+        - name: {{ .Values.image.pullSecret }}
       {{- end }}
       {{- if .Values.rbacEnabled}}
       serviceAccountName: {{ template "myapplication.fullname" . }}
@@ -121,11 +119,6 @@ spec:
             value: "myapplication@$(MY_POD_IP)"
           - name: K8S_SERVICE_NAME
             value: "{{ template "myapplication.fullname" . }}"
-          - name: myapplication_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "myapplication.fullname" . }}
-                key: myapplication-password
         envFrom:
           - configMapRef:
               name: {{ template "myapplication.fullname" . }}-config-env-vars

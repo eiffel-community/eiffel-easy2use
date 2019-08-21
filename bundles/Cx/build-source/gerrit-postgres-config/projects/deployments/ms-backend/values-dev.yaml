@@ -57,7 +57,7 @@ myapplication:
   nodePort:
 
   # Volume Mount Path to ConfigMap
-  ConfigMapvolumeMountPath: /deployments/config   # Needed for spring-boot application.properties via ConfigMap
+  ConfigMapvolumeMountPath: /opt/target/config    # OBS must match jar/war file folder location in Dockerfile (-/config)
   #DatavolumeMountPath:   # /data  Leave empty if no volume is needed, OBS needed if persistence.enabled: true!
 
   

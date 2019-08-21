@@ -1,5 +1,6 @@
-FROM fabric8/java-jboss-openjdk8-jdk:1.2
-ENV JAVA_APP_DIR=/deployments
-ENV JAVA_APP_JAR=app.jar
-EXPOSE 8090 8778 9779 9000
-COPY app.jar /deployments/
+FROM openjdk:11-jre-slim
+ENV PORT 9000
+EXPOSE 9000
+COPY app.jar /opt/target
+WORKDIR /opt/target
+CMD ["/bin/bash", "-c", "find -type f -name '*.jar' | xargs java -jar"]

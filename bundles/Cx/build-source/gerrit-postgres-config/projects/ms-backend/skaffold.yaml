@@ -129,7 +129,7 @@ profiles:
     deploy:
       helm:   
         releases:
-        - name: mydevapplication 
+        - name: ms-backend-remote-dev 
           recreatePods: true
           chartPath: ../deployments/ms-backend
           valuesFiles: 
@@ -139,7 +139,7 @@ profiles:
           setValues:  # OBS Remove values before commit/push updates for this repo!!!
             ingress.hosts[0]: ms-backend-remote-dev.K8S_DOMAIN_NAME_TO_SED 
             image.pullPolicy: Always  
-            image.pullSecret: mypullsecret            
+            image.pullSecret: mypullsecretbackend            
             imageCredentials.registry: 
             imageCredentials.username: 
             imageCredentials.password: 

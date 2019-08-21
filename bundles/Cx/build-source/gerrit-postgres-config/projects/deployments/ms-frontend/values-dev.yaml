@@ -36,15 +36,16 @@ image:
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
   ##
   pullPolicy: Always
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  # pullSecrets:
-  #   - myRegistrKeySecretName
+  ## Secrets must be manually created in the namespace. can be created with -> imageCredentials.registry/username/password
+  pullSecret: 
 
 ## does your cluster have rbac enabled? assume yes by default
 rbacEnabled: false
+
+imageCredentials:  # Secret (pullsecret), used together with image.pullSecret
+  registry: 
+  username: 
+  password: 
 
 ## section of specific values for application
 myapplication:
@@ -59,13 +60,7 @@ myapplication:
   nodePort:
 
   # Volume Mount Path to ConfigMap
-  volumeMountPath: /deployments/config
-
-
-  # pullsecret
-
-  ## Disk free limit
-  diskFreeLimit: '"6GiB"'
+  volumeMountPath: /opt/target/config    # OBS must match jar/war file folder location in Dockerfile (-/config)
 
   ## Environment Variable Configuration
   configurationEnvironmentVars: |
