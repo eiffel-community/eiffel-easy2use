@@ -493,7 +493,7 @@ activedirectory.managerDn=
 activedirectory.rootDn=
 activedirectory.userSearchFilter=
 logging.level.root=ERROR
-logging.level.org.springframework.web=ERROR
+logging.level.org.springframework.web=DEBUG
 logging.level.com.ericsson.eiffel.remrem.producer=DEBUG"
 
 # K8S format
@@ -522,7 +522,7 @@ activedirectory.managerDn=
 activedirectory.rootDn=
 activedirectory.userSearchFilter=
 logging.level.root=ERROR
-logging.level.org.springframework.web=ERROR
+logging.level.org.springframework.web=DEBUG
 logging.level.com.ericsson.eiffel.remrem.producer=DEBUG"
 
 # K8S format
