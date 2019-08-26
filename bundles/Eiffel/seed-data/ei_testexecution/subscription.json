@@ -25,6 +25,6 @@
     "userName" : "admin",
     "password" : "admin",
     "notificationMessageKeyValuesAuth" : [],
-    "authenticationType" : "BASIC_AUTH"
+    "authenticationType" : "BASIC_AUTH_JENKINS_CSRF"
 }
 ]
