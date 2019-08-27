@@ -25,7 +25,7 @@
     "userName" : "admin",
     "password" : "admin",
     "notificationMessageKeyValuesAuth" : [],
-    "authenticationType" : "BASIC_AUTH"
+    "authenticationType" : "BASIC_AUTH_JENKINS_CSRF"
   },
   {
     "subscriptionName" : "Subscription2_FEM_JENKINS",
@@ -53,6 +53,6 @@
     "userName" : "admin",
     "password" : "admin",
     "notificationMessageKeyValuesAuth" : [],
-    "authenticationType" : "BASIC_AUTH"
+    "authenticationType" : "BASIC_AUTH_JENKINS_CSRF"
   }
 ]
