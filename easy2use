@@ -293,7 +293,7 @@ function do_list {
   then
     local service_url_format="%-25s  %s\n"
     local docker_services=$(docker-compose config --services | sed -e 's/[\n\r]+/ /g' | sort)
-    local service_ports=$(grep EXTERNAL_PORT config-bundle.bash | sed -e "s/^.*${bundle}_//ig" | sort)
+    local service_ports=$(source config-bundle.bash && env | grep EXTERNAL_PORT | sed -e "s/^.*${bundle}_//ig" | sort)
     printf "\n${service_url_format}" "Service" "Exposed URL(s)"
     echo "------------------------------------------------------"
     for docker_service in $docker_services
