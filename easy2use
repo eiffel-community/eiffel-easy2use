@@ -294,13 +294,13 @@ function do_list {
   if [ "$TARGET_TYPE" == "Docker" ]
   then
     local service_url_format="%-25s  %s\n"
-    local service_ports=$(source config-bundle.bash && env | grep EXTERNAL_PORT | sed -e "s/^.*${bundle}_//ig" | sort)
+    local service_ports=$(source config-bundle.bash && env | grep EXTERNAL_PORT | sort)
 
     printf "\n${service_url_format}" "Service" "Exposed URL(s)"
     echo "------------------------------------------------------"
     for service_port in $service_ports
     do
-      local service_name=$(echo $service_port | sed -e 's/=.*$//g;s/_EXTERNAL_PORT//g;s/^[^_]*_//' | tr '[:upper:]' '[:lower:]')
+      local service_name=$(echo $service_port | sed -e 's/^[^_]*_//;s/=.*$//g;s/_EXTERNAL_PORT//g' | tr '[:upper:]' '[:lower:]')
       local exposed_port=$(echo $service_port | sed -e 's/^.*=//g')
       url="http://${TARGET_HOST}:${exposed_port}"
       printf "${service_url_format}" "${service_name}" "$url"
