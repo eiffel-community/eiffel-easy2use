@@ -15,3 +15,11 @@ services:
       dockerfile: ./jenkins/Dockerfile
       args:
         JENKINS_VERSION: ${EIFFEL_JENKINS_IMAGE_BUILD_VERSION}
+
+  jenkins_fem:
+    image: ${EIFFEL_JENKINS_FEM_IMAGE_TAG_NAME}
+    build:
+      context: ./
+      dockerfile: ./eiffel-jenkins/Dockerfile
+      args:
+        JENKINS_VERSION: ${EIFFEL_JENKINS_FEM_IMAGE_TAG_NAME}

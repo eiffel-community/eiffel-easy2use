@@ -43,7 +43,7 @@ export EIFFEL_DUMMY_ER_IMAGE_TAG_NAME=eiffelericsson/dummy-er
 export EIFFEL_ER_IMAGE_TAG_NAME=eiffelericsson/eiffel-er
 export EIFFEL_REMREM_GENERATE_IMAGE_TAG_NAME=eiffelericsson/eiffel-remrem-generate
 export EIFFEL_REMREM_PUBLISH_IMAGE_TAG_NAME=eiffelericsson/eiffel-remrem-publish
-export EIFFEL_JENKINS_IMAGE_TAG_NAME=bitnami/jenkins
+export EIFFEL_JENKINS_IMAGE_TAG_NAME=eiffelericsson/jenkins
 export EIFFEL_JENKINS_FEM_IMAGE_TAG_NAME=eiffelericsson/eiffel-jenkins
 export EIFFEL_NEXUS_IMAGE_TAG_NAME=sonatype/nexus3
 
