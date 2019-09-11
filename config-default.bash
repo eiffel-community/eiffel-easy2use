@@ -76,7 +76,7 @@ fi
 # If using local K8S cluster set via localhost_k8s_config.sh set
 # K8S_DOMAINNAME="mylocalkube"
 # If using remote K8S cluster set cluster domain name 
-# ex K8S_DOMAINNAME="integral.seli.gic.ericsson.se"
+# ex K8S_DOMAINNAME="remotek8s.company.com"
 K8S_DOMAINNAME="mylocalkube"
 
 

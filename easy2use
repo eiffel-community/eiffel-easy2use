@@ -226,7 +226,7 @@ function parse_arguments {
 # Helper to configure local Hyper-V  (Docker for Windows) K8S cluster
 #-----------------------------
 function do_k8s_local_hyper_v {
-  source utilities/K8S/configure_local_k8s_hyper_v.sh
+  source ${CLI_ROOT}/utilities/K8S/configure_local_k8s_hyper_v.sh
 }
 
 
@@ -236,7 +236,7 @@ function do_k8s_local_hyper_v {
 # Helper to configure local minikube K8S cluster
 #-----------------------------
 function do_k8s_local_minikube {
-  source utilities/K8S/configure_local_k8s_minikube.sh
+  source ${CLI_ROOT}/utilities/K8S/configure_local_k8s_minikube.sh
 }
 
 
@@ -247,8 +247,12 @@ function do_k8s_local_minikube {
 # in local Hyper-V (Docker for Windows) K8S cluster
 #-----------------------------
 function do_k8s_local_hosts_file_hyper_v {
+  local bundles_path="$1"
+  local bundle="$2"
+  cd ${bundles_path}/$bundle
   echo "Update your local '../etc/hosts' file with:"
-  source utilities/K8S/get_k8s_ingress.sh | awk '{if (NR!=1) {print "127.0.0.1 " $2}}'
+  source ${CLI_ROOT}/utilities/K8S/get_k8s_ingress.sh | awk '{if (NR!=1) {print "127.0.0.1 " $2}}'
+  cd ../..
 }
 
 
@@ -259,9 +263,13 @@ function do_k8s_local_hosts_file_hyper_v {
 # in local minikube cluster
 #-----------------------------
 function do_k8s_local_hosts_file_minikube {
+  local bundles_path="$1"
+  local bundle="$2"
+  cd ${bundles_path}/$bundle
   minikube_ip=$(minikube ip)
   echo "Update your local '../etc/hosts' file with:"
-  source utilities/K8S/get_k8s_ingress.sh | awk -v env_var="$minikube_ip" '{if (NR!=1) {print env_var" "$2}}'
+  source ${CLI_ROOT}/utilities/K8S/get_k8s_ingress.sh | awk -v env_var="$minikube_ip" '{if (NR!=1) {print env_var" "$2}}'
+  cd ../..
 }
 
 
@@ -335,6 +343,7 @@ function do_list {
 
   elif [ "$TARGET_TYPE" == "Kubernetes" ]
   then
+    pwd
     verbose "Looking for Kubernetes services in namespace ${K8S_NAMESPACE}"
     source ${CLI_ROOT}/utilities/K8S/get_k8s_ingress.sh | awk '{if (NR!=1) {print "http://"$2}}'
     echo "${app_url_context_path}"
@@ -749,7 +758,9 @@ function do_run {
     info | \
     list | \
     list-psw | \
-    list-packages)
+    list-packages | \
+    generate-local-hosts-file-hyper-v | \
+    generate-local-hosts-file-minikube)
       if [[ -z "${bundle}" ]]
       then
         bail_out "The command '$command' requires a bundle to be given\n"
@@ -791,6 +802,8 @@ function do_run {
       ;;
   esac
 
+ 
+
   debug "About to call command $command"
   case "$command" in
     start )    do_start "${current_bundles_path}" "$bundle" "$package" "$services";;
@@ -805,8 +818,8 @@ function do_run {
     list-packages)  do_list_packages "${current_bundles_path}" "$bundle";;
     configure-local-k8s-hyper-v) do_k8s_local_hyper_v;;
     configure-local-k8s-minikube) do_k8s_local_minikube;;
-    generate-local-hosts-file-hyper-v) do_k8s_local_hosts_file_hyper_v;;
-    generate-local-hosts-file-minikube) do_k8s_local_hosts_file_minikube;;
+    generate-local-hosts-file-hyper-v) do_k8s_local_hosts_file_hyper_v "${current_bundles_path}" "$bundle";;
+    generate-local-hosts-file-minikube) do_k8s_local_hosts_file_minikube "${current_bundles_path}" "$bundle";;
     * )        bail_out "Unknown command: $command"
   esac
 }
