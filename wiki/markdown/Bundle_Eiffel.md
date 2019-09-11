@@ -72,7 +72,7 @@ See the getting starting page: Getting Started
 ## Layout
 This is a schematic picture of the environment:
 
-<img src="./images/Eiffel-components.png" alt="Eiffel Easy2Use" width="750"/>
+<img src="./images/eiffel-components.png" alt="Eiffel Easy2Use" width="750"/>
 
 
 ## Usage

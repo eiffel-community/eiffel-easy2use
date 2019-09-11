@@ -53,5 +53,6 @@ export easy2use_bundle_psw="
 Eiffel Bundle Users/Passwords:
 --------------------------
 eiffel_jenkins_fem: admin / admin
+eiffel_jenkins: user / bitnami
 eiffel_rabbitmq: myuser / myuser
 eiffel_nexus: admin / admin123"
