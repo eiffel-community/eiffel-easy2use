@@ -21,6 +21,8 @@
 CORE_BUNDLES_PATH=bundles
 EXTERNAL_BUNDLES_PATH=
 
+# This variable is required if external bundles config-bundle.bash need to access internal bundles configurations.
+export EASY2USE_ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"
 
 #-----------------------------
 # get_bundles
@@ -300,43 +302,16 @@ function do_list {
   if [ "$TARGET_TYPE" == "Docker" ]
   then
     local service_url_format="%-25s  %s\n"
-    local docker_services=$(docker-compose config --services | sed -e 's/[\n\r]+/ /g' | sort)
-    local service_ports=$(grep EXTERNAL_PORT config-bundle.bash | sed -e "s/^.*${bundle}_//ig" | sort)
+    local service_ports=$(source config-bundle.bash && env | grep EXTERNAL_PORT | sort)
+
     printf "\n${service_url_format}" "Service" "Exposed URL(s)"
     echo "------------------------------------------------------"
-    for docker_service in $docker_services
-    do
-      local service_port_found=0
-      for service_port in $service_ports
-      do
-        local service_name=$(echo $service_port | sed -e 's/=.*$//g;s/_EXTERNAL_PORT//g' | tr '[:upper:]' '[:lower:]')
-        if [ "${docker_service}" == "${service_name}" ]
-        then
-          local service_port_found=1
-          local exposed_port=$(echo $service_port | sed -e 's/^.*=//g')
-          local url="http://${TARGET_HOST}:${exposed_port}"
-          printf "${service_url_format}" "${docker_service}" "$url"
-        fi
-      done
-      if [ $service_port_found -ne 1 ]
-      then
-        local url="No exposed port defined (at least not found)"
-        printf "${service_url_format}" "${docker_service}" "$url"
-      fi
-    done
-
-    echo ""
-    echo "Services with EXPOSED_PORTS but not present in docker-compose.yaml (or spelled differently)"
-    local docker_services_oneliner=$(echo "${docker_services}" | tr "\n" " ")
     for service_port in $service_ports
     do
-      local service_name=$(echo $service_port | sed -e 's/=.*$//g;s/_EXTERNAL_PORT//g' | tr '[:upper:]' '[:lower:]')
-      if [[ ! " ${docker_services_oneliner} " =~ " ${service_name} " ]]
-      then
-        local exposed_port=$(echo $service_port | sed -e 's/^.*=//g')
-        url="http://${TARGET_HOST}:${exposed_port}"
-        printf "${service_url_format}" "${service_name}" "$url"
-      fi
+      local service_name=$(echo $service_port | sed -e 's/^[^_]*_//;s/=.*$//g;s/_EXTERNAL_PORT//g' | tr '[:upper:]' '[:lower:]')
+      local exposed_port=$(echo $service_port | sed -e 's/^.*=//g')
+      url="http://${TARGET_HOST}:${exposed_port}"
+      printf "${service_url_format}" "${service_name}" "$url"
     done
    echo "${app_url_context_path}"
    echo "${easy2use_bundle_psw}"
