@@ -209,7 +209,7 @@ If you running the Cx bundle on a local K8S cluster, you need to update your ..e
 The deployed applications ms-frontend & ms-backend (Argo-CD) will not be removed via Easy2Use CLI.
 Remove the applications in the Argo-CD GUI before executing the Easy2Use remove cmd!
 
-### Alt1) Deploy CX bundle with all components including Argo 
+### Alt1) Remove CX bundle with all components including Argo 
 OBS Argo are a cluster global release, so it will be removed even if it's deployed in other namespace than specified in the Easy2Use cmd!
 
   ```
@@ -218,7 +218,7 @@ OBS Argo are a cluster global release, so it will be removed even if it's deploy
 
   OBS You need to answer "Y" twice, first for the Cx bundle removals and then the dependent services from the Eiffel bundle!
 
-### Alt2) Deploy CX bundle with all components including Argo-Events and excluding Argo  
+### Alt2) Remove CX bundle with all components including Argo-Events and excluding Argo  
   
   ```
   ./easy2use remove Cx -t Kubernetes -n <namespace> -p min
