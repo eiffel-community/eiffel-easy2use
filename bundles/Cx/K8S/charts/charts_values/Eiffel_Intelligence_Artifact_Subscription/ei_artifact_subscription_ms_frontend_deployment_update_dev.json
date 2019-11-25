@@ -16,7 +16,7 @@
         {
             "conditions": [
                 {
-                    "jmespath": "type=='EiffelArtifactCreatedEvent' && gav.artifactId=='ms-frontend'"
+                    "jmespath": "type=='EiffelArtifactCreatedEvent' && split(data.identity, '@|/')| [2]=='ms-frontend'"
                 },
                 {
                     "jmespath": "confidenceLevels[?value=='SUCCESS' && name=='readyForSystemIntegration']"
