@@ -25,7 +25,7 @@
 # ----- Eiffel 2.0 Servicenames, External Ports, Internal Ports
 export EIFFEL_MONGODB="eiffel-mongodb"
 export EIFFEL_RABBITMQ="eiffel-rabbitmq"
-export EIFFEL_DUMMY_ER="eiffel-dummy-er"
+export EIFFEL_DUMMY_ER="dummy-er"
 export EIFFEL_ER="eiffel-er"
 export EIFFEL_JENKINS_FEM="eiffel-jenkins-fem"
 export EIFFEL_JENKINS="eiffel-jenkins"
