@@ -426,7 +426,7 @@ export DOCKER_CONFIG_EIFFEL_DUMMY_ER="$CONFIG_EIFFEL_DUMMY_ER"
 ### Eiffel-ER service ###
 
 export CONFIG_EIFFEL_ER="
-server.contextPath=/
+server.servlet.context-path=
 server.port=${EIFFEL_ER_INTERNAL_PORT}
 rabbitmq.host=${EIFFEL_RABBITMQ}
 rabbitmq.port=${EIFFEL_RABBITMQ_AMQP_APPLICATION_PORT}
