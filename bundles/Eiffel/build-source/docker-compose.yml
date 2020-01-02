@@ -14,7 +14,7 @@ services:
       context: ./
       dockerfile: ./jenkins/Dockerfile
       args:
-        JENKINS_VERSION: ${EIFFEL_JENKINS_IMAGE_BUILD_VERSION}
+        JENKINS_VERSION: ${JENKINS_VERSION}
 
   jenkins_fem:
     image: ${EIFFEL_JENKINS_FEM_IMAGE_TAG_NAME}
@@ -22,4 +22,5 @@ services:
       context: ./
       dockerfile: ./eiffel-jenkins/Dockerfile
       args:
-        JENKINS_VERSION: ${EIFFEL_JENKINS_FEM_IMAGE_TAG_NAME}
+        JENKINS_VERSION: ${EIFFEL_JENKINS_IMAGE_BUILD_VERSION}
+        FEM_PLUGIN_VERSION: ${EIFFEL_JENKINS_PLUGIN_VERSION}

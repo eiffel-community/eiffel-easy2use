@@ -36,7 +36,7 @@
   &quot;msgParams&quot;: {
     &quot;meta&quot;: {
       &quot;type&quot;: &quot;EiffelArtifactCreatedEvent&quot;,
-      &quot;version&quot;: &quot;1.1.0&quot;,
+      &quot;version&quot;: &quot;3.0.0&quot;,
       &quot;tags&quot;: [],
       &quot;source&quot;: {
         &quot;domainId&quot;: &quot;example.domain&quot;
@@ -45,15 +45,10 @@
   },
   &quot;eventParams&quot;: {
     &quot;data&quot;: {
-      &quot;gav&quot;: {
-        &quot;groupId&quot;: &quot;com.othercompany.library&quot;,
-        &quot;artifactId&quot;: &quot;required&quot;,
-        &quot;version&quot;: &quot;required&quot;
-      },
+      &quot;identity&quot;: &quot;pkg:maven/com.othercompany.library/required@required&quot;,
       &quot;fileInformation&quot;: [
         {
-          &quot;classifier&quot;: &quot;exec&quot;,
-          &quot;extension&quot;: &quot;jar&quot;
+          &quot;name&quot;: &quot;required.jar&quot;
         }
       ],
       &quot;buildCommand&quot;: &quot;&quot;,
