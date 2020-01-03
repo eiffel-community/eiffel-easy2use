@@ -251,7 +251,7 @@ function execute_k8s_command_on_services {
         local settings=(
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
                 image.repository="$EIFFEL_JENKINS_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL_JENKINS_IMAGE_BUILD_VERSION"
+          image.tag="$JENKINS_VERSION"
           ingress.hostName="$K8S_INGRESS_EIFFEL_JENKINS"
           eiffel.configurationEnvironmentVars="$K8S_CONFIG_EIFFEL_JENKINS"
           ingress.enabled="$K8S_Ingress_Enabled"

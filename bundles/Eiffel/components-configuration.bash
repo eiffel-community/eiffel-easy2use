@@ -513,7 +513,7 @@ WAIT_MB_HOSTS=$EIFFEL_RABBITMQ:${EIFFEL_RABBITMQ_WEB_APPLICATION_PORT}"
 ### RemRem-Generate service ###
 
 export CONFIG_EIFFEL_REMREM_GENERATE="
-server.port=${EIFFEL_REMREM_GENERATE_EXTERNAL_PORT}
+server.port=${EIFFEL_REMREM_GENERATE_INTERNAL_PORT}
 jasypt.encryptor.password=
 activedirectory.generate.enabled=false
 activedirectory.ldapUrl=
