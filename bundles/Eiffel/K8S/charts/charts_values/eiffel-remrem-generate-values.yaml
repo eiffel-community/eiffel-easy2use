@@ -59,7 +59,7 @@ eiffel:
   nodePort:
 
   # Volume Mount Path to ConfigMap
-  volumeMountPath: /usr/local/tomcat/config
+  volumeMountPath: /deployments/config
 
 
   ## Disk free limit
