@@ -121,7 +121,7 @@ export DOCKER_CONFIG_EIFFEL_EI_FRONTEND=$CONFIG_EIFFEL_EI_FRONTEND_WITHOUT_COMMA
 
 ## General format for both Docker and K8S
 export CONFIG_EIFFEL_EI_BACKEND_ALLEVENTS="
-SpringApplicationName=${EIFFEL_EI_BACKEND_ALLEVENTS}
+spring.application.name=${EIFFEL_EI_BACKEND_ALLEVENTS}
 server.port=${EIFFEL_EI_BACKEND_ALLEVENTS_INTERNAL_PORT}
 rules.path=/rules/AllEventsRules-Eiffel-Agen-Version.json
 rules.replacement.marker=%IdentifyRulesEventId%
@@ -194,7 +194,7 @@ WAIT_DB_HOSTS=$EIFFEL_MONGODB:${EIFFEL_MONGODB_APPLICATION_PORT}"
 
 ## General format for both Docker and K8S
 export CONFIG_EIFFEL_EI_BACKEND_ARTIFACT="
-SpringApplicationName=${EIFFEL_EI_BACKEND_ARTIFACT}
+spring.application.name=${EIFFEL_EI_BACKEND_ARTIFACT}
 server.port=${EIFFEL_EI_BACKEND_ARTIFACT_INTERNAL_PORT}
 rules.path=/rules/ArtifactRules-Eiffel-Agen-Version.json
 rules.replacement.marker=%IdentifyRulesEventId%
@@ -268,7 +268,7 @@ WAIT_DB_HOSTS=$EIFFEL_MONGODB:${EIFFEL_MONGODB_APPLICATION_PORT}"
 
 ## General format for both Docker and K8S
 export CONFIG_EIFFEL_EI_BACKEND_TESTEXECUTION="
-SpringApplicationName=${EIFFEL_EI_BACKEND_TESTEXECUTION}
+spring.application.name=${EIFFEL_EI_BACKEND_TESTEXECUTION}
 server.port=${EIFFEL_EI_BACKEND_TESTEXECUTION_INTERNAL_PORT}
 rules.path=/rules/TestExecutionObjectRules-Eiffel-Agen-Version.json
 rules.replacement.marker=%IdentifyRulesEventId%
@@ -342,7 +342,7 @@ WAIT_DB_HOSTS=$EIFFEL_MONGODB:${EIFFEL_MONGODB_APPLICATION_PORT}"
 
 ## General format for both Docker and K8S
 export CONFIG_EIFFEL_EI_BACKEND_SOURCECHANGE="
-SpringApplicationName=${EIFFEL_EI_BACKEND_SOURCECHANGE}
+spring.application.name=${EIFFEL_EI_BACKEND_SOURCECHANGE}
 server.port=${EIFFEL_EI_BACKEND_SOURCECHANGE_INTERNAL_PORT}
 rules.path=/rules/SourceChangeObjectRules-Eiffel-Agen-Version.json
 rules.replacement.marker=%IdentifyRulesEventId%
