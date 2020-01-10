@@ -72,11 +72,6 @@ export EIFFEL_EI_AGGREGATED_DB_TTL=
 export EIFFEL_REMREM_USER=guest
 export EIFFEL_REMREM_PASSWORD=guest
 
-## Common Eiffel configurations
-
-export EIFFEL_EI_SEARCH_QUERY_PREFIX=object
-export EIFFEL_EI_AGGREGATED_OBJECT_NAME=aggregatedObject
-
 
 ################################################################
 
@@ -157,8 +152,6 @@ threads.core.pool.size=100
 threads.queue.capacity=5000
 threads.max.pool.size=150
 scheduled.threadpool.size=100
-search.query.prefix=${EIFFEL_EI_SEARCH_QUERY_PREFIX}
-aggregated.object.name=${EIFFEL_EI_AGGREGATED_OBJECT_NAME}
 email.sender=noreply@ericsson.com
 email.subject=Email Subscription Notification
 notification.retry=3
@@ -229,8 +222,6 @@ threads.core.pool.size=100
 threads.queue.capacity=5000
 threads.max.pool.size=150
 scheduled.threadpool.size=100
-search.query.prefix=${EIFFEL_EI_SEARCH_QUERY_PREFIX}
-aggregated.object.name=${EIFFEL_EI_AGGREGATED_OBJECT_NAME}
 email.sender=noreply@ericsson.com
 email.subject=Email Subscription Notification
 notification.retry=3
@@ -302,8 +293,6 @@ threads.core.pool.size=100
 threads.queue.capacity=5000
 threads.max.pool.size=150
 scheduled.threadpool.size=100
-search.query.prefix=${EIFFEL_EI_SEARCH_QUERY_PREFIX}
-aggregated.object.name=${EIFFEL_EI_AGGREGATED_OBJECT_NAME}
 email.sender=noreply@ericsson.com
 email.subject=Email Subscription Notification
 notification.retry=3
@@ -375,8 +364,6 @@ threads.core.pool.size=100
 threads.queue.capacity=5000
 threads.max.pool.size=150
 scheduled.threadpool.size=100
-search.query.prefix=${EIFFEL_EI_SEARCH_QUERY_PREFIX}
-aggregated.object.name=${EIFFEL_EI_AGGREGATED_OBJECT_NAME}
 email.sender=noreply@ericsson.com
 email.subject=Email Subscription Notification
 notification.retry=3
