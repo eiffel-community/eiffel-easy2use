@@ -73,7 +73,7 @@ If running in local K8S cluster, minikube or docker-for-windows (windows 10 Hype
   ```
 
 ## Components Included in Eiffel Bundle
-A detailed [view can be found here](./components.md).
+A detailed [view can be found here](components.md).
 
 
 ## Usage
@@ -113,4 +113,4 @@ Update your hosts file with the output from the printout!
 
 ## Tutorial for Bundle
 When the bundle is started it is time to start playing around with the services.
-A [step by step tutorial can be found here](./tutorial.md).
+A [step by step tutorial can be found here](tutorial.md).

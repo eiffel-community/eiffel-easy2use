@@ -85,7 +85,7 @@ If running in local K8S cluster, minikube or docker-for-windows (windows 10 Hype
   ```
 
 ## Components included in Cx bundle
-A detailed [view can be found here](./components.md).
+A detailed [view can be found here](components.md).
 
 
 ## Usage
@@ -137,4 +137,4 @@ NOTE: You need to answer "Y" twice, first for the GitLab bundle removals and the
 
 ## Tutorial for Bundle
 When the bundle is started it is time to start playing around with the services.
-A [step by step tutorial can be found here](./tutorial.md).
+A [step by step tutorial can be found here](tutorial.md).

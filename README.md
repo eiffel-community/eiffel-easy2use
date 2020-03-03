@@ -18,7 +18,7 @@
 <img src="./images/eiffel-easy2use.png" alt="Eiffel Easy2Use" width="350"/>
 
 # Eiffel Easy2Use
-Eiffel Easy2Use is aiming to create an easy installation for any set of components in Docker containers on a dedicated Docker host or in a Kubernetes Cluster via Helm Charts (K8S package manager), with no or minimal configuration required to get started. 
+Eiffel Easy2Use is aiming to create an easy installation for any set of components in Docker containers on a dedicated Docker host or in a Kubernetes Cluster via Helm Charts (K8S package manager), with no or minimal configuration required to get started.
 
 This Easy2Use space describes a Docker/Kubernetes easy set up sandbox environment. The environment aims at providing a portable and isolated demo/prototype sandbox for any Docker based application. It can even be run on your local laptop without any network access!
 
@@ -42,10 +42,10 @@ The Easy2Use CLI supports standard docker-compose and helm charts for deploying 
 
 # Included Bundles
 
-* GitLab
-* Cx
-* Eiffel
- 
+* [GitLab](./wiki/gitlab/setup.md)
+* [Cx](./wiki/cx/setup.md)
+* [Eiffel](./wiki/eiffel/setup.md)
+
 
 # About this repository
 The contents of this repository are licensed under the [Apache License 2.0](./LICENSE).
@@ -58,6 +58,6 @@ This repository forms part of the Eiffel Community. Eiffel is a protocol for tec
 Visit [Eiffel Community](https://eiffel-community.github.io) to get started and get involved.
 
 # Documentation
-1. [**Hosting Environments**](./wiki/markdown/Hosting_Environments.md)
-2. [**Getting Started**](./wiki/markdown/Getting_Started.md)
-3. [**Bundles**](./wiki/markdown/Bundles.md)
+1. [**Hosting Environments**](wiki/Hosting_Environments.md)
+2. [**Getting Started**](wiki/Getting_Started.md)
+3. [**Bundles**](wiki/Bundles.md)

@@ -132,7 +132,7 @@ Dependent Components Included from Eiffel Bundle
 - Eiffel ViCi
 - Eiffel Intelligence (with artifact rules)
 
-A more detailed [view of the components can be found here](./components.md).
+A more detailed [view of the components can be found here](components.md).
 
 ## Usage
 
@@ -214,4 +214,4 @@ the dependent services from the Eiffel bundle!
 
 ## Tutorial for Bundle
 When the bundle is started it is time to start playing around with the services.
-A [step by step tutorial can be found here](./tutorial.md).
+A [step by step tutorial can be found here](tutorial.md).
