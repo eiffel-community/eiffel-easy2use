@@ -25,7 +25,7 @@ To be able to run Easy2Use, make sure you have decided on a [**hosting environme
 # Quick Getting Started Guide
 
 ## Easy2Use Cheatsheet
-<a href="../../docs/Easy2Use_CheatSheet.pdf" target="_blank"><img src="../../images/cheatsheet_easy2use.png" alt="Eiffel Easy2Use Cheatsheet" width="350" /></a>
+<a href="../docs/Easy2Use_CheatSheet.pdf" target="_blank"><img src="../images/cheatsheet_easy2use.png" alt="Eiffel Easy2Use Cheatsheet" width="350" /></a>
 
 ## Clone the Easy2Use repository
 
