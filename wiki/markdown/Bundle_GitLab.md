@@ -19,7 +19,7 @@
 ## Idea
 To provide a GitLab bundle with CI/CD pipeline as code setup which executes CI/CD pipeline build steps in Docker containers.
 
-Dependent Eiffel services will be loaded from the Eiffel bundle to provide capability to log/vizualize pipeline activities via Eiffel events.
+Dependent Eiffel services will be loaded from the Eiffel bundle to provide capability to log/visualize pipeline activities via Eiffel events.
 
 ### Included Features
 CI:
@@ -29,7 +29,7 @@ CI:
  - GitLab CI engine with pipeline as code (ms-frontend & ms-backend)
  - Pre & post-merge pipelines
  - Eiffel event generated
- 
+
 CD:
  - CD Pipelines with kubectl deployment via HELM templates, helm charts included in ms-frontend & ms-backend microservices
  - Pre-merge CD pipeline (merge request) deployment to dev
@@ -49,21 +49,21 @@ GitLab
 Component | Service name | User/PSW | Ingress | Info
 ------------- | ------------ | -------- | ------- | ------------
 GitLab | gitlab_gitlab | NA | gitlab-\<domainname\> | user account needs to be created after startup
-<b>Services Loaded from Eiffel Bundle*</b> | | | 
-RabbitMQ (Message Bus) | rabbitmq | myuser / myuser | eiffel-rabbitmq-\<namespace\>.\<domainname\>	
+<b>Services Loaded from Eiffel Bundle*</b> | | |
+RabbitMQ (Message Bus) | rabbitmq | myuser / myuser | eiffel-rabbitmq-\<namespace\>.\<domainname\>
 MongoDB & Data Seeding | mongodb<br> mongo_seed | N/A | N/A | The seed-data folder in Easy2Use contains data that can be seeded into the MongoDB instance.
-RemRem Generate | remrem_generate | N/A | eiffel-remrem-generate-\<namespace\>.\<domainname\>	 
+RemRem Generate | remrem_generate | N/A | eiffel-remrem-generate-\<namespace\>.\<domainname\>
 RemRem Publish | remrem_publish | N/A | eiffel-remrem-publish-\<namespace\>.\<domainname\>
 Nexus3 | nexus | admin/admin123 | eiffel-nexus3-\<namespace\>.\<domainname\>
-Event Repository REST API | er | N/A | eiffel-er-\<namespace\>.\<domainname\>	
-Eiffel Vici | vici | N/A | eiffel-vici-\<namespace\>.\<domainname\>	
+Event Repository REST API | er | N/A | eiffel-er-\<namespace\>.\<domainname\>
+Eiffel Vici | vici | N/A | eiffel-vici-\<namespace\>.\<domainname\>
 
 ## Resource Requirements
 OS | Minimum Requirements | Preferably | Comments
 ------------- | ------------ | -------- | ----
 Windows 'Docker Toolbox' | ? | 24 GB RAM <br> 50 GB Disk? | This recommendation is valid when assigning 4 CPU cores to the Docker machine.<br>With less cores less memory would be consumed, but the performance will be worse. The assigned amount of RAM will be allocated to the Docker machine until it is stopped
 Windows 'Docker for Windows' | ? |20 GB RAM? <br> 50 GB Disk? | The assigned amount of RAM is dynamically allocated and only used by the Docker machine when needed?
-Linux | 8 GB RAM |16 GB RAM or more |	~11 GB of RAM will be use under the load. <br>When all containers is loaded, the memory usage is ~6 GB RAM. <br> Computer with 8 GB RAM works, but it will takes some more time to load <br>all containers due to swapping data between memory and hard drive. 
+Linux | 8 GB RAM |16 GB RAM or more |	~11 GB of RAM will be use under the load. <br>When all containers is loaded, the memory usage is ~6 GB RAM. <br> Computer with 8 GB RAM works, but it will takes some more time to load <br>all containers due to swapping data between memory and hard drive.
 
 ## Docker requirements
  - Docker 18.06 CE or newer
@@ -116,7 +116,7 @@ Gitlab can only be deployed once per cluster (one ingress used).
 
 Note: the GitLab startup can take a few minutes, so be patient!
 
-###  Deploy GitLab bundle with all components including Argo 
+###  Deploy GitLab bundle with all components including Argo
 
   ```
   ./easy2use start GitLab -t Kubernetes -n <namespace> -d <basedomainname>
@@ -127,18 +127,18 @@ Note: the GitLab startup can take a few minutes, so be patient!
 
 ## List Service URLs, UserName & PSW
 Easy2Use list command will both list URLs (ingresses) to the deployed K8S services and user/psw for the services.
-  
+
   ```
   ./easy2use list GitLab -t Kubernetes -n <namespace>
   ```
 
 
-  OBS For included Eiffel components do: 
+  OBS For included Eiffel components do:
   ```
   ./easy2use list Eiffel -t Kubernetes -n <namespace>
   ```
 
-## List HOSTS files entries for local K8S 
+## List HOSTS files entries for local K8S
 If you running the GitLab bundle on a local K8S cluster, you need to update your ..etc/hosts file with ingresses. To print the ingresses to use do:
 
 
@@ -173,15 +173,15 @@ NA
 
 ## GitLab
 
-### 1. Change password 
- - Login to GitLab  (gitlab.\<domainname\>) 
+### 1. Change password
+ - Login to GitLab  (gitlab.\<domainname\>)
  - Change password
-  
-### 2. Register User 
- - Click Rigister tab 
+
+### 2. Register User
+ - Click Rigister tab
  - Fill-in required text fields
  - Click Register
- 
+
 ### 3. Import Projects
 #### 3.1 Import ms-frontend
  - Click Create a project
@@ -189,7 +189,7 @@ NA
  - Click git Repo by URL, add Git Repo URL:
     - https://github.com/eiffelci/eiffel-ms-frontend-ci-test.git
  - Tick Public
- - Click Create project 
+ - Click Create project
  - Click Settings -> CI/CD -> Expand Secrets variables:
  - Print vars to add via:
     - ./easy2use list GitLab -t Kubernetes -n <namespace>
@@ -201,7 +201,7 @@ NA
  - Click git Repo by URL, add Git Repo URL:
    - https://github.com/eiffelci/eiffel-ms-backend-ci-test.git
  - Tick Public
- - Click Create project 
+ - Click Create project
  - Click Settings -> CI/CD -> Expand Secrets variables:
  - Print vars to add via:
    - ./easy2use list GitLab -t Kubernetes -n <namespace>
@@ -212,7 +212,7 @@ NA
 
  - Click CI/CD -> Run Pipeline -> Create pipeline
 
-   After initial piplines are now executed, the piplines will be started when changes are commited & pushed from now on!  
+   After initial piplines are now executed, the piplines will be started when changes are commited & pushed from now on!
 
 ### 5 Deployments (CD) - ms-frontend & ms-backend
   - dev (CD only executed for merge-requests)
