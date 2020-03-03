@@ -16,11 +16,11 @@
 --->
 # Eiffel Bundle
 
-* [Bundle Concept]()
-* [Prerequisites]()
-* [Included Components]()
-* [Usage]()
-* [Tutorial]()
+* [Bundle Concept](#bundle-concept)
+* [Prerequisites](#prerequisites)
+* [Included Components](#included-components)
+* [Usage](#usage)
+* [Tutorial for Bundle](#tutorial-for-bundle)
 
 ## Bundle Concept
 This bundle provides an environment in which all Eiffel components can be tested
@@ -72,8 +72,8 @@ If running in local K8S cluster, minikube or docker-for-windows (windows 10 Hype
   ./easy2use configure-local-k8s-minikube Eiffel -t Kubernetes
   ```
 
-## Components Included in Eiffel Bundle
-A detailed [view can be found here](components.md).
+## Included Components
+A detailed [view can be found here](./components.md).
 
 
 ## Usage

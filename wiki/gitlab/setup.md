@@ -16,11 +16,11 @@
 --->
 # GitLab Bundle
 
-* [Bundle Concept]()
-* [Prerequisites]()
-* [Included Components]()
-* [Usage]()
-* [Tutorial]()
+* [Bundle Concept](#bundle-concept)
+* [Prerequisites](#prerequisites)
+* [Included components](#included-components)
+* [Usage](#usage)
+* [Tutorial for Bundle](#tutorial-for-bundle)
 
 ## Bundle Concept
 To provide a GitLab bundle with CI/CD pipeline as code setup which executes CI/CD pipeline build steps in Docker containers.
@@ -84,8 +84,8 @@ If running in local K8S cluster, minikube or docker-for-windows (windows 10 Hype
   ./easy2use configure-local-k8s-minikube GitLab -t Kubernetes
   ```
 
-## Components included in Cx bundle
-A detailed [view can be found here](components.md).
+## Included components
+A detailed [view can be found here](./components.md).
 
 
 ## Usage

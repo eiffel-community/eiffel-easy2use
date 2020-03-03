@@ -16,11 +16,11 @@
 --->
 # Cx Bundle
 
-* [Bundle Concept]()
-* [Prerequisites]()
-* [Included Components]()
-* [Usage]()
-* [Tutorial]()
+* [Bundle Concept](#bundle-concept)
+* [Prerequisites](#prerequisites)
+* [Included Components](#included-components)
+* [Usage](#usage)
+* [Tutorial for Bundle](#tutorial-for-bundle)
 
 ## Bundle Concept
 
@@ -111,7 +111,7 @@ Add the following lines in the file:
     export CX_IMAGE_REPOSITORY_ARGO_K8S_SECRET_PSW="\<Password\>"
 
 
-## Components Included in Cx Bundle
+## Included Components
 - KeyCloak
 - Postgresql (KeyCloak)
 - Gerrit Server & Git
