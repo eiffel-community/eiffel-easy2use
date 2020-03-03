@@ -14,13 +14,17 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 --->
-# Hosting Environments
+# Bundles
 
-The Easy2Use environment can be deployed on your local laptop or any remote Docker host or Kubernetes cluster.
+A bundle is a package of services which are preconfigured and ready to start using.
+Currently Easy2use contains the below bundles:
 
-# Local Laptop
-* Kubernetes
-  - <a href="https://kubernetes.io/docs/setup/minikube/" target="_blank" />minikube</a> 
-  - <a href="https://docs.docker.com/docker-for-windows/install/" target="_blank" />Docker for Windows (Windows 10)</a>  
-
-
+1. [**GitLab**](./gitlab/setup.md)
+   - [Tutorial](./gitlab/tutorial.md)
+   - [Components](./gitlab/components.md)
+2. [**Cx**](./cx/setup.md)
+   - [Tutorial](./cx/tutorial.md)
+   - [Components](./cx/components.md)
+3. [**Eiffel**](./eiffel/setup.md)
+   - [Tutorial](./eiffel/tutorial.md)
+   - [Components](./eiffel/components.md)

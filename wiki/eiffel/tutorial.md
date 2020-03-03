@@ -1,5 +1,5 @@
 <!---
-   Copyright 2019 Ericsson AB.
+   Copyright 2020 Ericsson AB.
    For a full list of individual contributors, please see the commit history.
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,8 +14,5 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 --->
-# Bundles
- 1. [**GitLab**](./Bundle_GitLab.md)
- 2. [**Cx**](./Bundle_Cx.md)
- 3. [**Eiffel**](./Bundle_Eiffel.md)
- 
+# Tutorial for Eiffel Bundle
+To be defined
