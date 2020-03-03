@@ -94,8 +94,7 @@ A detailed [view can be found here](./components.md).
 Gitlab can only be deployed once per cluster (one ingress used).
 The GitLab startup can take a few minutes, so be patient!
 
-###  Deploy GitLab bundle with all components including Argo
-
+Deploy GitLab bundle with all components including Argo:
   ```
   ./easy2use start GitLab -t Kubernetes -n <namespace> -d <basedomainname>
   ```
