@@ -58,6 +58,6 @@ This repository forms part of the Eiffel Community. Eiffel is a protocol for tec
 Visit [Eiffel Community](https://eiffel-community.github.io) to get started and get involved.
 
 # Documentation
-1. [**Hosting Environments**](wiki/Hosting_Environments.md)
-2. [**Getting Started**](wiki/Getting_Started.md)
-3. [**Bundles**](wiki/Bundles.md)
+1. [**Hosting Environments**](./wiki/Hosting_Environments.md)
+2. [**Getting Started**](./wiki/Getting_Started.md)
+3. [**Bundles**](./wiki/Bundles.md)
