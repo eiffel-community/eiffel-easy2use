@@ -35,6 +35,10 @@ The Easy2Use CLI supports standard docker-compose and helm charts for deploying 
 
 <img src="./images/easy2use_cli.png" alt="Eiffel Easy2Use" width="350"/>
 
+## Helm Versions Supported
+The Easy2Use CLI supports Helm V2 & V3. Helm Version used is configurable via config-default.bash. The Default version is V2.
+
+Helm V3 support exist for included Eiffel Bundle.
 
 # Easy2Use Cheatsheet
 <a href="./docs/Easy2Use_CheatSheet.pdf" target="_blank"><img src="./images/cheatsheet_easy2use.png" alt="Eiffel Easy2Use Cheatsheet" width="350" /></a>

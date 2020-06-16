@@ -99,6 +99,7 @@ HOST: ${TARGET_HOST}"
     if [ "$TARGET_TYPE" == "Kubernetes" ]
     then
       echo "${config}
+HELM Version: ${HELM_VERSION}
 Domainname: ${K8S_DOMAINNAME}
 Cluster configfile: ${KUBECONFIG}
 Cluster context: $(kubectl config current-context)"

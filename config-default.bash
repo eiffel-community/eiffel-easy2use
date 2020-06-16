@@ -89,3 +89,9 @@ K8S_DOMAINNAME="mylocalkube"
 # config-k8s file. Which means that you can start multiple bundles in then
 # same K8S namespace. Leave commented out if not used.
 # K8S_NAMESPACE_OVERRIDE="mynamespace"
+
+# ----------- Helm Version
+# For Helm V3 use value V3  WARNING: ONLY THE EIFFEL BUNDLE IS WORKING WITH BOTH V2 & V3!
+#     Helm V2 use value V2
+# ------------------------------------------------------------------------------
+HELM_VERSION=V2

@@ -42,7 +42,7 @@ function execute_k8s_command_on_services {
           ####################  REMOVALS ################################################################## 
           # Additional GitLab Removal
           #additional_removals+=( "kubectl delete crd workflows.argoproj.io -n ${K8S_NAMESPACE}" )
-          
+          additional_removals+=( "kubectl delete clusterrolebinding gitlab-cluster-admin --namespace=${K8S_NAMESPACE}" )
           
           local releasename="$K8S_RELEASE_GITLAB_GITLAB"
           local settings=(

@@ -826,6 +826,12 @@ then
   TARGET_TYPE=${target_type_override}
 fi
 
+if [ ! -z ${helm_version_override} ]
+then
+  debug "Helm Version overriden by command line: ${helm_version_override}"
+  HELM_VERSION=${helm_version_override}
+fi
+
 [[ "$interactive" ]] || debug "Running in non-interactive mode"
 
 debug "Target Type: ${TARGET_TYPE}"
