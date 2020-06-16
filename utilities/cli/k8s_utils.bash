@@ -118,6 +118,20 @@ function do_execute_k8s_command_on_service {
         done
       fi
 
+    if [ "$HELM_VERSION" == "V3" ]
+      then
+      helm install \
+        "$releasename" \
+        --namespace "$K8S_NAMESPACE" \
+        --set "$settings_string" \
+        --replace \
+        --debug \
+        --values $valuefile \
+        $chart \
+        || ( print "Could not install $releasename" ; return 1 ) \
+        && verbose "Service $servicename installed as $releasename"
+    
+    else
       helm install \
         --namespace "$K8S_NAMESPACE" \
         --name "$releasename" \
@@ -128,6 +142,7 @@ function do_execute_k8s_command_on_service {
         $chart \
         || ( print "Could not install $releasename" ; return 1 ) \
         && verbose "Service $servicename installed as $releasename"
+    fi        
 
 
 
@@ -141,15 +156,29 @@ function do_execute_k8s_command_on_service {
 
       if [ "$chart" ]
       then
-        helm install \
-          --namespace "$K8S_NAMESPACE" \
-          --name "$releasename" \
-          --set "$settings_string" \
-          --replace \
-          --values $valuefile \
-          $chart >/dev/null \
-          || ( print "Could not install $releasename" ; return 1 ) \
-          && verbose "Service $servicename installed as $releasename"
+        
+        if [ "$HELM_VERSION" == "V3" ]
+          then                
+          helm install \
+            "$releasename" \
+            --namespace "$K8S_NAMESPACE" \
+            --set "$settings_string" \
+            --replace \
+            --values $valuefile \
+            $chart >/dev/null \
+            || ( print "Could not install $releasename" ; return 1 ) \
+            && verbose "Service $servicename installed as $releasename"
+        else
+          helm install \
+            --namespace "$K8S_NAMESPACE" \
+            --name "$releasename" \
+            --set "$settings_string" \
+            --replace \
+            --values $valuefile \
+            $chart >/dev/null \
+            || ( print "Could not install $releasename" ; return 1 ) \
+            && verbose "Service $servicename installed as $releasename"
+        fi
       fi 
     fi
     
@@ -161,8 +190,14 @@ function do_execute_k8s_command_on_service {
     then
       if [ "$releasename" != "null" ]
       then
-        helm delete "$releasename" --purge \
-        || print "Warning: Could not delete $releasename"
+        if [ "$HELM_VERSION" == "V3" ]
+          then
+          helm uninstall "$releasename" --namespace "$K8S_NAMESPACE" \
+          || print "Warning: Could not delete $releasename"
+        else
+          helm delete "$releasename" --purge \
+          || print "Warning: Could not delete $releasename"
+        fi  
       fi   
       if [ "$additional_removals" ]  
       then
@@ -173,8 +208,14 @@ function do_execute_k8s_command_on_service {
     else
       if [ "$releasename" != "null" ]
       then
-        helm delete "$releasename" --purge >/dev/null \
-        || print "Warning: Could not delete $releasename"
+        if [ "$HELM_VERSION" == "V3" ]
+          then
+          helm uninstall "$releasename" --namespace "$K8S_NAMESPACE" \
+          || print "Warning: Could not delete $releasename"
+        else  
+          helm delete "$releasename" --purge >/dev/null \
+          || print "Warning: Could not delete $releasename"
+        fi  
       fi  
       if [ "$additional_removals" ]  
       then
