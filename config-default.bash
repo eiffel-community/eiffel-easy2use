@@ -103,4 +103,7 @@ HELM_VERSION=V2
 # USE_SECURE_HTTPS_FOR_SERVICES=false  , for using HTTP connections
 # USE_SECURE_HTTPS_FOR_SERVICES=true   , for using secure HTTPS connections
 # ------------------------------------------------------------------------------
-USE_SECURE_HTTPS_FOR_SERVICES=false
+if [ -z ${USE_SECURE_HTTPS_FOR_SERVICES} ]
+then
+  USE_SECURE_HTTPS_FOR_SERVICES=false
+fi
