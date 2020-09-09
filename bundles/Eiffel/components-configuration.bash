@@ -82,10 +82,10 @@ export EIFFEL_REMREM_PASSWORD=guest
 ### EI Frontend service ###
 
 export EIFFEL_EI_FRONTEND_EI_INSTANCES_LIST="[\
-{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_ARTIFACT_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_ARTIFACT}\"\, \"host\": \"${EIFFEL_EI_BACKEND_ARTIFACT}\"\, \"https\": $USE_SECURE_HTTPS_FOR_SERVICES\, \"defaultBackend\": true}\,\
-{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_SOURCECHANGE_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_SOURCECHANGE}\"\, \"host\": \"${EIFFEL_EI_BACKEND_SOURCECHANGE}\"\, \"https\": $USE_SECURE_HTTPS_FOR_SERVICES\, \"defaultBackend\": false}\,\
-{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_TESTEXECUTION_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_TESTEXECUTION}\"\, \"host\": \"${EIFFEL_EI_BACKEND_TESTEXECUTION}\"\, \"https\": $USE_SECURE_HTTPS_FOR_SERVICES\, \"defaultBackend\": false}\,\
-{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_ALLEVENTS_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_ALLEVENTS}\"\, \"host\": \"${EIFFEL_EI_BACKEND_ALLEVENTS}\"\, \"https\": $USE_SECURE_HTTPS_FOR_SERVICES\, \"defaultBackend\": false}\
+{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_ARTIFACT_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_ARTIFACT}\"\, \"host\": \"${EIFFEL_EI_BACKEND_ARTIFACT}\"\, \"https\": false\, \"defaultBackend\": true}\,\
+{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_SOURCECHANGE_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_SOURCECHANGE}\"\, \"host\": \"${EIFFEL_EI_BACKEND_SOURCECHANGE}\"\, \"https\": false\, \"defaultBackend\": false}\,\
+{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_TESTEXECUTION_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_TESTEXECUTION}\"\, \"host\": \"${EIFFEL_EI_BACKEND_TESTEXECUTION}\"\, \"https\": false\, \"defaultBackend\": false}\,\
+{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_ALLEVENTS_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_ALLEVENTS}\"\, \"host\": \"${EIFFEL_EI_BACKEND_ALLEVENTS}\"\, \"https\": false\, \"defaultBackend\": false}\
 ]"
 
 export CONFIG_EIFFEL_EI_FRONTEND="
@@ -94,7 +94,7 @@ server.port=${EIFFEL_EI_FRONTEND_INTERNAL_PORT}
 ei.frontend.service.host=${EIFFEL_EI_FRONTEND}
 ei.frontend.service.port=${EIFFEL_EI_FRONTEND_EXTERNAL_APPLICATION_PORT}
 ei.frontend.context.path=
-ei.use.secure.http.frontend=false
+ei.use.secure.http.frontend=${USE_SECURE_HTTPS_FOR_SERVICES}
 ei.backend.instances.list.json.content=${EIFFEL_EI_FRONTEND_EI_INSTANCES_LIST}
 logging.level.root=ERROR
 logging.level.org.springframework.web=DEBUG
