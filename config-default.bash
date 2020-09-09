@@ -95,3 +95,12 @@ K8S_DOMAINNAME="mylocalkube"
 #     Helm V2 use value V2
 # ------------------------------------------------------------------------------
 HELM_VERSION=V2
+
+# ----------- Services Security configurations
+# Some Kubernetes setup requires external connections to services to use secure HTTPS
+# Some components might be need to configured differently due to HTTPS requirements.
+# Set this configuration variable to:
+# USE_SECURE_HTTPS_FOR_SERVICES=false  , for using HTTP connections
+# USE_SECURE_HTTPS_FOR_SERVICES=true   , for using secure HTTPS connections
+# ------------------------------------------------------------------------------
+USE_SECURE_HTTPS_FOR_SERVICES=false

@@ -68,6 +68,7 @@ export EIFFEL_EI_RABBITMQ_QUEUE_DURABLE=true
 export EIFFEL_EI_MERGE_ID_MAKER=%IdentifyRulesEventId%
 export EIFFEL_EI_AGGREGATED_DB_TTL=
 
+
 # Common RemRem configurations
 export EIFFEL_REMREM_USER=guest
 export EIFFEL_REMREM_PASSWORD=guest
@@ -81,10 +82,10 @@ export EIFFEL_REMREM_PASSWORD=guest
 ### EI Frontend service ###
 
 export EIFFEL_EI_FRONTEND_EI_INSTANCES_LIST="[\
-{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_ARTIFACT_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_ARTIFACT}\"\, \"host\": \"${EIFFEL_EI_BACKEND_ARTIFACT}\"\, \"https\": false\, \"defaultBackend\": true}\,\
-{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_SOURCECHANGE_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_SOURCECHANGE}\"\, \"host\": \"${EIFFEL_EI_BACKEND_SOURCECHANGE}\"\, \"https\": false\, \"defaultBackend\": false}\,\
-{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_TESTEXECUTION_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_TESTEXECUTION}\"\, \"host\": \"${EIFFEL_EI_BACKEND_TESTEXECUTION}\"\, \"https\": false\, \"defaultBackend\": false}\,\
-{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_ALLEVENTS_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_ALLEVENTS}\"\, \"host\": \"${EIFFEL_EI_BACKEND_ALLEVENTS}\"\, \"https\": false\, \"defaultBackend\": false}\
+{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_ARTIFACT_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_ARTIFACT}\"\, \"host\": \"${EIFFEL_EI_BACKEND_ARTIFACT}\"\, \"https\": $USE_SECURE_HTTPS_FOR_SERVICES\, \"defaultBackend\": true}\,\
+{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_SOURCECHANGE_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_SOURCECHANGE}\"\, \"host\": \"${EIFFEL_EI_BACKEND_SOURCECHANGE}\"\, \"https\": $USE_SECURE_HTTPS_FOR_SERVICES\, \"defaultBackend\": false}\,\
+{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_TESTEXECUTION_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_TESTEXECUTION}\"\, \"host\": \"${EIFFEL_EI_BACKEND_TESTEXECUTION}\"\, \"https\": $USE_SECURE_HTTPS_FOR_SERVICES\, \"defaultBackend\": false}\,\
+{ \"contextPath\": \"\"\, \"port\": \"${EIFFEL_EI_BACKEND_ALLEVENTS_APPLICATION_PORT}\"\, \"name\": \"${EIFFEL_EI_BACKEND_ALLEVENTS}\"\, \"host\": \"${EIFFEL_EI_BACKEND_ALLEVENTS}\"\, \"https\": $USE_SECURE_HTTPS_FOR_SERVICES\, \"defaultBackend\": false}\
 ]"
 
 export CONFIG_EIFFEL_EI_FRONTEND="
