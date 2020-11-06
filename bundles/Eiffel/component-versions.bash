@@ -15,7 +15,7 @@
 #   limitations under the License.
 #
 # Eiffel Component versions
-export EIFFEL_MONGODB_VERSION=4.0.14
+export EIFFEL_MONGODB_VERSION=4.2.8
 export EIFFEL_RABBITMQ_VERSION=3.8.2
 export EIFFEL_EI_BACKEND_VERSION=3.0.0
 export EIFFEL_EI_FRONTEND_VERSION=3.0.0

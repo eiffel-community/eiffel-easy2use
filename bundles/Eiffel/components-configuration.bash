@@ -94,7 +94,7 @@ server.port=${EIFFEL_EI_FRONTEND_INTERNAL_PORT}
 ei.frontend.service.host=${EIFFEL_EI_FRONTEND}
 ei.frontend.service.port=${EIFFEL_EI_FRONTEND_EXTERNAL_APPLICATION_PORT}
 ei.frontend.context.path=
-ei.use.secure.http.frontend=${USE_SECURE_HTTPS_FOR_SERVICES}
+ei.use.secure.http.frontend=${K8S_INGRESS_TLS_ENABLE}
 ei.backend.instances.list.json.content=${EIFFEL_EI_FRONTEND_EI_INSTANCES_LIST}
 logging.level.root=ERROR
 logging.level.org.springframework.web=DEBUG
@@ -624,7 +624,7 @@ WAIT_MB_HOSTS=${EIFFEL_RABBITMQ}\:${EIFFEL_RABBITMQ_WEB_EXTERNAL_PORT}"
 
 
 
-##### Generating Eiffel components Docker Environment files for docker-compose file. 
+##### Generating Eiffel components Docker Environment files for docker-compose file.
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"
 

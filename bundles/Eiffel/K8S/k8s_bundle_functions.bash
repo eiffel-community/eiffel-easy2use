@@ -39,7 +39,7 @@ function execute_k8s_command_on_services {
           service.port="$EIFFEL_MONGODB_EXTERNAL_PORT"
         )
         local valuefile="charts/charts_values/mongodb-values.yaml"
-        local chart="charts/mongodb-3.0.1.tgz"
+        local chart="charts/mongodb-5.12.0.tgz"
         ;;
 
       mongo_seed)
@@ -61,12 +61,14 @@ function execute_k8s_command_on_services {
                 image.repository="$EIFFEL_RABBITMQ_IMAGE_TAG_NAME"
           image.tag="$EIFFEL_RABBITMQ_VERSION"
           ingress.hostName="$K8S_INGRESS_EIFFEL_RABBITMQ"
+          ingress.tls="$K8S_INGRESS_TLS_ENABLE"
+          ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
           fullnameOverride="$K8S_SERVICE_EIFFEL_RABBITMQ"
           rabbitmq.nodePort="$EIFFEL_RABBITMQ_AMQP_EXTERNAL_PORT"
           rabbitmq.managerPort="$EIFFEL_RABBITMQ_WEB_EXTERNAL_PORT"
         )
         local valuefile="charts/charts_values/rabbitmq-values.yaml"
-        local chart="charts/rabbitmq-2.2.0.tgz"
+        local chart="charts/rabbitmq-4.8.0.tgz"
         ;;
 
       ei_backend_artifact)
@@ -79,12 +81,14 @@ function execute_k8s_command_on_services {
           eiffel.configuration="$K8S_CONFIG_EIFFEL_EI_BACKEND_ARTIFACT"
           eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_EI_BACKEND_ARTIFACT"
           ingress.hostName="$K8S_INGRESS_EIFFEL_EI_BACKEND_ARTIFACT"
+          ingress.tls="$K8S_INGRESS_TLS_ENABLE"
+          ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
           ingress.enabled="$K8S_Ingress_Enabled"
           eiffel.servicePort="$EIFFEL_EI_BACKEND_ARTIFACT_EXTERNAL_PORT"
           eiffel.containerPort="$EIFFEL_EI_BACKEND_ARTIFACT_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-ei-backend-artifact-values.yaml"
-        local chart="charts/eiffel-1.0.0.tgz"
+        local chart="charts/eiffel-2.0.0.tgz"
         ;;
 
       ei_backend_sourcechange)
@@ -96,13 +100,15 @@ function execute_k8s_command_on_services {
           eiffel.configuration="$K8S_CONFIG_EIFFEL_EI_BACKEND_SOURCECHANGE"
           eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_EI_BACKEND_SOURCECHANGE"
           ingress.hostName="$K8S_INGRESS_EIFFEL_EI_BACKEND_SOURCECHANGE"
+          ingress.tls="$K8S_INGRESS_TLS_ENABLE"
+          ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
           ingress.enabled="$K8S_Ingress_Enabled"
           fullnameOverride="$K8S_RELEASE_EIFFEL_EI_BACKEND_SOURCECHANGE"
           eiffel.servicePort="$EIFFEL_EI_BACKEND_SOURCECHANGE_EXTERNAL_PORT"
           eiffel.containerPort="$EIFFEL_EI_BACKEND_SOURCECHANGE_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-ei-backend-sourcechange-values.yaml"
-        local chart="charts/eiffel-1.0.0.tgz"
+        local chart="charts/eiffel-2.0.0.tgz"
         ;;
 
       ei_backend_testexecution)
@@ -115,12 +121,14 @@ function execute_k8s_command_on_services {
           eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_EI_BACKEND_TESTEXECUTION"
           ingress.hostName="$K8S_INGRESS_EIFFEL_EI_BACKEND_TESTEXECUTION"
           ingress.enabled="$K8S_Ingress_Enabled"
+          ingress.tls="$K8S_INGRESS_TLS_ENABLE"
+          ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
           fullnameOverride="$K8S_RELEASE_EIFFEL_EI_BACKEND_TESTEXECUTION"
           eiffel.servicePort="$EIFFEL_EI_BACKEND_TESTEXECUTION_EXTERNAL_PORT"
           eiffel.containerPort="$EIFFEL_EI_BACKEND_TESTEXECUTION_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-ei-backend-testexecution-values.yaml"
-        local chart="charts/eiffel-1.0.0.tgz"
+        local chart="charts/eiffel-2.0.0.tgz"
         ;;
 
       ei_backend_allevents)
@@ -132,13 +140,15 @@ function execute_k8s_command_on_services {
           eiffel.configuration="$K8S_CONFIG_EIFFEL_EI_BACKEND_ALLEVENTS"
           eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_EI_BACKEND_ALLEVENTS"
           ingress.hostName="$K8S_INGRESS_EIFFEL_EI_BACKEND_ALLEVENTS"
+          ingress.tls="$K8S_INGRESS_TLS_ENABLE"
+          ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
           ingress.enabled="$K8S_Ingress_Enabled"
           fullnameOverride="$K8S_RELEASE_EIFFEL_EI_BACKEND_ALLEVENTS"
           eiffel.servicePort="$EIFFEL_EI_BACKEND_ALLEVENTS_EXTERNAL_PORT"
           eiffel.containerPort="$EIFFEL_EI_BACKEND_ALLEVENTS_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-ei-backend-allevents-values.yaml"
-        local chart="charts/eiffel-1.0.0.tgz"
+        local chart="charts/eiffel-2.0.0.tgz"
         ;;
 
       ei_frontend)
@@ -156,7 +166,7 @@ function execute_k8s_command_on_services {
           eiffel.containerPort="$EIFFEL_EI_FRONTEND_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-ei-frontend-values.yaml"
-        local chart="charts/eiffel-1.0.0.tgz"
+        local chart="charts/eiffel-2.0.0.tgz"
         ;;
 
       dummy_er)
@@ -167,13 +177,15 @@ function execute_k8s_command_on_services {
           image.tag="$EIFFEL_DUMMY_ER_VERSION"
           eiffel.configuration="$K8S_CONFIG_EIFFEL_DUMMY_ER"
           ingress.hostName="$K8S_INGRESS_EIFFEL_DUMMY_ER"
+          ingress.tls="$K8S_INGRESS_TLS_ENABLE"
+          ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
           ingress.enabled="$K8S_Ingress_Enabled"
           fullnameOverride="$K8S_RELEASE_EIFFEL_DUMMY_ER"
           eiffel.servicePort="$EIFFEL_DUMMY_ER_EXTERNAL_PORT"
           eiffel.containerPort="$EIFFEL_DUMMY_ER_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-dummy-er-values.yaml"
-        local chart="charts/eiffel-1.0.0.tgz"
+        local chart="charts/eiffel-2.0.0.tgz"
         ;;
 
       vici)
@@ -183,13 +195,15 @@ function execute_k8s_command_on_services {
                 image.repository="$EIFFEL_VICI_IMAGE_TAG_NAME"
           image.tag="$EIFFEL_VICI_VERSION"
           ingress.hostName="$K8S_INGRESS_EIFFEL_VICI"
+          ingress.tls="$K8S_INGRESS_TLS_ENABLE"
+          ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
           ingress.enabled="$K8S_Ingress_Enabled"
           fullnameOverride="$K8S_RELEASE_EIFFEL_VICI"
           eiffel.servicePort="$EIFFEL_VICI_EXTERNAL_PORT"
           eiffel.containerPort="$EIFFEL_VICI_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-vici-values.yaml"
-        local chart="charts/eiffel-1.0.0.tgz"
+        local chart="charts/eiffel-2.0.0.tgz"
         ;;
 
       remrem_publish)
@@ -201,13 +215,15 @@ function execute_k8s_command_on_services {
           eiffel.configuration="$K8S_CONFIG_EIFFEL_REMREM_PUBLISH"
           eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_REMREM_PUBLISH"
           ingress.hostName="$K8S_INGRESS_EIFFEL_REMREM_PUBLISH"
+          ingress.tls="$K8S_INGRESS_TLS_ENABLE"
+          ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
           ingress.enabled="$K8S_Ingress_Enabled"
           fullnameOverride="$K8S_RELEASE_EIFFEL_REMREM_PUBLISH"
           eiffel.servicePort="$EIFFEL_REMREM_PUBLISH_EXTERNAL_PORT"
           eiffel.containerPort="$EIFFEL_REMREM_PUBLISH_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-remrem-publish-values.yaml"
-        local chart="charts/eiffel-1.0.0.tgz"
+        local chart="charts/eiffel-2.0.0.tgz"
         ;;
 
       remrem_generate)
@@ -219,13 +235,15 @@ function execute_k8s_command_on_services {
           eiffel.configuration="$K8S_CONFIG_EIFFEL_REMREM_GENERATE"
           eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_REMREM_GENERATE"
           ingress.hostName="$K8S_INGRESS_EIFFEL_REMREM_GENERATE"
+          ingress.tls="$K8S_INGRESS_TLS_ENABLE"
+          ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
           ingress.enabled="$K8S_Ingress_Enabled"
           fullnameOverride="$K8S_RELEASE_EIFFEL_REMREM_GENERATE"
           eiffel.servicePort="$EIFFEL_REMREM_GENERATE_EXTERNAL_PORT"
           eiffel.containerPort="$EIFFEL_REMREM_GENERATE_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-remrem-generate-values.yaml"
-        local chart="charts/eiffel-1.0.0.tgz"
+        local chart="charts/eiffel-2.0.0.tgz"
         ;;
 
       er)
@@ -237,13 +255,15 @@ function execute_k8s_command_on_services {
           eiffel.configuration="$K8S_CONFIG_EIFFEL_ER"
           eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_ER"
           ingress.hostName="$K8S_INGRESS_EIFFEL_ER"
+          ingress.tls="$K8S_INGRESS_TLS_ENABLE"
+          ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
           ingress.enabled="$K8S_Ingress_Enabled"
           fullnameOverride="$K8S_RELEASE_EIFFEL_ER"
           eiffel.servicePort="$EIFFEL_ER_EXTERNAL_PORT"
           eiffel.containerPort="$EIFFEL_ER_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-er-values.yaml"
-        local chart="charts/eiffel-1.0.0.tgz"
+        local chart="charts/eiffel-2.0.0.tgz"
         ;;
 
       jenkins)
@@ -253,6 +273,8 @@ function execute_k8s_command_on_services {
                 image.repository="$EIFFEL_JENKINS_IMAGE_TAG_NAME"
           image.tag="$JENKINS_VERSION"
           ingress.hostName="$K8S_INGRESS_EIFFEL_JENKINS"
+          ingress.tls="$K8S_INGRESS_TLS_ENABLE"
+          ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
           eiffel.configurationEnvironmentVars="$K8S_CONFIG_EIFFEL_JENKINS"
           ingress.enabled="$K8S_Ingress_Enabled"
           fullnameOverride="$K8S_RELEASE_EIFFEL_JENKINS"
@@ -260,7 +282,7 @@ function execute_k8s_command_on_services {
           eiffel.containerPort="$EIFFEL_JENKINS_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-jenkins-values.yaml"
-        local chart="charts/eiffel-1.0.0.tgz"
+        local chart="charts/eiffel-2.0.0.tgz"
         ;;
 
       jenkins_fem)
@@ -270,6 +292,8 @@ function execute_k8s_command_on_services {
                 image.repository="$EIFFEL_JENKINS_FEM_IMAGE_TAG_NAME"
           image.tag="$EIFFEL_JENKINS_PLUGIN_VERSION"
           ingress.hostName="$K8S_INGRESS_EIFFEL_JENKINS_FEM"
+          ingress.tls="$K8S_INGRESS_TLS_ENABLE"
+          ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
           eiffel.configurationEnvironmentVars="$K8S_CONFIG_EIFFEL_JENKINS_FEM"
           ingress.enabled="$K8S_Ingress_Enabled"
           fullnameOverride="$K8S_RELEASE_EIFFEL_JENKINS_FEM"
@@ -277,7 +301,7 @@ function execute_k8s_command_on_services {
           eiffel.containerPort="$EIFFEL_JENKINS_FEM_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-jenkins-fem-values.yaml"
-        local chart="charts/eiffel-1.0.0.tgz"
+        local chart="charts/eiffel-2.0.0.tgz"
         ;;
 
       nexus)
@@ -287,17 +311,19 @@ function execute_k8s_command_on_services {
                 image.repository="$EIFFEL_NEXUS_IMAGE_TAG_NAME"
           image.tag="$EIFFEL_NEXUS_VERSION"
           ingress.hostName="$K8S_INGRESS_EIFFEL_NEXUS3"
+          ingress.tls="$K8S_INGRESS_TLS_ENABLE"
+          ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
           ingress.enabled="$K8S_Ingress_Enabled"
           fullnameOverride="$K8S_RELEASE_EIFFEL_NEXUS3"
           eiffel.servicePort="$EIFFEL_NEXUS_EXTERNAL_PORT"
           eiffel.containerPort="$EIFFEL_NEXUS_INTERNAL_PORT"
         )
         local valuefile="charts/charts_values/eiffel-nexus3-values.yaml"
-        local chart="charts/eiffel-1.0.0.tgz"
+        local chart="charts/eiffel-2.0.0.tgz"
         ;;
 
-          
-      
+
+
 
       *)
         print "Unknown service: $i"
