@@ -178,11 +178,11 @@ configuration: |-
   default_user = myuser
   default_pass = myuser
   ## Clustering
-  cluster_formation.peer_discovery_backend  = rabbit_peer_discovery_k8s
-  cluster_formation.k8s.host = kubernetes.default.svc.{{ .Values.clusterDomain }}
-  cluster_formation.node_cleanup.interval = 10
-  cluster_formation.node_cleanup.only_log_warning = true
-  cluster_partition_handling = autoheal
+  #cluster_formation.peer_discovery_backend  = rabbit_peer_discovery_k8s
+  #cluster_formation.k8s.host = kubernetes.default.svc.{{ .Values.clusterDomain }}
+  #cluster_formation.node_cleanup.interval = 10
+  #cluster_formation.node_cleanup.only_log_warning = true
+  #cluster_partition_handling = autoheal
   # queue master locator
   queue_master_locator = min-masters
   # enable guest user

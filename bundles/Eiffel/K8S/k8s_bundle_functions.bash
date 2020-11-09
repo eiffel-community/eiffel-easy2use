@@ -25,6 +25,9 @@ function execute_k8s_command_on_services {
 
   local failed=0
 
+echo "TLS ENABLE: $K8S_INGRESS_TLS_ENABLE"
+echo "Certificate: "
+
   for i in $services
   do
     case $i in
@@ -160,6 +163,8 @@ function execute_k8s_command_on_services {
           eiffel.configuration="$K8S_CONFIG_EIFFEL_EI_FRONTEND"
           eiffel.configurationEnvironmentVars="$K8S_ENV_CONFIG_EIFFEL_EI_FRONTEND"
           ingress.hostName="$K8S_INGRESS_EIFFEL_EI_FRONTEND"
+          ingress.tls="$K8S_INGRESS_TLS_ENABLE"
+          ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
           ingress.enabled="$K8S_Ingress_Enabled"
           fullnameOverride="$K8S_RELEASE_EIFFEL_EI_FRONTEND"
           eiffel.servicePort="$EIFFEL_EI_FRONTEND_EXTERNAL_PORT"
