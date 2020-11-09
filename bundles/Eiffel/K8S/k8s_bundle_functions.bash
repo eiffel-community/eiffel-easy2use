@@ -25,9 +25,6 @@ function execute_k8s_command_on_services {
 
   local failed=0
 
-echo "TLS ENABLE: $K8S_INGRESS_TLS_ENABLE"
-echo "Certificate: "
-
   for i in $services
   do
     case $i in
