@@ -15,8 +15,8 @@
 #   limitations under the License.
 #
 # Eiffel Component versions
-export EIFFEL_MONGODB_VERSION=4.2.8
-export EIFFEL_RABBITMQ_VERSION=3.8.2
+export EIFFEL_MONGODB_VERSION=4.4.1
+export EIFFEL_RABBITMQ_VERSION=3.8.9
 export EIFFEL_EI_BACKEND_VERSION=3.0.0
 export EIFFEL_EI_FRONTEND_VERSION=3.0.0
 export EIFFEL_VICI_VERSION=0.0.1
@@ -34,7 +34,7 @@ export JENKINS_VERSION=2.150.2
 export EXTERNAL_DOCKER_REGISTRY=docker.io
 
 # Docker repository component image tag names
-export EIFFEL_MONGODB_IMAGE_TAG_NAME=mongo
+export EIFFEL_MONGODB_IMAGE_TAG_NAME=bitnami/mongodb
 export EIFFEL_RABBITMQ_IMAGE_TAG_NAME=bitnami/rabbitmq
 export EIFFEL_EI_BACKEND_IMAGE_TAG_NAME=eiffelericsson/eiffel-intelligence-backend
 export EIFFEL_EI_FRONTEND_IMAGE_TAG_NAME=eiffelericsson/eiffel-intelligence-frontend

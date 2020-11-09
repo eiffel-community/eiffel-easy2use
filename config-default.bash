@@ -93,8 +93,9 @@ K8S_DOMAINNAME="mylocalkube"
 # ----------- Helm Version
 # For Helm V3 use value V3  WARNING: ONLY THE EIFFEL BUNDLE IS WORKING WITH BOTH V2 & V3!
 #     Helm V2 use value V2
+#     Default: Helm V3
 # ------------------------------------------------------------------------------
-HELM_VERSION=V2
+HELM_VERSION=V3
 
 # ----------- Services Security configurations -------------------------------------
 # Some Kubernetes setup requires external connections to services to use secure HTTPS

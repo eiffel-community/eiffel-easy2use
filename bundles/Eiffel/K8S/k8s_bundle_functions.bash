@@ -39,7 +39,7 @@ function execute_k8s_command_on_services {
           service.port="$EIFFEL_MONGODB_EXTERNAL_PORT"
         )
         local valuefile="charts/charts_values/mongodb-values.yaml"
-        local chart="charts/mongodb-5.12.0.tgz"
+        local chart="charts/mongodb-9.3.1.tgz"
         ;;
 
       mongo_seed)
@@ -60,15 +60,15 @@ function execute_k8s_command_on_services {
                 image.registry="$EXTERNAL_DOCKER_REGISTRY"
                 image.repository="$EIFFEL_RABBITMQ_IMAGE_TAG_NAME"
           image.tag="$EIFFEL_RABBITMQ_VERSION"
-          ingress.hostName="$K8S_INGRESS_EIFFEL_RABBITMQ"
+          ingress.hostname="$K8S_INGRESS_EIFFEL_RABBITMQ"
           ingress.tls="$K8S_INGRESS_TLS_ENABLE"
           ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
           fullnameOverride="$K8S_SERVICE_EIFFEL_RABBITMQ"
-          rabbitmq.nodePort="$EIFFEL_RABBITMQ_AMQP_EXTERNAL_PORT"
-          rabbitmq.managerPort="$EIFFEL_RABBITMQ_WEB_EXTERNAL_PORT"
+          service.nodePort="$EIFFEL_RABBITMQ_AMQP_EXTERNAL_PORT"
+          service.managerPort="$EIFFEL_RABBITMQ_WEB_EXTERNAL_PORT"
         )
         local valuefile="charts/charts_values/rabbitmq-values.yaml"
-        local chart="charts/rabbitmq-4.8.0.tgz"
+        local chart="charts/rabbitmq-7.7.1.tgz"
         ;;
 
       ei_backend_artifact)
