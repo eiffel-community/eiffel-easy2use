@@ -75,7 +75,7 @@ fi
 # Domain name for the K8S NGINX Ingress
 # If using local K8S cluster set via localhost_k8s_config.sh set
 # K8S_DOMAINNAME="mylocalkube"
-# If using remote K8S cluster set cluster domain name 
+# If using remote K8S cluster set cluster domain name
 # ex K8S_DOMAINNAME="remotek8s.company.com"
 K8S_DOMAINNAME="mylocalkube"
 
@@ -93,5 +93,19 @@ K8S_DOMAINNAME="mylocalkube"
 # ----------- Helm Version
 # For Helm V3 use value V3  WARNING: ONLY THE EIFFEL BUNDLE IS WORKING WITH BOTH V2 & V3!
 #     Helm V2 use value V2
+#     Default: Helm V3
 # ------------------------------------------------------------------------------
-HELM_VERSION=V2
+HELM_VERSION=V3
+
+# ----------- Services Security configurations -------------------------------------
+# Some Kubernetes setup requires external connections to services to use secure HTTPS
+#
+# Set these configuration variables to configure secure HTTP connections:
+# K8S_INGRESS_TLS_ENABLE=false  , for using HTTP connections
+# K8S_INGRESS_TLS_ENABLE=true   , for using secure HTTPS connections
+# K8S_INGRESS_CERT_SECRET_NAME , If K8S_INGRESS_TLS_ENABLE is set to true, then
+#                                 a K8S Certifacate Secret is required,
+#                                 set this variable to the K8S Certificate Secret name
+# ------------------------------------------------------------------------------
+K8S_INGRESS_TLS_ENABLE=false
+K8S_INGRESS_CERT_SECRET_NAME=""

@@ -100,7 +100,7 @@ COMMANDS:
   list       : List all deployed services for a given bundle
                For Docker: addresses and host ports and user/psw
                For K8S: Ingresses to services and user/psw
-  list-bundles : 
+  list-bundles :
                List available bundles
   list-packages :
                List available packages for choosen bundle. Use flag -p <package>
@@ -320,7 +320,7 @@ function do_list {
   then
     pwd
     verbose "Looking for Kubernetes services in namespace ${K8S_NAMESPACE}"
-    source ${CLI_ROOT}/utilities/K8S/get_k8s_ingress.sh | awk '{if (NR!=1) {print "http://"$2}}'
+    source ${CLI_ROOT}/utilities/K8S/get_k8s_ingress.sh | awk '{if (NR!=1) {print "https://"$2}}'
     echo "${app_url_context_path}"
     echo "${easy2use_bundle_psw}"
   fi
@@ -711,7 +711,7 @@ function stop_dependencies {
 #-----------------------------
 # do_run
 #
-# This function enables recursive calls of Easy2Use commands based on 
+# This function enables recursive calls of Easy2Use commands based on
 # dependencies between bundles.
 #-----------------------------
 function do_run {
@@ -777,7 +777,7 @@ function do_run {
       ;;
   esac
 
- 
+
 
   debug "About to call command $command"
   case "$command" in
