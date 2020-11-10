@@ -100,7 +100,7 @@ COMMANDS:
   list       : List all deployed services for a given bundle
                For Docker: addresses and host ports and user/psw
                For K8S: Ingresses to services and user/psw
-  list-bundles : 
+  list-bundles :
                List available bundles
   list-packages :
                List available packages for choosen bundle. Use flag -p <package>
@@ -310,7 +310,7 @@ function do_list {
     do
       local service_name=$(echo $service_port | sed -e 's/^[^_]*_//;s/=.*$//g;s/_EXTERNAL_PORT//g' | tr '[:upper:]' '[:lower:]')
       local exposed_port=$(echo $service_port | sed -e 's/^.*=//g')
-      url="http://${TARGET_HOST}:${exposed_port}"
+      url="https://${TARGET_HOST}:${exposed_port}"
       printf "${service_url_format}" "${service_name}" "$url"
     done
    echo "${app_url_context_path}"
@@ -711,7 +711,7 @@ function stop_dependencies {
 #-----------------------------
 # do_run
 #
-# This function enables recursive calls of Easy2Use commands based on 
+# This function enables recursive calls of Easy2Use commands based on
 # dependencies between bundles.
 #-----------------------------
 function do_run {
@@ -777,7 +777,7 @@ function do_run {
       ;;
   esac
 
- 
+
 
   debug "About to call command $command"
   case "$command" in
