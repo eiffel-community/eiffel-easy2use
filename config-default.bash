@@ -99,8 +99,8 @@ HELM_VERSION=V3
 
 # ----------- Services Security configurations -------------------------------------
 # Some Kubernetes setup requires external connections to services to use secure HTTPS
-# Some components might be need to configured differently due to HTTPS requirements.
-# Set this configuration variable to:
+#
+# Set these configuration variables to configure secure HTTP connections:
 # K8S_INGRESS_TLS_ENABLE=false  , for using HTTP connections
 # K8S_INGRESS_TLS_ENABLE=true   , for using secure HTTPS connections
 # K8S_INGRESS_CERT_SECRET_NAME , If K8S_INGRESS_TLS_ENABLE is set to true, then
