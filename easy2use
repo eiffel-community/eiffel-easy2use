@@ -310,7 +310,7 @@ function do_list {
     do
       local service_name=$(echo $service_port | sed -e 's/^[^_]*_//;s/=.*$//g;s/_EXTERNAL_PORT//g' | tr '[:upper:]' '[:lower:]')
       local exposed_port=$(echo $service_port | sed -e 's/^.*=//g')
-      url="https://${TARGET_HOST}:${exposed_port}"
+      url="http://${TARGET_HOST}:${exposed_port}"
       printf "${service_url_format}" "${service_name}" "$url"
     done
    echo "${app_url_context_path}"
@@ -320,7 +320,7 @@ function do_list {
   then
     pwd
     verbose "Looking for Kubernetes services in namespace ${K8S_NAMESPACE}"
-    source ${CLI_ROOT}/utilities/K8S/get_k8s_ingress.sh | awk '{if (NR!=1) {print "http://"$2}}'
+    source ${CLI_ROOT}/utilities/K8S/get_k8s_ingress.sh | awk '{if (NR!=1) {print "https://"$2}}'
     echo "${app_url_context_path}"
     echo "${easy2use_bundle_psw}"
   fi
