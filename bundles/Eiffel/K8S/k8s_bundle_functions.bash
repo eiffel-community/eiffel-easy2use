@@ -37,6 +37,8 @@ function execute_k8s_command_on_services {
           image.tag="$EIFFEL_MONGODB_VERSION"
           fullnameOverride="$K8S_SERVICE_EIFFEL_MONGODB"
           service.port="$EIFFEL_MONGODB_EXTERNAL_PORT"
+          persistence.enabled="$K8S_PVC_ENABLE"
+          persistence.size="$K8S_PVC_SIZE"
         )
         local valuefile="charts/charts_values/mongodb-values.yaml"
         local chart="charts/mongodb-9.3.1.tgz"
@@ -66,6 +68,8 @@ function execute_k8s_command_on_services {
           fullnameOverride="$K8S_SERVICE_EIFFEL_RABBITMQ"
           service.nodePort="$EIFFEL_RABBITMQ_AMQP_EXTERNAL_PORT"
           service.managerPort="$EIFFEL_RABBITMQ_WEB_EXTERNAL_PORT"
+          persistence.enabled="$K8S_PVC_ENABLE"
+          persistence.size="$K8S_PVC_SIZE"
         )
         local valuefile="charts/charts_values/rabbitmq-values.yaml"
         local chart="charts/rabbitmq-7.7.1.tgz"
