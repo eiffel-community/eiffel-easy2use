@@ -109,3 +109,20 @@ HELM_VERSION=V3
 # ------------------------------------------------------------------------------
 K8S_INGRESS_TLS_ENABLE=false
 K8S_INGRESS_CERT_SECRET_NAME=""
+
+
+# ----------- Services Persistence Storage (PVC) configurations -------------------------------------
+# Some components support persitent storage in Kubernetes, e.g. MongoDb and RabbitMq in Eiffel bundle.
+# When persistence storage (PVC - PersistenceVolumeClaim) is enabled, data is not lossed in case of restart of pod/container.
+# There is two configurations:
+# K8S_PVC_ENABLE : if set to true, then persistence storage will be used for components that support that.
+# K8S_PVC_STORAGE_CLASS : If defined, storageClassName: <storageClass>
+#                         If set to "-", storageClassName: "", which disables dynamic provisioning
+#                         If undefined (the default) or set to null, no storageClassName spec is
+#                         set, choosing the default provisioner.  (gp2 on AWS, standard on
+#                         GKE, AWS & OpenStack)
+#                         storageClass: "-"
+#                       
+# ------------------------------------------------------------------------------
+K8S_PVC_ENABLE=false
+K8S_PVC_STORAGE_CLASS="null"
