@@ -39,6 +39,7 @@ function execute_k8s_command_on_services {
           service.port="$EIFFEL_MONGODB_EXTERNAL_PORT"
           persistence.enabled="$K8S_PVC_ENABLE"
           persistence.size="$K8S_PVC_SIZE"
+          persistence.storageClass="$K8S_PVC_STORAGE_CLASS"
         )
         local valuefile="charts/charts_values/mongodb-values.yaml"
         local chart="charts/mongodb-9.3.1.tgz"
@@ -70,6 +71,7 @@ function execute_k8s_command_on_services {
           service.managerPort="$EIFFEL_RABBITMQ_WEB_EXTERNAL_PORT"
           persistence.enabled="$K8S_PVC_ENABLE"
           persistence.size="$K8S_PVC_SIZE"
+          persistence.storageClass="$K8S_PVC_STORAGE_CLASS"
         )
         local valuefile="charts/charts_values/rabbitmq-values.yaml"
         local chart="charts/rabbitmq-7.7.1.tgz"
