@@ -17,6 +17,8 @@
 
 <img src="./images/eiffel-easy2use.png" alt="Eiffel Easy2Use" width="350"/>
 
+[![Sandbox badge](https://img.shields.io/badge/Stage-Sandbox-yellow)](https://github.com/eiffel-community/community/blob/master/PROJECT_LIFECYCLE.md#stage-sandbox)
+
 # Eiffel Easy2Use
 Eiffel Easy2Use is aiming to create an easy installation for any set of components in Docker containers on a dedicated Docker host or in a Kubernetes Cluster via Helm Charts (K8S package manager), with no or minimal configuration required to get started.
 
