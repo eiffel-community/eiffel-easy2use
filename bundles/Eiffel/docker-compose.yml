@@ -58,6 +58,7 @@ services:
       - EIFFEL_JENKINS_FEM_PORT=${EIFFEL_JENKINS_FEM_INTERNAL_PORT}
       - EIFFEL_JENKINS
       - EIFFEL_JENKINS_PORT=${EIFFEL_JENKINS_INTERNAL_PORT}
+    user: root # give permission for copying to /seed-data
     command:   #  Do NOT SEED ER without user & psw specified in application.yml, DB and tables will be created with remrem_generated PSW if not specified. json filename = collection
       bash -c "cp -R /seed-data-temp /seed-data &&
                /seed-data/inject-env-values-to-files.sh &&
