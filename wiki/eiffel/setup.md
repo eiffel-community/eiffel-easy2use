@@ -51,7 +51,10 @@ Linux | 8 GB RAM |16 GB RAM or more |	~11 GB of RAM will be use under the load. 
 
 #### Docker requirements
  - Docker 18.06 CE or newer
- - Docker-Compose 1.22 or newer
+ - In Linux Systems
+     - Use Docker-compose version <= 1.29.2
+ - In Windows Systems
+     - Disable Docker-compose-V2 in Docker-Desktop settings (Docker Desktop -> Settings -> uncheck "Use Docker Compose V2")
 
 #### Kubernetes requirements
  - Kubernetes cluster (local or remote)
