@@ -23,24 +23,8 @@
 # Add Ingress
 minikube addons enable ingress
 
-# Add Kubernetes Graphs
-kubectl create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/influxdb.yaml
-kubectl create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/heapster.yaml
-kubectl create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/grafana.yaml
-
-# Add NGINX
-helm install stable/nginx-ingress --name my-nginx --replace
-helm install stable/nginx-ingress --name my-nginx --set rbac.create=true --replace
-
-# Install Tiller
-helm init
-
 #RBAC
 kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
 
 # Show minikube ip
-minikube ip
-
-# Start Dashboard
-echo "Open K8S Dashboard in Browser:"
-minikube dashboard
+echo MinikubeIP: $(minikube ip)
