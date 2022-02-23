@@ -270,7 +270,7 @@ function do_k8s_local_hosts_file_minikube {
   cd ${bundles_path}/$bundle
   minikube_ip=$(minikube ip)
   echo "Update your local '../etc/hosts' file with:"
-  source ${CLI_ROOT}/utilities/K8S/get_k8s_ingress.sh | awk -v env_var="$minikube_ip" '{if (NR!=1) {print env_var" "$2}}'
+  source ${CLI_ROOT}/utilities/K8S/get_k8s_ingress.sh | awk -v env_var="$minikube_ip" '{if (NR!=1) {print env_var" "$3}}'
   cd ../..
 }
 
@@ -320,7 +320,7 @@ function do_list {
   then
     pwd
     verbose "Looking for Kubernetes services in namespace ${K8S_NAMESPACE}"
-    source ${CLI_ROOT}/utilities/K8S/get_k8s_ingress.sh | awk '{if (NR!=1) {print "https://"$2}}'
+    source ${CLI_ROOT}/utilities/K8S/get_k8s_ingress.sh | awk '{if (NR!=1) {print "http://"$3}}'
     echo "${app_url_context_path}"
     echo "${easy2use_bundle_psw}"
   fi
