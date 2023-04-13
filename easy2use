@@ -415,11 +415,12 @@ function do_remove {
     source k8s_bundle_functions.bash
     if [ -z "$services" ] && [ -z "$package" ]
     then
-      [[ -f "./packages/max.sh" ]] || \
-        bail_out "K8S package file max.sh do not exist for K8S"
-      package="max"
+      print "Services and package are not defined. Namespace '${K8S_NAMESPACE}' will be deleted permanently."
+      kubectl delete namespace ${K8S_NAMESPACE}
+    else
+      execute_k8s_command "delete" "$package" "$services"
     fi
-    execute_k8s_command "delete" "$package" "$services"
+
     cd ..
   fi
 
