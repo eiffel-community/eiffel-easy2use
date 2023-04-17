@@ -194,6 +194,9 @@ function do_execute_k8s_command_on_service {
           then
           helm uninstall "$releasename" --namespace "$K8S_NAMESPACE" \
           || print "Warning: Could not delete $releasename"
+          if [[ -n $(kubectl get pvc --namespace "$K8S_NAMESPACE" -l "app.kubernetes.io/instance=$releasename" 2>/dev/null) ]];then
+          	kubectl delete pvc --namespace "$K8S_NAMESPACE" -l "app.kubernetes.io/instance=$releasename"
+          fi
         else
           helm delete "$releasename" --purge \
           || print "Warning: Could not delete $releasename"
@@ -212,6 +215,9 @@ function do_execute_k8s_command_on_service {
           then
           helm uninstall "$releasename" --namespace "$K8S_NAMESPACE" \
           || print "Warning: Could not delete $releasename"
+          if [[ -n $(kubectl get pvc --namespace "$K8S_NAMESPACE" -l "app.kubernetes.io/instance=$releasename" 2>/dev/null) ]];then
+          	kubectl delete pvc --namespace "$K8S_NAMESPACE" -l "app.kubernetes.io/instance=$releasename"
+          fi
         else  
           helm delete "$releasename" --purge >/dev/null \
           || print "Warning: Could not delete $releasename"
