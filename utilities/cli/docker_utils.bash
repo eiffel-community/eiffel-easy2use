@@ -34,25 +34,25 @@
 #  $2: Flag for docker-compose
 #-----------------------------
 function execute_docker_command {
-  local docker_compose_cmd="$1"
+  local docker_compose_sub_cmd="$1"
   local docker_compose_flag="$2"
   local package="$3"
   local services="$4"
 
-  verbose "execute_docker_command cmd: ${docker_compose_cmd}"
+  verbose "execute_docker_command cmd: ${docker_compose_sub_cmd}"
   verbose "execute_docker_command flag: ${docker_compose_flag}"
 
   if [ -z "$services" ] && [ -z "$package" ]
   then
-    print "Docker ${docker_compose_cmd}"
+    print "Docker ${docker_compose_sub_cmd}"
     call "$DOCKER_COMPOSE_CMD stop" $noop
 
   else
     if [ ! -z "$services" ]
     then
       services_string=$(echo $services | tr ',' ' ')
-      print "Docker ${docker_compose_cmd} service(s): ${services_string}"
-      call "$DOCKER_COMPOSE_CMD ${docker_compose_cmd} ${docker_compose_flag} ${services_string}" $noop
+      print "Docker ${docker_compose_sub_cmd} service(s): ${services_string}"
+      call "$DOCKER_COMPOSE_CMD ${docker_compose_sub_cmd} ${docker_compose_flag} ${services_string}" $noop
     fi
 
     if [ ! -z "$package" ]
@@ -61,8 +61,8 @@ function execute_docker_command {
         bail_out "Package file: $package.sh specified do not exist"
 
       source ./packages/$package.sh
-      print "Docker ${docker_compose_cmd} package service(s): ${docker_package_services}"
-      call "$DOCKER_COMPOSE_CMD ${docker_compose_cmd} ${docker_compose_flag} ${docker_package_services}" $noop
+      print "Docker ${docker_compose_sub_cmd} package service(s): ${docker_package_services}"
+      call "$DOCKER_COMPOSE_CMD ${docker_compose_sub_cmd} ${docker_compose_flag} ${docker_package_services}" $noop
     fi
   fi
 }
