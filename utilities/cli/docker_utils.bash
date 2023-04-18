@@ -45,14 +45,14 @@ function execute_docker_command {
   if [ -z "$services" ] && [ -z "$package" ]
   then
     print "Docker ${docker_compose_cmd}"
-    call "docker-compose stop" $noop
+    call "$DOCKER_COMPOSE_CMD stop" $noop
 
   else
     if [ ! -z "$services" ]
     then
       services_string=$(echo $services | tr ',' ' ')
       print "Docker ${docker_compose_cmd} service(s): ${services_string}"
-      call "docker-compose ${docker_compose_cmd} ${docker_compose_flag} ${services_string}" $noop
+      call "$DOCKER_COMPOSE_CMD ${docker_compose_cmd} ${docker_compose_flag} ${services_string}" $noop
     fi
 
     if [ ! -z "$package" ]
@@ -62,7 +62,7 @@ function execute_docker_command {
 
       source ./packages/$package.sh
       print "Docker ${docker_compose_cmd} package service(s): ${docker_package_services}"
-      call "docker-compose ${docker_compose_cmd} ${docker_compose_flag} ${docker_package_services}" $noop
+      call "$DOCKER_COMPOSE_CMD ${docker_compose_cmd} ${docker_compose_flag} ${docker_package_services}" $noop
     fi
   fi
 }
