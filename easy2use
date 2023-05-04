@@ -184,6 +184,15 @@ function parse_arguments {
     shift # move to next key-value pair
   done
 
+  # Check if new or old docker compose command is available in environment
+  docker compose &> /dev/null
+  if [ "$?" == "0" ];
+  then
+    DOCKER_COMPOSE_CMD="docker compose"
+  else
+    DOCKER_COMPOSE_CMD="docker-compose"
+  fi
+
   # Join all given services to a space separated string
   [[ -z ${services_string} ]] || \
     services=$(echo ${services_string} | tr ',' ' ')
@@ -408,7 +417,7 @@ function do_remove {
     then
       bail_out "Docker: The remove command can NOT be used together with service(s) and/or package"
     fi
-      call "docker-compose down --volumes" $noop
+      call "$DOCKER_COMPOSE_CMD down --volumes" $noop
   elif [ "$TARGET_TYPE" == "Kubernetes" ]
   then
     cd K8S
@@ -446,7 +455,7 @@ function do_restart {
     cd ${bundles_path}/$bundle/docker-compose
     if [ -z "$services" ] && [ -z "$package" ]
     then
-      call "docker-compose restart" $noop
+      call "$DOCKER_COMPOSE_CMD restart" $noop
     else
       execute_docker_command "restart" "" "$package" "$services"
     fi
@@ -527,7 +536,7 @@ function do_status {
 
   if [ "$TARGET_TYPE" == "Docker" ]
   then
-    call "docker-compose ps" $noop
+    call "$DOCKER_COMPOSE_CMD ps" $noop
   elif [ "$TARGET_TYPE" == "Kubernetes" ]
   then
     print "Command 'status' is not yet implemented for Kubernetes"
