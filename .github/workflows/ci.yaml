@@ -1,9 +1,12 @@
 name: easy2use-ci
  
-on:
+on: 
   push:
+    branches:
+      - master
   pull_request:
-    branches: [ issue-4 ]
+    branches:
+      - master
  
 jobs:
   build:
