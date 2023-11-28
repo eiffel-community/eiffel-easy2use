@@ -1,0 +1,64 @@
+name: easy2use-ci
+ 
+on: 
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  NAMESPACE: ci-eiffel
+  BUNDLE: Eiffel
+  READY_POD_TIMEOUT: 120s
+ 
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Kubernetes Version
+        run: |
+              : # Get kubectl version
+              kubectl version
+
+      - name: Install Easy2Use on cluster
+        id: installation
+        run: |
+              : # Create the NAMESPACE
+              kubectl create ns $NAMESPACE 
+
+              : # Install the BUNDLE via easy2use
+              ./easy2use start -t Kubernetes -d cluster.local -e ./bundles -n $NAMESPACE $BUNDLE -y
+
+              : # Wait until all pods are running
+              kubectl wait pod \
+              --all \
+              --for=condition=Ready \
+              --field-selector=status.phase=Running \
+              --selector job-name!=mongodb-seed \
+              --namespace=$NAMESPACE \
+              --timeout=$READY_POD_TIMEOUT
+
+              : # Check that the mongodb seed job is completed
+              kubectl wait \
+              --for=condition=complete \
+              --namespace=$NAMESPACE \
+              job/mongodb-seed
+
+      - name: List the Eiffel pods and ingresses
+        run: |
+              kubectl get pods -n $NAMESPACE
+              kubectl get ingress -n $NAMESPACE
+
+      - name: Remove Easy2Use from cluster
+        id: removal
+        if: always()
+        run: |
+              : # Remove the BUNDLE from the cluster via easy2use
+              ./easy2use remove -t Kubernetes -d cluster.local -e ./bundles -n $NAMESPACE $BUNDLE -y
+
+              : # Delete the NAMESPACE
+              kubectl delete ns $NAMESPACE
