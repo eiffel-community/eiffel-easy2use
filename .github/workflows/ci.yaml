@@ -9,8 +9,11 @@ on:
       - master
 
 env:
-  NAMESPACE: ci-eiffel
+  DOMAIN: eiffel4eiffel.nordix.org
+  NAMESPACE: eiffel
+  TARGET: Kubernetes
   BUNDLE: Eiffel
+  PATH_TO_BUNDLE: ./bundles
   READY_POD_TIMEOUT: 120s
  
 jobs:
@@ -31,7 +34,7 @@ jobs:
               kubectl create ns $NAMESPACE 
 
               : # Install the BUNDLE via easy2use
-              ./easy2use start -t Kubernetes -d cluster.local -e ./bundles -n $NAMESPACE $BUNDLE -y
+              ./easy2use start -t $TARGET -d $DOMAIN -e $PATH_TO_BUNDLE -n $NAMESPACE $BUNDLE -y
 
               : # Wait until all pods are running
               kubectl wait pod \
@@ -53,12 +56,44 @@ jobs:
               kubectl get pods -n $NAMESPACE
               kubectl get ingress -n $NAMESPACE
 
+              : # Wait for a while
+              echo "Waiting..." && sleep 30
+
+      - name: Get the EI-frontend subscriptions
+        run: |
+              cd ./utilities/eiffel && \
+              bash ei_subscriptions.bash -d $DOMAIN -n $NAMESPACE
+
+      - name: POST an Eiffel ArtC event
+        run: |
+              cd ./utilities/eiffel && \
+              bash remrem_publish_event.bash -d $DOMAIN -n $NAMESPACE
+
+              : # Wait for a while until the processing of the events
+              echo "Waiting..." && sleep 60
+
+      - name: Ensure that Jenkins jobs executed successfully
+        run: |
+              : # The ArtC event should trigger three different jobs.
+              : # ei-artifact-triggered-job, ei-artifact-triggered-parameterized-job
+              : # and event-triggered-job
+              cd ./utilities/eiffel && \
+              output=$(bash er_events.bash -d $DOMAIN -n $NAMESPACE -l 8 | bash jq_query.bash | wc -l)
+              echo "Output: ${output}"
+
+              if [ $output -eq 3 ];
+              then
+                  echo "Jenkins jobs passed."
+              else
+                  echo "Jenkins jobs failed." && exit 1
+              fi
+
       - name: Remove Easy2Use from cluster
         id: removal
         if: always()
         run: |
               : # Remove the BUNDLE from the cluster via easy2use
-              ./easy2use remove -t Kubernetes -d cluster.local -e ./bundles -n $NAMESPACE $BUNDLE -y
+              ./easy2use remove -t $TARGET -d $DOMAIN -e $PATH_TO_BUNDLE -n $NAMESPACE $BUNDLE -y
 
               : # Delete the NAMESPACE
               kubectl delete ns $NAMESPACE
