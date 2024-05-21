@@ -129,7 +129,6 @@ Dependent Components Included from Eiffel Bundle
 - RemRem Generate
 - RemRem Publish
 - Event Repository REST API
-- Eiffel ViCi
 - Eiffel Intelligence (with artifact rules)
 
 A more detailed [view of the components can be found here](components.md).

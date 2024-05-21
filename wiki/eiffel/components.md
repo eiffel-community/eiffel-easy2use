@@ -18,7 +18,7 @@
 
 Component | Service name | User/PSW | Info
 ------------- | ------------ | -------- | ----
-Dummy Event Repository REST API | dummy_er | N/A | Needed for Vici for now
+Dummy Event Repository REST API | dummy_er | N/A | Needed for Vici (**deprecated**)
 Eiffel Intelligence  (Frontend) | ei_frontend | N/A
 Eiffel Intelligence (All Events) | ei_allevents | N/A
 Eiffel Intelligence (Artifact) | ei_artifact | N/A | Subscription included (seeded) to trigger predefined Jenkins Job ei-artifact-triggered-job via native Jenkins Rest API
@@ -32,7 +32,6 @@ MongoDb & Data Seeding | mongodb & mongo_seed | N/A | The seed-data folder in Ea
 Nexus3 | nexus | admin / admin123 |
 RemRem Generate | remrem_generate | N/A |
 RemRem Publish | remrem_publish | N/A |
-Vici | eiffel_vici | N/A
 
 ## Layout
 This is a schematic picture of the environment:

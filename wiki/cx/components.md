@@ -35,5 +35,3 @@ MongoDB & Data Seeding | mongodb<br> mongo_seed | N/A | N/A | The seed-data fold
 RemRem Generate | remrem_generate | N/A | eiffel-remrem-generate-\<namespace\>.\<domainname\>
 RemRem Publish | remrem_publish | N/A | eiffel-remrem-publish-\<namespace\>.\<domainname\>
 Event Repository REST API | er | N/A | eiffel-er-\<namespace\>.\<domainname\>
-Eiffel Vici | vici | N/A | eiffel-vici-\<namespace\>.\<domainname\>
-

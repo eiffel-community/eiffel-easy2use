@@ -194,24 +194,6 @@ function execute_k8s_command_on_services {
         local chart="charts/eiffel-2.0.0.tgz"
         ;;
 
-      vici)
-        local releasename="$K8S_RELEASE_EIFFEL_VICI"
-        local settings=(
-                image.registry="$EXTERNAL_DOCKER_REGISTRY"
-                image.repository="$EIFFEL_VICI_IMAGE_TAG_NAME"
-          image.tag="$EIFFEL_VICI_VERSION"
-          ingress.hostName="$K8S_INGRESS_EIFFEL_VICI"
-          ingress.tls="$K8S_INGRESS_TLS_ENABLE"
-          ingress.tlsSecret="$K8S_INGRESS_CERT_SECRET_NAME"
-          ingress.enabled="$K8S_Ingress_Enabled"
-          fullnameOverride="$K8S_RELEASE_EIFFEL_VICI"
-          eiffel.servicePort="$EIFFEL_VICI_EXTERNAL_PORT"
-          eiffel.containerPort="$EIFFEL_VICI_INTERNAL_PORT"
-        )
-        local valuefile="charts/charts_values/eiffel-vici-values.yaml"
-        local chart="charts/eiffel-2.0.0.tgz"
-        ;;
-
       remrem_publish)
         local releasename="$K8S_RELEASE_EIFFEL_REMREM_PUBLISH"
         local settings=(

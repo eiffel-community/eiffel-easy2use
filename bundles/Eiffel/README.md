@@ -45,7 +45,6 @@ Components included in Eiffel bundle
 - Eiffel Jenkins (with Fem Plugin)
 - Jenkins
 - Event Repository REST API
-- Vici
 - Dummy Event Repository REST API
 - Nexus3 
 

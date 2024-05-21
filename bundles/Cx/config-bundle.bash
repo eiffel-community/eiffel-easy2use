@@ -111,7 +111,7 @@ export CX_JENKINS_CONFIG_SECRETS_PATH=charts/charts_values/jenkins_secrets/
 #  - OBS no spaces allowed!!
 # 
 
-CONF_Cx_DEPENDENCIES_BUNDLES[0]="Eiffel,rabbitmq,mongodb,mongo_seed,remrem_generate,remrem_publish,er,ei_backend_artifact,ei_frontend,vici,dummy_er"
+CONF_Cx_DEPENDENCIES_BUNDLES[0]="Eiffel,rabbitmq,mongodb,mongo_seed,remrem_generate,remrem_publish,er,ei_backend_artifact,ei_frontend,dummy_er"
 
 # ------------------------------
 

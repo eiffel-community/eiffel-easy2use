@@ -58,7 +58,6 @@ Dependent Components Included from Eiffel2 Bundle
 - RemRem Publish
 - Nexus3
 - Event Repository REST API
-- Eiffel-Vici
 - Eiffel Intelligence artifact
 
 Usage
