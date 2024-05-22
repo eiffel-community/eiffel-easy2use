@@ -70,7 +70,7 @@ jobs:
               bash remrem_publish_event.bash -d $DOMAIN -n $NAMESPACE
 
               : # Wait for a while until the processing of the events
-              echo "Waiting..." && sleep 60
+              echo "Waiting..." && sleep 90
 
       - name: Ensure that Jenkins jobs executed successfully
         run: |

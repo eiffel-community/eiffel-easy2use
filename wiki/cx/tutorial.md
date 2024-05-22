@@ -98,7 +98,6 @@ Check your pushed patchset
 - Click ms-frontend to see post-merge pipeline execution
 
 ### 3. Eiffel Events Generated in Jenkins Pipelines
-- Eiffel Vici: eiffel-vici-\<namespace\>.\<domainname\>
 - Instruction TBD XXXXX
 
 
@@ -222,7 +221,6 @@ Check your pushed patchset
 - Click on workflows icon on the left manu
 
 ### 2. Eiffel Events Generated in Jenkins Pipelines
-- Eiffel Vici: eiffel-vici-\<namespace\>.\<domainname\>
 - Instruction TBD XXXXX
 
 

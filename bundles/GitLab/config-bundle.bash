@@ -43,7 +43,7 @@ export GITLAB_GITLAB="gitlab-gitlab"
 #  - OBS no spaces allowed!!
 # 
 
-CONF_GitLab_DEPENDENCIES_BUNDLES[0]="Eiffel,rabbitmq,mongodb,mongo_seed,remrem_generate,remrem_publish,er,vici,dummy_er,nexus"
+CONF_GitLab_DEPENDENCIES_BUNDLES[0]="Eiffel,rabbitmq,mongodb,mongo_seed,remrem_generate,remrem_publish,er,dummy_er,nexus"
 
 # ------------------------------
 

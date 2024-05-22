@@ -228,6 +228,7 @@ services:
 
 
 ####### /Start Eiffel Intelligence Frontend ###############################################################################
+
   ei_frontend:
     restart: always
     image: ${EIFFEL_EI_FRONTEND_IMAGE_TAG}
@@ -246,21 +247,6 @@ services:
 
 ####### /Stop Eiffel Intelligence Frontend ###############################################################################
 
-  vici:
-    restart: always
-    image: ${EIFFEL_VICI_IMAGE_TAG}
-    expose:
-      - "${EIFFEL_VICI_INTERNAL_PORT}"
-    ports:
-      - "${EIFFEL_VICI_EXTERNAL_PORT}:${EIFFEL_VICI_INTERNAL_PORT}"
-#    environment:
-#      - WAIT_MB_HOSTS=rabbitmq:15672
-#      - WAIT_DB_HOSTS=mongodb:27017
-    networks:
-          eiffel.0_1:
-            aliases:
-              - ${EIFFEL_VICI}
-
   dummy_er:
     restart: always
     image: ${EIFFEL_DUMMY_ER_IMAGE_TAG}
@@ -270,7 +256,6 @@ services:
       - "${EIFFEL_DUMMY_ER_EXTERNAL_PORT}:${EIFFEL_DUMMY_ER_INTERNAL_PORT}"
     depends_on:
       - er
-      - vici
     networks:
           eiffel.0_1:
             aliases:

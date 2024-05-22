@@ -26,7 +26,6 @@ RemRem Generate | remrem_generate | N/A | eiffel-remrem-generate-\<namespace\>.\
 RemRem Publish | remrem_publish | N/A | eiffel-remrem-publish-\<namespace\>.\<domainname\>
 Nexus3 | nexus | admin/admin123 | eiffel-nexus3-\<namespace\>.\<domainname\>
 Event Repository REST API | er | N/A | eiffel-er-\<namespace\>.\<domainname\>
-Eiffel ViCi | vici | N/A | eiffel-vici-\<namespace\>.\<domainname\>
 
 ## Layout
 This is a schematic picture of the environment:
