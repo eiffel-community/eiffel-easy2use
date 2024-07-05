@@ -413,7 +413,7 @@ export DOCKER_CONFIG_EIFFEL_DUMMY_ER="$CONFIG_EIFFEL_DUMMY_ER"
 ### Eiffel-ER service ###
 
 export CONFIG_EIFFEL_ER="
-server.servlet.context-path=
+server.servlet.contextpath=
 server.port=${EIFFEL_ER_INTERNAL_PORT}
 rabbitmq.host=${EIFFEL_RABBITMQ}
 rabbitmq.port=${EIFFEL_RABBITMQ_AMQP_APPLICATION_PORT}
@@ -456,7 +456,7 @@ export K8S_ENV_CONFIG_EIFFEL_ER="WAIT_HOSTS: '$EIFFEL_RABBITMQ\:${EIFFEL_RABBITM
 
 # Docker format
 export DOCKER_CONFIG_EIFFEL_ER="$CONFIG_EIFFEL_ER
-WAIT_HOSTS=$EIFFEL_RABBITMQ:${EIFFEL_RABBITMQ_WEB_APPLICATION_PORT} $EIFFEL_MONGODB:${EIFFEL_MONGODB_APPLICATION_PORT}"
+WAIT_HOSTS=\"$EIFFEL_RABBITMQ:${EIFFEL_RABBITMQ_WEB_APPLICATION_PORT} $EIFFEL_MONGODB:${EIFFEL_MONGODB_APPLICATION_PORT}\""
 
 ### End of Eiffel-ER service ###
 
@@ -508,8 +508,8 @@ activedirectory.managerPassword=
 activedirectory.managerDn=
 activedirectory.rootDn=
 activedirectory.userSearchFilter=
-event-repository.enabled=true
-event-repository.url=${EIFFEL_ER_REST_URL}
+event.repository.enabled=true
+event.repository.url=${EIFFEL_ER_REST_URL}
 logging.level.root=ERROR
 logging.level.org.springframework.web=DEBUG
 logging.level.com.ericsson.eiffel.remrem.producer=DEBUG"
